@@ -1,0 +1,39 @@
+{
+    "name": "jolicode/seo-override",
+    "description": "Override your seo markup on the fly",
+    "keywords": ["seo"],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Loïck Piera",
+            "email": "pyrech@gmail.com"
+        },
+        {
+            "name": "Damien Alexandre",
+            "email": "dalexandre@jolicode.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Joli\\SeoOverride\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Joli\\SeoOverride\\tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=5.6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.7",
+        "fabpot/php-cs-fixer": "~2.2"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.x-dev"
+        }
+    }
+}

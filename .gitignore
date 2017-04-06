@@ -1,0 +1,7 @@
+# Dependencies
+/vendor
+
+# Composer
+composer.lock
+
+.php_cs.cache

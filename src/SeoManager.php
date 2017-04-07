@@ -42,13 +42,28 @@ class SeoManager
     }
 
     /**
+     * Update and override the Seo of the HTML for the given path.
+     *
+     * @param string $path
+     * @param string $html
+     *
+     * @return string
+     */
+    public function updateAndOverrideForPath($path, $html)
+    {
+        $this->updateSeoForPath($path);
+
+        return $this->overrideHtml($html);
+    }
+
+    /**
      * Update the Seo from the fetchers for a specific path.
      *
-     * @param mixed $path
+     * @param string $path
      *
      * @return Seo
      */
-    public function fetchSeoForPath($path)
+    public function updateSeoForPath($path)
     {
         foreach ($this->fetchers as $fetcher) {
             if ($seo = $fetcher->fetch($path)) {
@@ -64,9 +79,9 @@ class SeoManager
     /**
      * Perform the override of HTML SEO related tags.
      *
-     * @param $html
+     * @param string $html
      *
-     * @return bool|Seo
+     * @return string
      */
     public function overrideHtml($html)
     {

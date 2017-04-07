@@ -34,10 +34,8 @@ class SeoSubscriber implements EventSubscriberInterface
         if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST) {
             $path = $event->getRequest()->getPathInfo();
 
-            $this->seoManager->fetchSeoForPath($path);
-
             $responseContent = $event->getResponse()->getContent();
-            $newResponseContent = $this->seoManager->overrideHtml($responseContent);
+            $newResponseContent = $this->seoManager->updateAndOverrideForPath($path, $responseContent);
 
             $event->getResponse()->setContent($newResponseContent);
         }

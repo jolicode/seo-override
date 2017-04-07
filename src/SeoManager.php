@@ -17,19 +17,19 @@ namespace Joli\SeoOverride;
  */
 class SeoManager
 {
-    /** @var Fetcher */
-    private $fetcher;
+    /** @var Fetcher[] */
+    private $fetchers;
 
     /** @var Seo */
     private $seo;
 
     /**
-     * @param Fetcher $fetcher
-     * @param Seo     $seo
+     * @param Fetcher[] $fetchers
+     * @param Seo       $seo
      */
-    public function __construct(Fetcher $fetcher, Seo $seo = null)
+    public function __construct(array $fetchers, Seo $seo = null)
     {
-        $this->fetcher = $fetcher;
+        $this->fetchers = $fetchers;
         $this->seo = $seo || new Seo();
     }
 
@@ -50,7 +50,14 @@ class SeoManager
      */
     public function fetchSeoForPath($path)
     {
-        // @todo
+        foreach ($this->fetchers as $fetcher) {
+            if ($seo = $fetcher->fetch($path)) {
+                $this->mergeSeo($seo);
+
+                break;
+            }
+        }
+
         return $this->seo;
     }
 
@@ -67,34 +74,42 @@ class SeoManager
 
         $seo = $this->getSeo();
 
-        if ($seo->getMetaTitle()) {
+        if ($seo->getTitle()) {
             $html = preg_replace(
                 '@<!--SEO_TITLE-->.+<!--/SEO_TITLE-->@im',
-                '<title>'.htmlspecialchars($seo->getMetaTitle()).'</title>',
+                '<title>'.htmlspecialchars($seo->getTitle()).'</title>',
                 $html
             );
         }
 
-        if ($seo->getMetaDescription()) {
+        if ($seo->getDescription()) {
             $html = preg_replace(
                 '@<!--SEO_DESC-->.*?<!--/SEO_DESC-->@im',
-                '<meta name="description" content="'.htmlspecialchars($seo->getMetaDescription()).'">',
+                '<meta name="description" content="'.htmlspecialchars($seo->getDescription()).'">',
                 $html
             );
         }
 
-        if ($seo->getMetaCanonical()) {
+        if ($seo->getKeywords()) {
             $html = preg_replace(
-                '@<!--SEO_CANO-->.*?<!--/SEO_CANO-->@im',
-                '<link rel="canonical" href="'.htmlspecialchars($seo->getMetaCanonical()).'" />',
+                '@<!--SEO_KEYWORDS-->.*?<!--/SEO_KEYWORDS-->@im',
+                '<meta name="description" content="'.htmlspecialchars($seo->getKeywords()).'">',
                 $html
             );
         }
 
-        if ($seo->getMetaRobots()) {
+        if ($seo->getRobots()) {
             $html = preg_replace(
                 '@<!--SEO_ROBOT-->.*?<!--/SEO_ROBOT-->@im',
-                '<meta name="robots" content="'.htmlspecialchars($seo->getMetaRobots()).'">',
+                '<meta name="robots" content="'.htmlspecialchars($seo->getRobots()).'">',
+                $html
+            );
+        }
+
+        if ($seo->getCanonical()) {
+            $html = preg_replace(
+                '@<!--SEO_CANO-->.*?<!--/SEO_CANO-->@im',
+                '<link rel="canonical" href="'.htmlspecialchars($seo->getCanonical()).'" />',
                 $html
             );
         }
@@ -116,5 +131,35 @@ class SeoManager
         }
 
         return $html;
+    }
+
+    /**
+     * Merge the given Seo data inside the current one.
+     *
+     * @param Seo $seo
+     */
+    private function mergeSeo(Seo $seo)
+    {
+        if ($seo->getTitle()) {
+            $this->seo->setTitle($seo->getTitle());
+        }
+        if ($seo->getDescription()) {
+            $this->seo->setDescription($seo->getDescription());
+        }
+        if ($seo->getKeywords()) {
+            $this->seo->setKeywords($seo->getKeywords());
+        }
+        if ($seo->getRobots()) {
+            $this->seo->setRobots($seo->getRobots());
+        }
+        if ($seo->getCanonical()) {
+            $this->seo->setCanonical($seo->getCanonical());
+        }
+        if ($seo->getOgTitle()) {
+            $this->seo->setOgTitle($seo->getOgTitle());
+        }
+        if ($seo->getOgDescription()) {
+            $this->seo->setOgDescription($seo->getOgDescription());
+        }
     }
 }

@@ -1,0 +1,19 @@
+Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride:
+  type: entity
+  repositoryClass: Joli\SeoOverride\Bridge\Doctrine\Repository\SeoOverrideRepository
+  table: joli_seo_override
+  indexes:
+    path_ndex:
+      columns: [ path ]
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    path:
+      type: string
+      length: 255
+  embedded:
+    seo:
+      class: Joli\SeoOverride\Seo

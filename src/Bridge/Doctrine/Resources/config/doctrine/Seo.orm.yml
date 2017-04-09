@@ -1,0 +1,24 @@
+Joli\SeoOverride\Seo:
+  type: embeddable
+  fields:
+    title:
+      type: string
+      length: 255
+    description:
+      type: string
+      length: 255
+    keywords:
+      type: string
+      length: 255
+    robots:
+      type: string
+      length: 255
+    canonical:
+      type: string
+      length: 255
+    ogTitle:
+      type: string
+      length: 255
+    ogDescription:
+      type: string
+      length: 255

@@ -3,7 +3,7 @@ Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride:
   repositoryClass: Joli\SeoOverride\Bridge\Doctrine\Repository\SeoOverrideRepository
   table: joli_seo_override
   indexes:
-    path_ndex:
+    path_index:
       columns: [ path ]
   id:
     id:

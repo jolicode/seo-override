@@ -33,23 +33,15 @@ class SeoManager
         $this->seo = $seo || new Seo();
     }
 
-    /**
-     * @return Seo
-     */
-    public function getSeo()
+    public function getSeo(): Seo
     {
         return $this->seo;
     }
 
     /**
      * Update and override the Seo of the HTML for the given path.
-     *
-     * @param string $path
-     * @param string $html
-     *
-     * @return string
      */
-    public function updateAndOverrideForPath($path, $html)
+    public function updateAndOverrideForPath(string $path, string $html): string
     {
         $this->updateSeoForPath($path);
 
@@ -58,12 +50,8 @@ class SeoManager
 
     /**
      * Update the Seo from the fetchers for a specific path.
-     *
-     * @param string $path
-     *
-     * @return Seo
      */
-    public function updateSeoForPath($path)
+    public function updateSeoForPath(string $path): Seo
     {
         foreach ($this->fetchers as $fetcher) {
             if ($seo = $fetcher->fetch($path)) {
@@ -78,12 +66,8 @@ class SeoManager
 
     /**
      * Perform the override of HTML SEO related tags.
-     *
-     * @param string $html
-     *
-     * @return string
      */
-    public function overrideHtml($html)
+    public function overrideHtml(string $html): string
     {
         // @todo
 
@@ -150,8 +134,6 @@ class SeoManager
 
     /**
      * Merge the given Seo data inside the current one.
-     *
-     * @param Seo $seo
      */
     private function mergeSeo(Seo $seo)
     {

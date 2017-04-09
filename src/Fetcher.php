@@ -22,5 +22,5 @@ interface Fetcher
      *
      * @return Seo|null
      */
-    public function fetch($path);
+    public function fetch(string $path);
 }

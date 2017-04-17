@@ -13,14 +13,12 @@ namespace Joli\SeoOverride;
 
 /**
  * A fetcher is responsible to find and return an eventual Seo configuration
- * for a given path.
+ * for a given path and domain.
  */
 interface Fetcher
 {
     /**
-     * @param string $path
-     *
      * @return Seo|null
      */
-    public function fetch(string $path);
+    public function fetch(string $path, string $domainAlias = null);
 }

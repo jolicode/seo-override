@@ -20,16 +20,21 @@ class SeoManager
     /** @var Fetcher[] */
     private $fetchers;
 
+    /** @var string[] */
+    private $domains;
+
     /** @var Seo */
     private $seo;
 
     /**
      * @param Fetcher[] $fetchers
+     * @param string[]  $domains
      * @param Seo       $seo
      */
-    public function __construct(array $fetchers, Seo $seo = null)
+    public function __construct(array $fetchers, array $domains, Seo $seo = null)
     {
         $this->fetchers = $fetchers;
+        $this->domains = $domains;
         $this->seo = $seo || new Seo();
     }
 
@@ -39,22 +44,24 @@ class SeoManager
     }
 
     /**
-     * Update and override the Seo of the HTML for the given path.
+     * Update and override the Seo of the HTML for the given path and domain.
      */
-    public function updateAndOverrideForPath(string $path, string $html): string
+    public function updateAndOverride(string $html, string $path, string $domain): string
     {
-        $this->updateSeoForPath($path);
+        $this->updateSeo($path, $domain);
 
         return $this->overrideHtml($html);
     }
 
     /**
-     * Update the Seo from the fetchers for a specific path.
+     * Update the Seo from the fetchers for a specific path and domain.
      */
-    public function updateSeoForPath(string $path): Seo
+    public function updateSeo(string $path, string $domain): Seo
     {
+        $domainAlias = $this->findDomainAlias($domain);
+
         foreach ($this->fetchers as $fetcher) {
-            if ($seo = $fetcher->fetch($path)) {
+            if ($seo = $fetcher->fetch($path, $domainAlias)) {
                 $this->mergeSeo($seo);
 
                 break;
@@ -130,6 +137,22 @@ class SeoManager
         }
 
         return $html;
+    }
+
+    /**
+     * Update and override the Seo of the HTML for the given domain and path.
+     *
+     * @return string|null
+     */
+    private function findDomainAlias(string $domain)
+    {
+        foreach ($this->domains as $domainAlias => $pattern) {
+            if (preg_match($pattern, $domain)) {
+                return $domainAlias;
+            }
+        }
+
+        return null;
     }
 
     /**

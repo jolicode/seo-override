@@ -17,15 +17,15 @@ use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
 class SeoOverrideRepository extends EntityRepository
 {
     /**
-     * @param string $path
-     *
      * @return SeoOverride|null
      */
-    public function findOneForPath(string $path)
+    public function findOneForPathAndDomain(string $path, string $domainAlias = null)
     {
         return $this->createQueryBuilder('s')
              ->andWhere('s.path = :path')
              ->setParameter('path', $path)
+             ->andWhere('s.domain = :domain')
+             ->setParameter('domain', $domainAlias)
              ->setMaxResults(1)
              ->getQuery()
              ->getOneOrNullResult();

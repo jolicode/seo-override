@@ -1,0 +1,21 @@
+framework:
+    secret: 'azertyuiop'
+    router:
+        resource: '%kernel.root_dir%/config/routing.yml'
+        strict_requirements: ~
+    templating:
+        enabled: false
+    assets:
+        enabled: false
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+
+seo_override:
+    fetchers:
+        -
+            type: php
+            include_path: "%kernel.root_dir%/config/seo_overrides.php"
+    domains:
+        domain1: '@domain1.com@'

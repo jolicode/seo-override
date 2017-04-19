@@ -35,7 +35,7 @@ class SeoManager
     {
         $this->fetchers = $fetchers;
         $this->domains = $domains;
-        $this->seo = $seo || new Seo();
+        $this->seo = $seo ?: new Seo();
     }
 
     public function getSeo(): Seo
@@ -76,8 +76,6 @@ class SeoManager
      */
     public function overrideHtml(string $html): string
     {
-        // @todo
-
         $seo = $this->getSeo();
 
         if ($seo->getTitle()) {
@@ -90,8 +88,8 @@ class SeoManager
 
         if ($seo->getDescription()) {
             $html = preg_replace(
-                '@<!--SEO_DESC-->.*?<!--/SEO_DESC-->@im',
-                '<meta name="description" content="'.htmlspecialchars($seo->getDescription()).'">',
+                '@<!--SEO_DESCRIPTION-->.*?<!--/SEO_DESCRIPTION-->@im',
+                '<meta name="description" content="'.htmlspecialchars($seo->getDescription()).'" />',
                 $html
             );
         }
@@ -99,22 +97,22 @@ class SeoManager
         if ($seo->getKeywords()) {
             $html = preg_replace(
                 '@<!--SEO_KEYWORDS-->.*?<!--/SEO_KEYWORDS-->@im',
-                '<meta name="description" content="'.htmlspecialchars($seo->getKeywords()).'">',
+                '<meta name="keywords" content="'.htmlspecialchars($seo->getKeywords()).'" />',
                 $html
             );
         }
 
         if ($seo->getRobots()) {
             $html = preg_replace(
-                '@<!--SEO_ROBOT-->.*?<!--/SEO_ROBOT-->@im',
-                '<meta name="robots" content="'.htmlspecialchars($seo->getRobots()).'">',
+                '@<!--SEO_ROBOTS-->.*?<!--/SEO_ROBOTS-->@im',
+                '<meta name="robots" content="'.htmlspecialchars($seo->getRobots()).'" />',
                 $html
             );
         }
 
         if ($seo->getCanonical()) {
             $html = preg_replace(
-                '@<!--SEO_CANO-->.*?<!--/SEO_CANO-->@im',
+                '@<!--SEO_CANONICAL-->.*?<!--/SEO_CANONICAL-->@im',
                 '<link rel="canonical" href="'.htmlspecialchars($seo->getCanonical()).'" />',
                 $html
             );
@@ -122,7 +120,7 @@ class SeoManager
 
         if ($seo->getOgTitle()) {
             $html = preg_replace(
-                '@<!--SEO_OGTITLE-->.*?<!--/SEO_OGTITLE-->@im',
+                '@<!--SEO_OG_TITLE-->.*?<!--/SEO_OG_TITLE-->@im',
                 '<meta property="og:title" content="'.htmlspecialchars($seo->getOgTitle()).'" />',
                 $html
             );
@@ -130,7 +128,7 @@ class SeoManager
 
         if ($seo->getOgDescription()) {
             $html = preg_replace(
-                '@<!--SEO_OGDESC-->.*?<!--/SEO_OGDESC-->@im',
+                '@<!--SEO_OG_DESCRIPTION-->.*?<!--/SEO_OG_DESCRIPTION-->@im',
                 '<meta property="og:description" content="'.htmlspecialchars($seo->getOgDescription()).'" />',
                 $html
             );

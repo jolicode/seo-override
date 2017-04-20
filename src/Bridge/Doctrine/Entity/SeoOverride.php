@@ -28,7 +28,7 @@ class SeoOverride
     /**
      * @var string|null
      */
-    private $domain;
+    private $domainAlias;
 
     /**
      * @var Seo
@@ -50,14 +50,14 @@ class SeoOverride
         $this->path = $path;
     }
 
-    public function getDomain()
+    public function getDomainAlias()
     {
-        return $this->domain;
+        return $this->domainAlias;
     }
 
-    public function setDomain(string $domain = null)
+    public function setDomainAlias(string $domainAlias = null)
     {
-        $this->domain = $domain;
+        $this->domainAlias = $domainAlias;
     }
 
     public function getSeo(): Seo

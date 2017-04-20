@@ -24,8 +24,8 @@ class SeoOverrideRepository extends EntityRepository
         return $this->createQueryBuilder('s')
              ->andWhere('s.path = :path')
              ->setParameter('path', $path)
-             ->andWhere('s.domain = :domain')
-             ->setParameter('domain', $domainAlias)
+             ->andWhere('s.domainAlias = :domainAlias')
+             ->setParameter('domainAlias', $domainAlias)
              ->setMaxResults(1)
              ->getQuery()
              ->getOneOrNullResult();

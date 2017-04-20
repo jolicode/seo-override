@@ -25,12 +25,12 @@ class DoctrineFetcher implements Fetcher
         $this->registry = $registry;
     }
 
-    public function fetch(string $path)
+    public function fetch(string $path, string $domainAlias = null)
     {
         $repository = $this->registry->getManagerForClass(SeoOverride::class)->getRepository(SeoOverride::class);
 
         /** @var SeoOverride|null $seoOverride */
-        $seoOverride = $repository->findOneForPath($path);
+        $seoOverride = $repository->findOneForPathAndDomain($path, $domainAlias);
 
         return $seoOverride ? $seoOverride->getSeo() : null;
     }

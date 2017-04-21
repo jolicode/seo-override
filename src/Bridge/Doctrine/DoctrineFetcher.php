@@ -15,6 +15,11 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
 use Joli\SeoOverride\Fetcher;
 
+/**
+ * This fetcher looks for overrides in database through a Doctrine SeoOverride entity.
+ *
+ * @see SeoOverride
+ */
 class DoctrineFetcher implements Fetcher
 {
     /** @var ManagerRegistry */

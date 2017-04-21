@@ -149,6 +149,26 @@ class SeoManagerTest extends TestCase
         self::assertSame('title', $seoManager->getSeo()->getTitle());
     }
 
+    public function test_it_looks_for_catch_all_domain_when_no_override_found()
+    {
+        $seo = new Seo();
+        $seo->setTitle('title');
+
+        $fetcher = $this->prophesize(Fetcher::class);
+        $fetcher->fetch('/', 'domain1')->willReturn(null);
+        $fetcher->fetch('/', null)->willReturn($seo);
+
+        $seoManager = new SeoManager([
+            $fetcher->reveal(),
+        ], [
+            'domain1' => '@example.com@',
+        ]);
+
+        $seoManager->updateSeo('/', 'www.example.com');
+
+        self::assertSame('title', $seoManager->getSeo()->getTitle());
+    }
+
     public function test_it_overrides_html()
     {
         $seo = new Seo();
@@ -192,6 +212,28 @@ HTML;
 HTML;
 
         self::assertSame($expected, $seoManager->overrideHtml($html));
+    }
+
+    public function test_it_does_not_override_html_when_no_override()
+    {
+        $seoManager = new SeoManager([], []);
+
+        $html = <<<'HTML'
+<html>
+<head>
+<!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
+<!--SEO_DESCRIPTION--><meta name="description" content="old description"><!--/SEO_DESCRIPTION-->
+<!--SEO_KEYWORDS--><meta name="keywords" content="old keywords"><!--/SEO_KEYWORDS-->
+<!--SEO_ROBOTS--><meta name="robots" content="old robots"><!--/SEO_ROBOTS-->
+<!--SEO_CANONICAL--><link rel="canonical" href="/old-canonical"><!--/SEO_CANONICAL-->
+<!--SEO_OG_TITLE--><meta property="og:title" content="old og:title"><!--/SEO_OG_TITLE-->
+<!--SEO_OG_DESCRIPTION--><meta property="og:description" content="old og:description"><!--/SEO_OG_DESCRIPTION-->
+</head>
+<body></body>
+</html>
+HTML;
+
+        self::assertSame($html, $seoManager->overrideHtml($html));
     }
 
     public function test_it_updates_seo_and_overrides_html()

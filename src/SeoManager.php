@@ -61,7 +61,15 @@ class SeoManager
         $domainAlias = $this->findDomainAlias($domain);
 
         foreach ($this->fetchers as $fetcher) {
-            if ($seo = $fetcher->fetch($path, $domainAlias)) {
+            // Try for the requested domain if it's known
+            if ($domainAlias && $seo = $fetcher->fetch($path, $domainAlias)) {
+                $this->mergeSeo($seo);
+
+                break;
+            }
+
+            // Try for the catch all domain
+            if ($seo = $fetcher->fetch($path, null)) {
                 $this->mergeSeo($seo);
 
                 break;

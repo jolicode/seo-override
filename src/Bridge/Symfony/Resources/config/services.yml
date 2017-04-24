@@ -22,7 +22,7 @@ services:
         arguments:
             - '' # Argument configured in the DIC extension
         tags:
-            - { name: seo_override.fetcher, alias: in_memory, required_options: 'data' }
+            - { name: seo_override.fetcher, alias: in_memory, required_options: 'overrides' }
 
     seo_override.fetcher.php:
         class: Joli\SeoOverride\Fetcher\PhpFetcher

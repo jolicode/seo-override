@@ -120,8 +120,8 @@ class SeoManagerTest extends TestCase
         $seoManager = new SeoManager([
             $fetcher->reveal(),
         ], [
-            'domain1' => '@example.fr@',
-            'domain2' => '@example.com@',
+            'domain1' => 'example.fr',
+            'domain2' => 'example.com',
         ]);
 
         $seoManager->updateSeo('/', 'www.example.com');
@@ -140,8 +140,8 @@ class SeoManagerTest extends TestCase
         $seoManager = new SeoManager([
             $fetcher->reveal(),
         ], [
-            'domain1' => '@example.com@',
-            'domain2' => '@example.com@',
+            'domain1' => 'example.com',
+            'domain2' => 'example.com',
         ]);
 
         $seoManager->updateSeo('/', 'www.example.com');
@@ -161,7 +161,7 @@ class SeoManagerTest extends TestCase
         $seoManager = new SeoManager([
             $fetcher->reveal(),
         ], [
-            'domain1' => '@example.com@',
+            'domain1' => 'example.com',
         ]);
 
         $seoManager->updateSeo('/', 'www.example.com');
@@ -247,8 +247,8 @@ HTML;
         $seoManager = new SeoManager([
             $fetcher->reveal(),
         ], [
-            'domain1' => '@example.fr@',
-            'domain2' => '@example.com@',
+            'domain1' => 'example.fr',
+            'domain2' => 'example.com',
         ]);
 
         $html = <<<'HTML'

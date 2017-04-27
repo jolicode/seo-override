@@ -18,4 +18,4 @@ seo_override:
             type: php
             include_path: "%kernel.root_dir%/config/seo_overrides.php"
     domains:
-        domain1: '@domain1.com@'
+        domain1: 'domain1.com'

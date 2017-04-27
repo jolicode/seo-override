@@ -172,7 +172,7 @@ class SeoOverrideExtensionTest extends TestCase
         $this->extension->load([
             'seo_override' => [
                 'domains' => [
-                    'domain1' => '@example.fr@',
+                    'domain1' => 'example.fr',
                 ],
             ],
         ], $container);
@@ -184,7 +184,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertTrue(is_array($parameters));
         self::assertCount(1, $parameters);
         self::assertArrayHasKey('domain1', $parameters);
-        self::assertSame('@example.fr@', $parameters['domain1']);
+        self::assertSame('example.fr', $parameters['domain1']);
     }
 
     public function test_it_preserves_domains_order()
@@ -193,9 +193,9 @@ class SeoOverrideExtensionTest extends TestCase
         $this->extension->load([
             'seo_override' => [
                 'domains' => [
-                    'domain1' => '@example.fr@',
-                    'domain2' => '@example.com@',
-                    'domain3' => '@example.es@',
+                    'domain1' => 'example.fr',
+                    'domain2' => 'example.com',
+                    'domain3' => 'example.es',
                 ],
             ],
         ], $container);
@@ -209,11 +209,11 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertArrayHasKey('domain1', $parameters);
         self::assertArrayHasKey('domain2', $parameters);
         self::assertArrayHasKey('domain3', $parameters);
-        self::assertSame('@example.fr@', $parameters['domain1']);
-        self::assertSame('@example.com@', $parameters['domain2']);
-        self::assertSame('@example.es@', $parameters['domain3']);
-        self::assertSame('@example.fr@', array_shift($parameters));
-        self::assertSame('@example.com@', array_shift($parameters));
-        self::assertSame('@example.es@', array_shift($parameters));
+        self::assertSame('example.fr', $parameters['domain1']);
+        self::assertSame('example.com', $parameters['domain2']);
+        self::assertSame('example.es', $parameters['domain3']);
+        self::assertSame('example.fr', array_shift($parameters));
+        self::assertSame('example.com', array_shift($parameters));
+        self::assertSame('example.es', array_shift($parameters));
     }
 }

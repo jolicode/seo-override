@@ -1,0 +1,8 @@
+services:
+    seo_override.fetcher.doctrine:
+        class: Joli\SeoOverride\Bridge\Doctrine\DoctrineFetcher
+        private: true
+        arguments:
+            - '@doctrine'
+        tags:
+            - { name: seo_override.fetcher, alias: doctrine }

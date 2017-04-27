@@ -37,5 +37,6 @@ return PhpCsFixer\Config::create()
         PhpCsFixer\Finder::create()
             ->in(__DIR__)
             ->notPath('tests/Unit/Fixtures')
+            ->notPath('tests/Functional/Fixtures')
     )
 ;

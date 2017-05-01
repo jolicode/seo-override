@@ -15,6 +15,14 @@ Use [Composer](http://getcomposer.org/) to install SeoOverride in your project:
 composer require "jolicode/seo-override"
 ```
 
+## Documentation
+
+This package can be used either with plain PHP or inside Symfony through the
+provided bundle.
+
+* [Regular usage](doc/regular)
+* [Usage inside Symfony](doc/symfony)
+
 ## Further documentation
 
 You can see the current and past versions using one of the following:

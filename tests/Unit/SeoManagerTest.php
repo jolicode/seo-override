@@ -221,13 +221,13 @@ HTML;
         $html = <<<'HTML'
 <html>
 <head>
-<!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
-<!--SEO_DESCRIPTION--><meta name="description" content="old description"><!--/SEO_DESCRIPTION-->
-<!--SEO_KEYWORDS--><meta name="keywords" content="old keywords"><!--/SEO_KEYWORDS-->
-<!--SEO_ROBOTS--><meta name="robots" content="old robots"><!--/SEO_ROBOTS-->
-<!--SEO_CANONICAL--><link rel="canonical" href="/old-canonical"><!--/SEO_CANONICAL-->
-<!--SEO_OG_TITLE--><meta property="og:title" content="old og:title"><!--/SEO_OG_TITLE-->
-<!--SEO_OG_DESCRIPTION--><meta property="og:description" content="old og:description"><!--/SEO_OG_DESCRIPTION-->
+<title>old title</title>
+<meta name="description" content="old description">
+<meta name="keywords" content="old keywords">
+<meta name="robots" content="old robots">
+<link rel="canonical" href="/old-canonical">
+<meta property="og:title" content="old og:title">
+<meta property="og:description" content="old og:description">
 </head>
 <body></body>
 </html>

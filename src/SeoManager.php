@@ -86,63 +86,27 @@ class SeoManager
     {
         $seo = $this->getSeo();
 
-        if ($seo->getTitle()) {
-            $html = preg_replace(
-                '@<!--SEO_TITLE-->.+<!--/SEO_TITLE-->@im',
-                '<title>'.htmlspecialchars($seo->getTitle()).'</title>',
-                $html
-            );
-        }
-
-        if ($seo->getDescription()) {
-            $html = preg_replace(
-                '@<!--SEO_DESCRIPTION-->.*?<!--/SEO_DESCRIPTION-->@im',
-                '<meta name="description" content="'.htmlspecialchars($seo->getDescription()).'" />',
-                $html
-            );
-        }
-
-        if ($seo->getKeywords()) {
-            $html = preg_replace(
-                '@<!--SEO_KEYWORDS-->.*?<!--/SEO_KEYWORDS-->@im',
-                '<meta name="keywords" content="'.htmlspecialchars($seo->getKeywords()).'" />',
-                $html
-            );
-        }
-
-        if ($seo->getRobots()) {
-            $html = preg_replace(
-                '@<!--SEO_ROBOTS-->.*?<!--/SEO_ROBOTS-->@im',
-                '<meta name="robots" content="'.htmlspecialchars($seo->getRobots()).'" />',
-                $html
-            );
-        }
-
-        if ($seo->getCanonical()) {
-            $html = preg_replace(
-                '@<!--SEO_CANONICAL-->.*?<!--/SEO_CANONICAL-->@im',
-                '<link rel="canonical" href="'.htmlspecialchars($seo->getCanonical()).'" />',
-                $html
-            );
-        }
-
-        if ($seo->getOgTitle()) {
-            $html = preg_replace(
-                '@<!--SEO_OG_TITLE-->.*?<!--/SEO_OG_TITLE-->@im',
-                '<meta property="og:title" content="'.htmlspecialchars($seo->getOgTitle()).'" />',
-                $html
-            );
-        }
-
-        if ($seo->getOgDescription()) {
-            $html = preg_replace(
-                '@<!--SEO_OG_DESCRIPTION-->.*?<!--/SEO_OG_DESCRIPTION-->@im',
-                '<meta property="og:description" content="'.htmlspecialchars($seo->getOgDescription()).'" />',
-                $html
-            );
-        }
-
-        return $html;
+        return preg_replace(
+            [
+                '@<!--SEO_TITLE-->(.+)<!--/SEO_TITLE-->@im',
+                '@<!--SEO_DESCRIPTION-->(.*?)<!--/SEO_DESCRIPTION-->@im',
+                '@<!--SEO_KEYWORDS-->(.*?)<!--/SEO_KEYWORDS-->@im',
+                '@<!--SEO_ROBOTS-->(.*?)<!--/SEO_ROBOTS-->@im',
+                '@<!--SEO_CANONICAL-->(.*?)<!--/SEO_CANONICAL-->@im',
+                '@<!--SEO_OG_TITLE-->(.*?)<!--/SEO_OG_TITLE-->@im',
+                '@<!--SEO_OG_DESCRIPTION-->(.*?)<!--/SEO_OG_DESCRIPTION-->@im',
+            ],
+            [
+                $seo->getTitle() ? '<title>'.htmlspecialchars($seo->getTitle()).'</title>' : '$1',
+                $seo->getDescription() ? '<meta name="description" content="'.htmlspecialchars($seo->getDescription()).'" />' : '$1',
+                $seo->getKeywords() ? '<meta name="keywords" content="'.htmlspecialchars($seo->getKeywords()).'" />' : '$1',
+                $seo->getRobots() ? '<meta name="robots" content="'.htmlspecialchars($seo->getRobots()).'" />' : '$1',
+                $seo->getCanonical() ? '<link rel="canonical" href="'.htmlspecialchars($seo->getCanonical()).'" />' : '$1',
+                $seo->getOgTitle() ? '<meta property="og:title" content="'.htmlspecialchars($seo->getOgTitle()).'" />' : '$1',
+                $seo->getOgDescription() ? '<meta property="og:description" content="'.htmlspecialchars($seo->getOgDescription()).'" />' : '$1',
+            ],
+            $html
+        );
     }
 
     /**

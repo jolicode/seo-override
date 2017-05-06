@@ -3,9 +3,3 @@ index:
     defaults:
         _controller: FrameworkBundle:Template:template
         template:    index.html.twig
-
-another_route:
-    path: /another-route
-    defaults:
-        _controller: FrameworkBundle:Template:template
-        template:    another.html.twig

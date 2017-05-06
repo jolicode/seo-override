@@ -1,3 +1,4 @@
+/app/data/*
 /var/*
 !/var/cache
 /var/cache/*

@@ -17,25 +17,25 @@ namespace Joli\SeoOverride;
 class Seo
 {
     /** @var string */
-    private $title;
+    protected $title;
 
     /** @var string */
-    private $description;
+    protected $description;
 
     /** @var string */
-    private $keywords;
+    protected $keywords;
 
     /** @var string */
-    private $robots;
+    protected $robots;
 
     /** @var string */
-    private $canonical;
+    protected $canonical;
 
     /** @var string */
-    private $ogTitle;
+    protected $ogTitle;
 
     /** @var string */
-    private $ogDescription;
+    protected $ogDescription;
 
     /**
      * @return string

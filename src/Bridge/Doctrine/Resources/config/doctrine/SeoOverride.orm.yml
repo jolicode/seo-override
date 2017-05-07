@@ -20,4 +20,4 @@ Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride:
       nullable: true
   embedded:
     seo:
-      class: Joli\SeoOverride\Seo
+      class: Joli\SeoOverride\Bridge\Doctrine\Entity\Seo

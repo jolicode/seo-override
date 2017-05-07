@@ -11,7 +11,7 @@ Doctrine Entity.
 
 We provide some Doctrine mappings for our entity and Value Object. Those
 mappings are written in yaml and are located inside `vendor/jolicode/seo-override/src/Bridge/Doctrine/Resources/config/doctrine`.
-You will need to tell Doctrine ORM to load them for handling `Joli\SeoOverride`
+You will need to tell Doctrine ORM to load them for handling `Joli\SeoOverride\Bridge\Doctrine\Entity`
 namespace.
 
 ## InMemoryFetcher

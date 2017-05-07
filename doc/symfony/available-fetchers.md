@@ -22,7 +22,7 @@ doctrine:
                 type: yml
                 is_bundle: false
                 dir: %kernel.root_dir%/../vendor/jolicode/seo-override/src/Bridge/Doctrine/Resources/config/doctrine
-                prefix: Joli\SeoOverride
+                prefix: Joli\SeoOverride\Bridge\Doctrine\Entity
                 alias: SeoOverride
 ```
 

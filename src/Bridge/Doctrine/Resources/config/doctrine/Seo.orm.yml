@@ -1,24 +1,31 @@
-Joli\SeoOverride\Seo:
+Joli\SeoOverride\Bridge\Doctrine\Entity\Seo:
   type: embeddable
   fields:
     title:
       type: string
       length: 255
+      nullable: true
     description:
       type: string
       length: 255
+      nullable: true
     keywords:
       type: string
       length: 255
+      nullable: true
     robots:
       type: string
       length: 255
+      nullable: true
     canonical:
       type: string
       length: 255
+      nullable: true
     ogTitle:
       type: string
       length: 255
+      nullable: true
     ogDescription:
       type: string
       length: 255
+      nullable: true

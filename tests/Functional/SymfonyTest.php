@@ -11,19 +11,58 @@
 
 namespace Joli\SeoOverride\tests\Functional;
 
+use Doctrine\ORM\EntityManager;
+use Joli\SeoOverride\Bridge\Doctrine\Entity\Seo as DoctrineSeo;
+use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
 use Joli\SeoOverride\tests\Functional\Fixtures\symfony\app\AppKernel;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\HttpFoundation\Request;
 
-class SymfonyTest extends TestCase
+class SymfonyTest extends KernelTestCase
 {
-    public function test_it_overrides_seo_for_known_domain()
+    public static function setUpBeforeClass()
+    {
+        parent::setUpBeforeClass();
+        self::bootKernel();
+
+        $databasePath = self::$kernel->getRootDir().'/data/data.sqlite';
+        if (file_exists($databasePath)) {
+            unlink($databasePath);
+        }
+
+        $application = new Application(self::$kernel);
+        $application->setAutoExit(false);
+        $application->run(new ArrayInput([
+            'doctrine:database:create',
+        ]));
+        $application->run(new ArrayInput([
+            'doctrine:schema:update',
+            '--force' => true,
+        ]));
+
+        $seo = new DoctrineSeo();
+        $seo->setTitle('new title for homepage of domain_doctrine');
+
+        $seoOverride = new SeoOverride();
+        $seoOverride->setPath('/');
+        $seoOverride->setDomainAlias('domain_doctrine');
+        $seoOverride->setSeo($seo);
+
+        /** @var EntityManager $manager */
+        $manager = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $manager->persist($seoOverride);
+        $manager->flush();
+    }
+
+    public function test_it_overrides_seo_handled_with_doctrine_fetcher()
     {
         $expected = <<<'HTML'
 <html>
     <head>
-        <title>new title for homepage of domain1</title>
-        <meta name="description" content="description for index" />
+        <title>new title for homepage of domain_doctrine</title>
+        <meta name="description" content="description for homepage" />
     </head>
     <body>
         <h1>Hello world</h1>
@@ -32,35 +71,18 @@ class SymfonyTest extends TestCase
 
 HTML;
 
-        $response = $this->call('/', 'domain1.com');
-
-        $this->assertSame($expected, $response->getContent());
-
-        $expected = <<<'HTML'
-<html>
-    <head>
-        <title>new title for another page of domain1</title>
-        <meta name="description" content="description for another page" />
-    </head>
-    <body>
-        <h1>Hello world</h1>
-    </body>
-</html>
-
-HTML;
-
-        $response = $this->call('/another-route', 'domain1.com');
+        $response = $this->call('/', 'domain_doctrine.com');
 
         $this->assertSame($expected, $response->getContent());
     }
 
-    public function test_it_overrides_seo_for_catch_all_domain()
+    public function test_it_overrides_seo_handled_with_in_memory_fetcher()
     {
         $expected = <<<'HTML'
 <html>
     <head>
-        <title>new title for homepage of catch-all domain</title>
-        <meta name="description" content="description for index" />
+        <title>new title for homepage of domain_in_memory</title>
+        <meta name="description" content="description for homepage" />
     </head>
     <body>
         <h1>Hello world</h1>
@@ -69,15 +91,18 @@ HTML;
 
 HTML;
 
-        $response = $this->call('/', 'domain2.com');
+        $response = $this->call('/', 'domain_in_memory.com');
 
         $this->assertSame($expected, $response->getContent());
+    }
 
+    public function test_it_overrides_seo_handled_with_php_fetcher()
+    {
         $expected = <<<'HTML'
 <html>
     <head>
-        <title>new title for another page of catch-all domain</title>
-        <meta name="description" content="description for another page" />
+        <title>new title for homepage of domain_php</title>
+        <meta name="description" content="description for homepage" />
     </head>
     <body>
         <h1>Hello world</h1>
@@ -86,9 +111,34 @@ HTML;
 
 HTML;
 
-        $response = $this->call('/another-route', 'domain2.com');
+        $response = $this->call('/', 'domain_php.com');
 
         $this->assertSame($expected, $response->getContent());
+    }
+
+    public function test_it_does_not_override_seo_when_no_fetcher_matching()
+    {
+        $expected = <<<'HTML'
+<html>
+    <head>
+        <title>old title for homepage</title>
+        <meta name="description" content="description for homepage" />
+    </head>
+    <body>
+        <h1>Hello world</h1>
+    </body>
+</html>
+
+HTML;
+
+        $response = $this->call('/', 'domain_unkown.com');
+
+        $this->assertSame($expected, $response->getContent());
+    }
+
+    protected static function getKernelClass()
+    {
+        return AppKernel::class;
     }
 
     private function call($uri, $host)
@@ -96,8 +146,7 @@ HTML;
         $request = Request::create($uri, 'GET', [], [], [], [
             'HTTP_HOST' => $host,
         ]);
-        $kernel = new AppKernel('test', true);
 
-        return $kernel->handle($request);
+        return self::$kernel->handle($request);
     }
 }

@@ -11,8 +11,6 @@
 
 namespace Joli\SeoOverride\Bridge\Doctrine\Entity;
 
-use Joli\SeoOverride\Seo;
-
 class SeoOverride
 {
     /**

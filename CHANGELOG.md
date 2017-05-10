@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 0.1.1 (2017-05-10)
 
 * Force Doctrine column names in yaml mapping
 * Fix deprecations in documentation

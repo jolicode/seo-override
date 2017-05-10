@@ -4,7 +4,7 @@ Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride:
   table: joli_seo_override
   indexes:
     request_index:
-      columns: [ path, domainAlias ]
+      columns: [ path, domain_alias ]
   id:
     id:
       type: integer
@@ -12,12 +12,15 @@ Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride:
         strategy: AUTO
   fields:
     path:
+      column: path
       type: string
       length: 255
     domainAlias:
+      column: domain_alias
       type: string
       length: 255
       nullable: true
   embedded:
     seo:
+      columnPrefix: seo
       class: Joli\SeoOverride\Bridge\Doctrine\Entity\Seo

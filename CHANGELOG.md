@@ -1,5 +1,5 @@
 # Changes between versions
 
-## Not yet released
+## 0.1 (2017-05-10)
 
-* Nothing :)
+* Initial release

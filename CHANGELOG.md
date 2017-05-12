@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 0.1.2 (2017-05-12)
 
 * Fix return typehint on Doctrine entity getters
 

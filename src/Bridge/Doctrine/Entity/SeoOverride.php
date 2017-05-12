@@ -33,12 +33,12 @@ class SeoOverride
      */
     private $seo;
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getPath(): string
+    public function getPath()
     {
         return $this->path;
     }
@@ -58,7 +58,7 @@ class SeoOverride
         $this->domainAlias = $domainAlias;
     }
 
-    public function getSeo(): Seo
+    public function getSeo()
     {
         return $this->seo;
     }

@@ -1,0 +1,17 @@
+services:
+    seo_override.data_collector:
+        class: Joli\SeoOverride\Bridge\Symfony\DataCollector\SeoOverrideDataCollector
+        arguments:
+            - '@seo_override.data_collector.manager'
+        tags:
+            -
+                name:     data_collector
+                template: '@SeoOverride/data_collector/seo-override.html.twig'
+                id:       'seo-override'
+        public: false
+
+    seo_override.data_collector.manager:
+        class: Joli\SeoOverride\Bridge\Symfony\DataCollector\SeoManager
+        decorates: seo_override.manager
+        arguments:
+            - '@seo_override.data_collector.manager.inner'

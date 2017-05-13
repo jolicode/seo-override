@@ -1,0 +1,84 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% macro icon() %}
+    {# From https://thenounproject.com/term/checkered-flag/61516/ #}
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0"
+         x="0px" y="0px" viewBox="0 0 24 24" height="24" enable-background="new 0 0 24 24" xml:space="preserve">
+        <line fill="none" stroke="#AAA" stroke-width="2" stroke-miterlimit="10" x1="4" y1="2" x2="4" y2="22"></line>
+        <g>
+            <rect x="11" y="7" width="3" height="3" fill="#AAA"></rect>
+            <path fill="#AAA" d="M6,2v13h14c1.1,0,2-0.9,2-2V4c0-1.1-0.9-2-2-2H6z M20,7h-3v3h3v3h-3v-3h-3v3h-3v-3H8V7h3V4h3v3h3V4h3V7z"></path>
+        </g>
+    </svg>
+{% endmacro %}
+
+{% block toolbar %}
+    {% import _self as macros %}
+
+    {% set icon %}
+        <span class="icon">
+            {{ macros.icon }}
+        </span>
+
+        <span class="sf-toolbar-value sf-toolbar-status">{{ collector.status }}</span>
+    {% endset %}
+    {#
+        {% set text %}
+
+            <div class="sf-toolbar-info-piece">
+                Seo-Override
+            </div>
+
+    {% endset %}#}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block menu %}
+    {% import _self as macros %}
+
+    {# This left-hand menu appears when using the full-screen profiler. #}
+    <span class="label">
+        <span class="icon">
+            {{ macros.icon }}
+        </span>
+        <strong>Seo Override</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Seo Override</h2>
+
+    <h3>Fetchers</h3>
+
+    <div class="metrics">
+        <div class="metric">
+            <span class="value">{{ include('@WebProfiler/Icon/' ~ (true ? 'yes' : 'no') ~ '.svg') }}</span>
+            <span class="label">doctrine</span>
+        </div>
+        <div class="metric">
+            <span class="value">{{ include('@WebProfiler/Icon/' ~ (false ? 'yes' : 'no') ~ '.svg') }}</span>
+            <span class="label">custom</span>
+        </div>
+    </div>
+
+
+    <h3>Status</h3>
+    <p><strong>{{ collector.status }}</strong></p>
+
+    <ul>
+        <li>Default from configuration</li>
+        <li>Matched path {{ collector.path }} with Doctrine entity ID #22</li>
+    </ul>
+
+    <h3>Default Seo</h3>
+    {{ dump(collector.default) }}
+
+    <h3>Override Seo</h3>
+    {{ dump(collector.override) }}
+
+{% endblock %}

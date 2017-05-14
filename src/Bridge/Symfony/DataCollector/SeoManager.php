@@ -2,7 +2,9 @@
 
 namespace Joli\SeoOverride\Bridge\Symfony\DataCollector;
 
+use Joli\SeoOverride\Fetcher;
 use Joli\SeoOverride\Seo;
+use Joli\SeoOverride\SeoManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
@@ -10,35 +12,55 @@ use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\Yaml\Yaml;
 
-class SeoManager extends \Joli\SeoOverride\SeoManager // @todo should use an interface
+class SeoManager extends \Joli\SeoOverride\SeoManager
 {
-    protected $seoManager;
+    protected $data = [];
 
-    public function __construct(\Joli\SeoOverride\SeoManager $seoManager)
+    public function __construct(array $fetchers, array $domains, Seo $seo = null)
     {
-        $this->seoManager = $seoManager;
+        parent::__construct($fetchers, $domains, $seo);
+
+        $this->data['seo_versions'][] = ['seo' => $seo]; // @todo clone?
+        $this->data['fetchers'] = [];
     }
 
-    public function getSeo(): Seo
+    public function getData()
     {
-        return $this->seoManager->getSeo();
+        return $this->data;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function updateAndOverride(string $html, string $path, string $domain): string
     {
-        return $this->seoManager->updateAndOverride($html, $path, $domain);
+        $this->data['path'] = $path;
+        $this->data['domain'] = $domain;
+        $this->data['status'] = SeoOverrideDataCollector::STATUS_DEFAULT;
+
+        return parent::updateAndOverride($html, $path, $domain);
     }
 
-    public function updateSeo(string $path, string $domain): Seo
+    /**
+     * {@inheritdoc}
+     */
+    public function fetch(Fetcher $fetcher, string $path, $domainAlias)
     {
-        // @todo HERE, store all the stuffs!
-        return $this->seoManager->updateSeo($path, $domain);
-    }
+        $seo = parent::fetch($fetcher, $path, $domainAlias);
 
-    public function overrideHtml(string $html): string
-    {
-        // @todo HERE, store!
+        $this->data['fetchers'][] = [
+            'name' => get_class($fetcher),
+            'matched' => $seo instanceof Seo,
+        ];
 
-        return $this->seoManager->overrideHtml($html);
+        if ($seo) {
+            $this->data['status'] = SeoOverrideDataCollector::STATUS_MATCHED;
+            $this->data['seo_versions'][] = [
+                'seo' => $seo,
+                'fetcher' => get_class($fetcher),
+            ]; // @todo clone?
+        }
+
+        return $seo;
     }
 }

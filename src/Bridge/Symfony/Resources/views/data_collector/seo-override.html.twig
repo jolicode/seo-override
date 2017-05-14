@@ -53,32 +53,48 @@
 {% block panel %}
     <h2>Seo Override</h2>
 
-    <h3>Fetchers</h3>
+    <h3>Informations</h3>
 
     <div class="metrics">
         <div class="metric">
-            <span class="value">{{ include('@WebProfiler/Icon/' ~ (true ? 'yes' : 'no') ~ '.svg') }}</span>
-            <span class="label">doctrine</span>
+            <span class="value">{{ collector.status }}</span>
+            <span class="label">Status</span>
         </div>
+
         <div class="metric">
-            <span class="value">{{ include('@WebProfiler/Icon/' ~ (false ? 'yes' : 'no') ~ '.svg') }}</span>
-            <span class="label">custom</span>
+            <span class="value">{{ collector.path }}</span>
+            <span class="label">Matched path</span>
+        </div>
+
+        <div class="metric">
+            <span class="value">{{ collector.domain }}</span>
+            <span class="label">Domain</span>
         </div>
     </div>
 
+    <h3>Fetchers</h3>
 
-    <h3>Status</h3>
-    <p><strong>{{ collector.status }}</strong></p>
+    <div class="metrics">
+        {% for fetcher in collector.fetchers %}
+            <div class="metric">
+                <span class="value">{{ include('@WebProfiler/Icon/' ~ (fetcher.matched ? 'yes' : 'no') ~ '.svg') }}</span>
+                <span class="label">{{ fetcher.name }}</span>
+            </div>
+        {% else %}
+            <p>No fetcher called.</p>
+        {% endfor %}
+    </div>
 
-    <ul>
-        <li>Default from configuration</li>
-        <li>Matched path {{ collector.path }} with Doctrine entity ID #22</li>
-    </ul>
 
-    <h3>Default Seo</h3>
-    {{ dump(collector.default) }}
+    <h3>Seo verions</h3>
 
-    <h3>Override Seo</h3>
-    {{ dump(collector.override) }}
+    <ol>
+        {% for version in collector.versions %}
+            <li>
+                <h4>From {{ loop.index == 1 ? 'default' : version.fetcher }}</h4>
+                {{ dump(version.seo) }}
+            </li>
+        {% endfor %}
+    </ol>
 
 {% endblock %}

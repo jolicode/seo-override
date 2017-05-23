@@ -1,4 +1,5 @@
 /app/data/*
+!/app/data/.gitkeep
 /var/*
 !/var/cache
 /var/cache/*

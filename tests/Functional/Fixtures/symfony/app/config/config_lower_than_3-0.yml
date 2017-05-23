@@ -1,0 +1,6 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    templating:
+        engines: ['twig']

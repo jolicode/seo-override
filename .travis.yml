@@ -10,10 +10,19 @@ matrix:
     include:
         - php: 7.0
           env: check_cs=true
+        - php: 7.0
+          env: deps=low
+        - php: 7.1
+          env: deps=high
 
 env:
     global:
+        - deps=high
         - check_cs=false
+
+install:
+    - if [ "$deps" = "low" ]; then composer --prefer-dist --prefer-lowest update; fi;
+    - if [ "$deps" != "low" ]; then composer --prefer-dist update; fi;
 
 before_script:
     - composer install --no-interaction

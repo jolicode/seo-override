@@ -1,18 +1,21 @@
 <?php
 
+/*
+ * This file is part of the SeoOverride project.
+ *
+ * (c) JoliCode <coucou@jolicode.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Joli\SeoOverride\Bridge\Symfony\DataCollector;
 
 use Joli\SeoOverride\Fetcher;
 use Joli\SeoOverride\Seo;
-use Joli\SeoOverride\SeoManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\DataCollector\DataCollector;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
-use Symfony\Component\Yaml\Yaml;
+use Joli\SeoOverride\SeoManager as BaseSeoManager;
 
-class SeoManager extends \Joli\SeoOverride\SeoManager
+class SeoManager extends BaseSeoManager
 {
     protected $data = [];
 
@@ -23,7 +26,7 @@ class SeoManager extends \Joli\SeoOverride\SeoManager
         if ($seo) {
             $this->data['seo_versions'][] = [
                 'seo' => clone $seo,
-                'origin' => 'initial'
+                'origin' => 'initial',
             ];
         }
 
@@ -56,9 +59,9 @@ class SeoManager extends \Joli\SeoOverride\SeoManager
     /**
      * {@inheritdoc}
      */
-    public function fetch(Fetcher $fetcher, string $path, $domainAlias)
+    public function fetch(Fetcher $fetcher, string $path, string $domainAlias = null)
     {
-        $callback = function(string $path, string $domainAlias = null, Seo $seo = null) use ($fetcher) {
+        $callback = function (string $path, string $domainAlias = null, Seo $seo = null) use ($fetcher) {
             $this->data['fetchers'][] = [
                 'name' => get_class($fetcher),
                 'matched' => $seo instanceof Seo,

@@ -11,7 +11,6 @@
 
 namespace Joli\SeoOverride\Bridge\Symfony\Subscriber;
 
-use Joli\SeoOverride\SeoManager;
 use Joli\SeoOverride\SeoManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;

@@ -78,7 +78,7 @@ class SeoManager implements SeoManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function fetch(Fetcher $fetcher, string $path, $domainAlias)
+    public function fetch(Fetcher $fetcher, string $path, string $domainAlias = null)
     {
         // Try for the requested domain if it's known
         if ($domainAlias && $seo = $fetcher->fetch($path, $domainAlias)) {

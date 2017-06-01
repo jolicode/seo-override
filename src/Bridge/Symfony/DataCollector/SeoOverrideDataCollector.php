@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the SeoOverride project.
+ *
+ * (c) JoliCode <coucou@jolicode.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Joli\SeoOverride\Bridge\Symfony\DataCollector;
 
 use Joli\SeoOverride\Seo;
@@ -7,9 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
-use Symfony\Component\VarDumper\Cloner\VarCloner;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
-use Symfony\Component\Yaml\Yaml;
 
 class SeoOverrideDataCollector extends DataCollector implements LateDataCollectorInterface
 {

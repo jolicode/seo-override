@@ -33,7 +33,7 @@ interface SeoManagerInterface
      *
      * @return Seo|null
      */
-    public function fetch(Fetcher $fetcher, string $path, $domainAlias);
+    public function fetch(Fetcher $fetcher, string $path, string $domainAlias = null);
 
     /**
      * Perform the override of HTML SEO related tags.

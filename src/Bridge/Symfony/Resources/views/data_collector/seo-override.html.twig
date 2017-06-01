@@ -56,7 +56,7 @@
     <h3>Informations</h3>
 
     <div class="metrics">
-        <div class="metric {{ collector.status == constant('Joli\\SeoOverride\\Bridge\\Symfony\\DataCollector\\SeoOverrideDataCollector::STATUS_MATCHED') ? 'status-success' : 'status-error' }}">
+        <div class="metric">
             <span class="value">{{ collector.status }}</span>
             <span class="label">Status</span>
         </div>
@@ -72,7 +72,7 @@
         </div>
 
         {% if collector.domains|length > 0 %}
-            <div class="metric {{ collector.domainAlias ? 'status-success' : 'status-error' }}">
+            <div class="metric {{ collector.domainAlias ? '' : 'status-error' }}">
                 <span class="value">{{ collector.domainAlias ? collector.domainAlias : 'Unkown domain' }}</span>
                 <span class="label ">Matched domain alias</span>
             </div>

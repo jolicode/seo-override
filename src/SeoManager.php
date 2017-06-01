@@ -128,7 +128,7 @@ class SeoManager implements SeoManagerInterface
      *
      * @return string|null
      */
-    private function findDomainAlias(string $domain)
+    protected function findDomainAlias(string $domain)
     {
         foreach ($this->domains as $domainAlias => $pattern) {
             if (preg_match('#'.$pattern.'#i', $domain)) {

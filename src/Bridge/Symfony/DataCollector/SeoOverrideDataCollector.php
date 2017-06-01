@@ -66,6 +66,16 @@ class SeoOverrideDataCollector extends DataCollector implements LateDataCollecto
         return $this->data['domain'];
     }
 
+    public function getDomains()
+    {
+        return $this->data['domains'];
+    }
+
+    public function getDomainAlias()
+    {
+        return $this->data['domain_alias'];
+    }
+
     /**
      * {@inheritdoc}
      */

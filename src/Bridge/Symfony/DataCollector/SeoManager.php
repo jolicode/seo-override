@@ -20,8 +20,15 @@ class SeoManager extends \Joli\SeoOverride\SeoManager
     {
         parent::__construct($fetchers, $domains, $seo);
 
-        $this->data['seo_versions'][] = ['seo' => $seo]; // @todo clone?
+        if ($seo) {
+            $this->data['seo_versions'][] = [
+                'seo' => clone $seo,
+                'origin' => 'initial'
+            ];
+        }
+
         $this->data['fetchers'] = [];
+        $this->data['domains'] = array_keys($domains);
     }
 
     public function getData()
@@ -32,13 +39,18 @@ class SeoManager extends \Joli\SeoOverride\SeoManager
     /**
      * {@inheritdoc}
      */
-    public function updateAndOverride(string $html, string $path, string $domain): string
+    public function updateSeo(string $path, string $domain): Seo
     {
         $this->data['path'] = $path;
         $this->data['domain'] = $domain;
         $this->data['status'] = SeoOverrideDataCollector::STATUS_DEFAULT;
 
-        return parent::updateAndOverride($html, $path, $domain);
+        $this->data['seo_versions'][] = [
+            'seo' => clone $this->getSeo(),
+            'origin' => 'before update',
+        ];
+
+        return parent::updateSeo($path, $domain);
     }
 
     /**
@@ -46,21 +58,38 @@ class SeoManager extends \Joli\SeoOverride\SeoManager
      */
     public function fetch(Fetcher $fetcher, string $path, $domainAlias)
     {
-        $seo = parent::fetch($fetcher, $path, $domainAlias);
+        $callback = function(string $path, string $domainAlias = null, Seo $seo = null) use ($fetcher) {
+            $this->data['fetchers'][] = [
+                'name' => get_class($fetcher),
+                'matched' => $seo instanceof Seo,
+                'domain_alias' => $domainAlias,
+            ];
+        };
+        $callback->bindTo($this);
 
-        $this->data['fetchers'][] = [
-            'name' => get_class($fetcher),
-            'matched' => $seo instanceof Seo,
-        ];
+        $collectorFetcher = new CallbackFetcher($fetcher, $callback);
+        $seo = parent::fetch($collectorFetcher, $path, $domainAlias);
 
         if ($seo) {
             $this->data['status'] = SeoOverrideDataCollector::STATUS_MATCHED;
             $this->data['seo_versions'][] = [
-                'seo' => $seo,
+                'seo' => clone $seo,
                 'fetcher' => get_class($fetcher),
-            ]; // @todo clone?
+                'origin' => 'from fetcher',
+            ];
         }
 
         return $seo;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function findDomainAlias(string $domain)
+    {
+        $domainAlias = parent::findDomainAlias($domain);
+        $this->data['domain_alias'] = $domainAlias;
+
+        return $domainAlias;
     }
 }

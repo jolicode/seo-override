@@ -15,8 +15,6 @@ interface SeoManagerInterface
 {
     /**
      * Get the current Seo object.
-     *
-     * @return Seo
      */
     public function getSeo(): Seo;
 

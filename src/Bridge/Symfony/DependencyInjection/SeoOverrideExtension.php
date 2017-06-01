@@ -29,7 +29,7 @@ class SeoOverrideExtension extends Extension
         $this->registerFetchersConfiguration($config['fetchers'], $container, $loader);
         $this->registerDomainsConfiguration($config['domains'], $container);
 
-        if ($container->getParameter('kernel.debug')) {
+        if ($container->hasParameter('kernel.debug') && $container->getParameter('kernel.debug')) {
             $loader->load('debug.yml');
         }
     }

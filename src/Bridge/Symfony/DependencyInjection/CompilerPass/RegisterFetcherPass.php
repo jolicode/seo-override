@@ -11,7 +11,6 @@
 
 namespace Joli\SeoOverride\Bridge\Symfony\DependencyInjection\CompilerPass;
 
-use Joli\SeoOverride\Bridge\Symfony\DataCollector\SeoManager;
 use ReflectionClass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -70,10 +69,6 @@ class RegisterFetcherPass implements CompilerPassInterface
 
         $definition = $container->getDefinition('seo_override.manager');
         $definition->replaceArgument(0, $fetcherDefinitions);
-
-        if (true) { // @todo
-            $definition->setClass(SeoManager::class);
-        }
     }
 
     private function assertTagsDefineUniqueAliases(array $availableFetcherIds): array

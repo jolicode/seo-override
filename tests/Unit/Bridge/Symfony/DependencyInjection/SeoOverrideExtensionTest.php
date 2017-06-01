@@ -11,6 +11,7 @@
 
 namespace Joli\SeoOverride\tests\Unit\Bridge\Symfony\DependencyInjection;
 
+use Joli\SeoOverride\Bridge\Symfony\DataCollector\SeoManager as DebugSeoManager;
 use Joli\SeoOverride\Bridge\Symfony\DependencyInjection\SeoOverrideExtension;
 use Joli\SeoOverride\SeoManager;
 use PHPUnit\Framework\TestCase;
@@ -215,5 +216,17 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('example.fr', array_shift($parameters));
         self::assertSame('example.com', array_shift($parameters));
         self::assertSame('example.es', array_shift($parameters));
+    }
+
+    public function test_it_decorates_manager_when_in_debug()
+    {
+        $container = new ContainerBuilder();
+        $container->setParameter('kernel.debug', true);
+        $this->extension->load([], $container);
+
+        $container->compile();
+
+        self::assertTrue($container->has('seo_override.manager'));
+        self::assertInstanceOf(DebugSeoManager::class, $container->get('seo_override.manager'));
     }
 }

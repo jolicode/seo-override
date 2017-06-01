@@ -1,4 +1,10 @@
 services:
+    seo_override.manager:
+        class: Joli\SeoOverride\Bridge\Symfony\DataCollector\SeoManager
+        arguments:
+            - []
+            - '%seo_override.domains%'
+
     seo_override.data_collector:
         class: Joli\SeoOverride\Bridge\Symfony\DataCollector\SeoOverrideDataCollector
         arguments:

@@ -20,7 +20,7 @@
             {{ macros.icon }}
         </span>
 
-        <span class="sf-toolbar-value sf-toolbar-status">{{ collector.status }}</span>
+        <span class="sf-toolbar-value sf-toolbar-status">{{ collector.statusLabel }}</span>
     {% endset %}
     {#
         {% set text %}
@@ -57,7 +57,7 @@
 
     <div class="metrics">
         <div class="metric">
-            <span class="value">{{ collector.status }}</span>
+            <span class="value">{{ collector.statusLabel }}</span>
             <span class="label">Status</span>
         </div>
 

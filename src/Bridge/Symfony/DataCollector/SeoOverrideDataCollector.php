@@ -11,7 +11,6 @@
 
 namespace Joli\SeoOverride\Bridge\Symfony\DataCollector;
 
-use Joli\SeoOverride\Seo;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
@@ -55,6 +54,11 @@ class SeoOverrideDataCollector extends DataCollector implements LateDataCollecto
     public function getStatus()
     {
         return $this->data['status'];
+    }
+
+    public function getStatusLabel()
+    {
+        return $this->data['status'] === self::STATUS_MATCHED ? 'matched' : 'no match';
     }
 
     public function getVersions()

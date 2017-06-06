@@ -36,7 +36,13 @@ class SeoSubscriber implements EventSubscriberInterface
             $domain = $event->getRequest()->getHost();
 
             $responseContent = $event->getResponse()->getContent();
-            $newResponseContent = $this->seoManager->updateAndOverride($responseContent, $path, $domain);
+
+            if ($event->getResponse()->getStatusCode() >= 300) {
+                // We do not want to trigger fetchers on non 2XX response
+                $newResponseContent = $this->seoManager->overrideHtml($responseContent);
+            } else {
+                $newResponseContent = $this->seoManager->updateAndOverride($responseContent, $path, $domain);
+            }
 
             $event->getResponse()->setContent($newResponseContent);
         }

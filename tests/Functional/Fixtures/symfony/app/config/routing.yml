@@ -3,3 +3,8 @@ index:
     defaults:
         _controller: FrameworkBundle:Template:template
         template:    index.html.twig
+
+error:
+    path: /error
+    defaults:
+        _controller: app.error_controller:errorAction

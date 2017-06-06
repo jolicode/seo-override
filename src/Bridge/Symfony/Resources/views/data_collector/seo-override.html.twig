@@ -20,16 +20,8 @@
             {{ macros.icon }}
         </span>
 
-        <span class="sf-toolbar-value sf-toolbar-status">{{ collector.statusLabel }}</span>
+        <span class="sf-toolbar-value sf-toolbar-status sf-toolbar-status-{{ collector.status == constant('Joli\\SeoOverride\\Bridge\\Symfony\\DataCollector\\SeoOverrideDataCollector::STATUS_MATCHED') ? 'green' : 'red' }}">{{ collector.statusLabel }}</span>
     {% endset %}
-    {#
-        {% set text %}
-
-            <div class="sf-toolbar-info-piece">
-                Seo-Override
-            </div>
-
-    {% endset %}#}
 
     {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
 {% endblock %}
@@ -87,7 +79,8 @@
                 <span class="value">
                     {{ include('@WebProfiler/Icon/' ~ (fetcher.matched ? 'yes' : 'no') ~ '.svg') }}
                     {% if collector.domains|length > 0 %}
-                        <small>(domain: {{ fetcher.domain_alias ?: 'default' }})</small>
+                        <br />
+                        <small>domain: {{ fetcher.domain_alias ?: 'none' }}</small>
                     {% endif %}
                 </span>
                 <span class="label">{{ fetcher.name }}</span>

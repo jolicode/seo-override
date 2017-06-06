@@ -18,8 +18,9 @@ use Joli\SeoOverride\SeoManager as BaseSeoManager;
 class SeoManager extends BaseSeoManager
 {
     protected $data = [];
+    private $fetcherMapping;
 
-    public function __construct(array $fetchers, array $domains, Seo $seo = null)
+    public function __construct(array $fetchers, array $domains, Seo $seo = null, array $fetchersMapping)
     {
         parent::__construct($fetchers, $domains, $seo);
 
@@ -30,6 +31,9 @@ class SeoManager extends BaseSeoManager
             ];
         }
 
+        $this->fetchersMapping = $fetchersMapping;
+
+        $this->data['fetchersMapping'] = $fetchersMapping;
         $this->data['fetchers'] = [];
         $this->data['domains'] = array_keys($domains);
     }
@@ -63,7 +67,8 @@ class SeoManager extends BaseSeoManager
     {
         $callback = function (string $path, string $domainAlias = null, Seo $seo = null) use ($fetcher) {
             $this->data['fetchers'][] = [
-                'name' => get_class($fetcher),
+                'type' => array_search(get_class($fetcher), $this->fetchersMapping, true),
+                'class' => get_class($fetcher),
                 'matched' => $seo instanceof Seo,
                 'domain_alias' => $domainAlias,
             ];
@@ -77,7 +82,8 @@ class SeoManager extends BaseSeoManager
             $this->data['status'] = SeoOverrideDataCollector::STATUS_MATCHED;
             $this->data['seo_versions'][] = [
                 'seo' => clone $seo,
-                'fetcher' => get_class($fetcher),
+                'fetcher_type' => array_search(get_class($fetcher), $this->fetchersMapping, true),
+                'fetcher_class' => get_class($fetcher),
                 'origin' => 'from fetcher',
             ];
         }

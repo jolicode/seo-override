@@ -83,7 +83,7 @@
                         <small>domain: {{ fetcher.domain_alias ?: 'none' }}</small>
                     {% endif %}
                 </span>
-                <span class="label">{{ fetcher.name }}</span>
+                <span class="label" title="{{ fetcher.class }}">{{ fetcher.type }}</span>
             </div>
         {% else %}
             <p>No fetcher called.</p>

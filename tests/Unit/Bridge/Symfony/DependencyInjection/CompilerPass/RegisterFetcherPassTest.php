@@ -18,6 +18,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Exception\LogicException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class RegisterFetcherPassTest extends TestCase
 {
@@ -26,6 +27,9 @@ class RegisterFetcherPassTest extends TestCase
 
     /** @var ObjectProphecy */
     private $container;
+
+    /** @var ParameterBag */
+    private $parameterBag;
 
     /** @var ObjectProphecy */
     private $managerDefinition;
@@ -36,7 +40,10 @@ class RegisterFetcherPassTest extends TestCase
 
         $this->compilerPass = new RegisterFetcherPass();
         $this->container = $this->prophesize(ContainerBuilder::class);
+        $this->parameterBag = $this->prophesize(ParameterBag::class);
         $this->managerDefinition = $this->prophesize(Definition::class);
+
+        $this->container->getParameterBag()->willReturn($this->parameterBag->reveal());
     }
 
     public function test_it_throws_exception_with_tag_not_defining_alias()
@@ -100,6 +107,8 @@ class RegisterFetcherPassTest extends TestCase
         $this->container->getParameter('seo_override.fetchers_configuration')->willReturn([]);
         $this->container->findTaggedServiceIds('seo_override.fetcher')->willReturn($tags);
         $this->container->getDefinition('seo_override.manager')->willReturn($this->managerDefinition->reveal());
+        $this->container->hasParameter('kernel.debug')->willReturn(false);
+        $this->parameterBag->remove('seo_override.fetchers_configuration')->shouldBeCalled();
 
         $this->compilerPass->process($this->container->reveal());
     }
@@ -187,6 +196,8 @@ class RegisterFetcherPassTest extends TestCase
         $this->container->findTaggedServiceIds('seo_override.fetcher')->willReturn($tags);
         $this->container->getDefinition('seo_override.manager')->willReturn($this->managerDefinition->reveal());
         $this->container->getDefinition('service1')->willReturn($fetcherDefinition->reveal());
+        $this->container->hasParameter('kernel.debug')->willReturn(false);
+        $this->parameterBag->remove('seo_override.fetchers_configuration')->shouldBeCalled();
 
         $this->compilerPass->process($this->container->reveal());
     }
@@ -288,6 +299,56 @@ class RegisterFetcherPassTest extends TestCase
         $this->container->getDefinition('service1')->willReturn($fetcherDefinition1->reveal());
         $this->container->getDefinition('service2')->willReturn($fetcherDefinition2->reveal());
         $this->container->getDefinition('service3')->willReturn($fetcherDefinition3->reveal());
+        $this->container->hasParameter('kernel.debug')->willReturn(false);
+        $this->parameterBag->remove('seo_override.fetchers_configuration')->shouldBeCalled();
+
+        $this->compilerPass->process($this->container->reveal());
+    }
+
+    public function test_it_defines_fetcher_mapping_when_in_debug()
+    {
+        $fetchersConfiguration = [
+            [
+                'type' => 'fetcher1',
+            ],
+            [
+                'type' => 'fetcher2',
+            ],
+        ];
+
+        $tags = [
+            'service1' => [
+                [
+                    'alias' => 'fetcher1',
+                ],
+            ],
+            'service2' => [
+                [
+                    'alias' => 'fetcher2',
+                ],
+            ],
+        ];
+
+        $fetcherDefinition1 = $this->prophesize(Definition::class);
+        $fetcherDefinition1->getClass()->willReturn(FakeFetcher::class);
+
+        $fetcherDefinition2 = $this->prophesize(Definition::class);
+        $fetcherDefinition2->getClass()->willReturn(FakeFetcher::class);
+
+        $this->managerDefinition->replaceArgument(0, [$fetcherDefinition1, $fetcherDefinition2])->shouldBeCalled();
+
+        $this->container->getParameter('seo_override.fetchers_configuration')->willReturn($fetchersConfiguration);
+        $this->container->findTaggedServiceIds('seo_override.fetcher')->willReturn($tags);
+        $this->container->getDefinition('seo_override.manager')->willReturn($this->managerDefinition->reveal());
+        $this->container->getDefinition('service1')->willReturn($fetcherDefinition1->reveal());
+        $this->container->getDefinition('service2')->willReturn($fetcherDefinition2->reveal());
+        $this->container->hasParameter('kernel.debug')->willReturn(true);
+        $this->container->getParameter('kernel.debug')->willReturn(true);
+        $this->container->setParameter('seo_override.fetchers_mapping', [
+            'fetcher1' => FakeFetcher::class,
+            'fetcher2' => FakeFetcher::class,
+        ])->shouldBeCalled();
+        $this->parameterBag->remove('seo_override.fetchers_configuration')->shouldBeCalled();
 
         $this->compilerPass->process($this->container->reveal());
     }

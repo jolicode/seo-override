@@ -25,7 +25,7 @@ class RegisterFetcherPass implements CompilerPassInterface
             $container->findTaggedServiceIds('seo_override.fetcher')
         );
 
-        $fetcherDefinitions = [];
+        $fetcherDefinitionsByType = [];
         $fetchersConfiguration = $container->getParameter('seo_override.fetchers_configuration');
 
         foreach ($fetchersConfiguration as $fetcherConfiguration) {
@@ -64,11 +64,20 @@ class RegisterFetcherPass implements CompilerPassInterface
                 $fetcherDefinition->replaceArgument($index, $value);
             }
 
-            $fetcherDefinitions[] = $fetcherDefinition;
+            $fetcherDefinitionsByType[$type] = $fetcherDefinition;
+        }
+
+        if ($container->hasParameter('kernel.debug') && $container->getParameter('kernel.debug')) {
+            $container->setParameter('seo_override.fetchers_mapping', array_map(function (Definition $definition) {
+                return $definition->getClass();
+            }, $fetcherDefinitionsByType));
         }
 
         $definition = $container->getDefinition('seo_override.manager');
-        $definition->replaceArgument(0, $fetcherDefinitions);
+        $definition->replaceArgument(0, array_values($fetcherDefinitionsByType));
+
+        // Remove now useless parameter
+        $container->getParameterBag()->remove('seo_override.fetchers_configuration');
     }
 
     private function assertTagsDefineUniqueAliases(array $availableFetcherIds): array

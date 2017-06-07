@@ -136,6 +136,27 @@ HTML;
         $this->assertSame($expected, $response->getContent());
     }
 
+    public function test_it_does_not_override_seo_when_no_2XX_response()
+    {
+        $expected = <<<'HTML'
+<html>
+    <head>
+        <title>old title for error page</title>
+        <meta name="description" content="description for error page" />
+    </head>
+    <body>
+        <h1>Hello error</h1>
+    </body>
+</html>
+
+HTML;
+
+        $response = $this->call('/error', 'localhost');
+
+        $this->assertSame(400, $response->getStatusCode());
+        $this->assertSame($expected, $response->getContent());
+    }
+
     protected static function getKernelClass()
     {
         return AppKernel::class;

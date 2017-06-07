@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 0.2.0 (2017-06-07)
 
 * Add Web Profiler data collector
 * Do not run fetchers on non 2XX responses

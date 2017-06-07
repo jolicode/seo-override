@@ -1,0 +1,105 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% macro icon() %}
+    {# From https://thenounproject.com/term/checkered-flag/61516/ #}
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.0"
+         x="0px" y="0px" viewBox="0 0 24 24" height="24" enable-background="new 0 0 24 24" xml:space="preserve">
+        <line fill="none" stroke="#AAA" stroke-width="2" stroke-miterlimit="10" x1="4" y1="2" x2="4" y2="22"></line>
+        <g>
+            <rect x="11" y="7" width="3" height="3" fill="#AAA" class="sf-svg-path"></rect>
+            <path fill="#AAA" d="M6,2v13h14c1.1,0,2-0.9,2-2V4c0-1.1-0.9-2-2-2H6z M20,7h-3v3h3v3h-3v-3h-3v3h-3v-3H8V7h3V4h3v3h3V4h3V7z"></path>
+        </g>
+    </svg>
+{% endmacro %}
+
+{% block toolbar %}
+    {% import _self as macros %}
+
+    {% set icon %}
+        <span class="icon">
+            {{ macros.icon }}
+        </span>
+
+        <span class="sf-toolbar-value sf-toolbar-status sf-toolbar-status-{{ collector.status == constant('Joli\\SeoOverride\\Bridge\\Symfony\\DataCollector\\SeoOverrideDataCollector::STATUS_MATCHED') ? 'green' : 'red' }}">{{ collector.statusLabel }}</span>
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block menu %}
+    {% import _self as macros %}
+
+    {# This left-hand menu appears when using the full-screen profiler. #}
+    <span class="label">
+        <span class="icon">
+            {{ macros.icon }}
+        </span>
+        <strong>Seo Override</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Seo Override</h2>
+
+    <h3>Informations</h3>
+
+    <div class="metrics">
+        <div class="metric">
+            <span class="value">{{ collector.statusLabel }}</span>
+            <span class="label">Status</span>
+        </div>
+
+        <div class="metric">
+            <span class="value">{{ collector.path }}</span>
+            <span class="label">Matched path</span>
+        </div>
+
+        <div class="metric">
+            <span class="value">{{ collector.domain }}</span>
+            <span class="label">Domain</span>
+        </div>
+
+        {% if collector.domains|length > 0 %}
+            <div class="metric {{ collector.domainAlias ? '' : 'status-error' }}">
+                <span class="value">{{ collector.domainAlias ? collector.domainAlias : 'Unkown domain' }}</span>
+                <span class="label ">Matched domain alias</span>
+            </div>
+        {% endif %}
+    </div>
+
+    <h3>Fetchers called</h3>
+
+    <div class="metrics">
+        {% for fetcher in collector.fetchers %}
+            <div class="metric">
+                <span class="value">
+                    {{ include('@WebProfiler/Icon/' ~ (fetcher.matched ? 'yes' : 'no') ~ '.svg') }}
+                    {% if collector.domains|length > 0 %}
+                        <br />
+                        <small>domain: {{ fetcher.domain_alias ?: 'none' }}</small>
+                    {% endif %}
+                </span>
+                <span class="label" title="{{ fetcher.class }}">{{ fetcher.type }}</span>
+            </div>
+        {% else %}
+            <p>No fetcher called.</p>
+        {% endfor %}
+    </div>
+
+
+    <h3>Seo versions</h3>
+
+    <ol>
+        {% for version in collector.versions %}
+            <li>
+                <h4>{{ version.origin|capitalize }}</h4>
+                {{ dump(version.seo) }}
+            </li>
+        {% endfor %}
+    </ol>
+
+{% endblock %}

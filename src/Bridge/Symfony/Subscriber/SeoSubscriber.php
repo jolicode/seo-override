@@ -11,7 +11,7 @@
 
 namespace Joli\SeoOverride\Bridge\Symfony\Subscriber;
 
-use Joli\SeoOverride\SeoManager;
+use Joli\SeoOverride\SeoManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -20,11 +20,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class SeoSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var SeoManager
+     * @var SeoManagerInterface
      */
     private $seoManager;
 
-    public function __construct(SeoManager $seoManager)
+    public function __construct(SeoManagerInterface $seoManager)
     {
         $this->seoManager = $seoManager;
     }

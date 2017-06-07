@@ -15,7 +15,7 @@ namespace Joli\SeoOverride;
  * This manager is the main class you should use to manually configure the SEO
  * of the current action.
  */
-class SeoManager
+class SeoManager implements SeoManagerInterface
 {
     /** @var Fetcher[] */
     private $fetchers;
@@ -38,13 +38,16 @@ class SeoManager
         $this->seo = $seo ?: new Seo();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSeo(): Seo
     {
         return $this->seo;
     }
 
     /**
-     * Update and override the Seo of the HTML for the given path and domain.
+     * {@inheritdoc}
      */
     public function updateAndOverride(string $html, string $path, string $domain): string
     {
@@ -54,24 +57,17 @@ class SeoManager
     }
 
     /**
-     * Update the Seo from the fetchers for a specific path and domain.
+     * {@inheritdoc}
      */
     public function updateSeo(string $path, string $domain): Seo
     {
         $domainAlias = $this->findDomainAlias($domain);
 
         foreach ($this->fetchers as $fetcher) {
-            // Try for the requested domain if it's known
-            if ($domainAlias && $seo = $fetcher->fetch($path, $domainAlias)) {
+            $seo = $this->fetch($fetcher, $path, $domainAlias);
+
+            if ($seo) {
                 $this->mergeSeo($seo);
-
-                break;
-            }
-
-            // Try for the catch all domain
-            if ($seo = $fetcher->fetch($path, null)) {
-                $this->mergeSeo($seo);
-
                 break;
             }
         }
@@ -80,7 +76,25 @@ class SeoManager
     }
 
     /**
-     * Perform the override of HTML SEO related tags.
+     * {@inheritdoc}
+     */
+    public function fetch(Fetcher $fetcher, string $path, string $domainAlias = null)
+    {
+        // Try for the requested domain if it's known
+        if ($domainAlias && $seo = $fetcher->fetch($path, $domainAlias)) {
+            return $seo;
+        }
+
+        // Try for the catch all domain
+        if ($seo = $fetcher->fetch($path, null)) {
+            return $seo;
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function overrideHtml(string $html): string
     {
@@ -114,7 +128,7 @@ class SeoManager
      *
      * @return string|null
      */
-    private function findDomainAlias(string $domain)
+    protected function findDomainAlias(string $domain)
     {
         foreach ($this->domains as $domainAlias => $pattern) {
             if (preg_match('#'.$pattern.'#i', $domain)) {

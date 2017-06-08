@@ -45,6 +45,9 @@ class SeoOverrideExtensionTest extends TestCase
 
         self::assertEmpty($container->getDefinition('seo_override.manager')->getArgument(0));
         self::assertSame('%seo_override.domains%', $container->getDefinition('seo_override.manager')->getArgument(1));
+
+        self::assertEmpty($container->getDefinition('seo_override.manager')->getMethodCalls());
+        self::assertSame('UTF-8', $container->get('seo_override.manager')->getEncoding());
     }
 
     public function test_it_supports_fetcher_configuration()
@@ -228,5 +231,22 @@ class SeoOverrideExtensionTest extends TestCase
 
         self::assertTrue($container->has('seo_override.manager'));
         self::assertInstanceOf(DebugSeoManager::class, $container->get('seo_override.manager'));
+    }
+
+    public function test_it_set_encoding_when_specified()
+    {
+        $container = new ContainerBuilder();
+        $this->extension->load([
+            'seo_override' => [
+                'encoding' => 'KOI8-R',
+            ],
+        ], $container);
+
+        self::assertTrue($container->has('seo_override.manager'));
+        self::assertCount(1, $container->getDefinition('seo_override.manager')->getMethodCalls());
+        self::assertSame(['setEncoding', ['KOI8-R']], $container->getDefinition('seo_override.manager')->getMethodCalls()[0]);
+
+        $manager = $container->get('seo_override.manager');
+        self::assertSame('KOI8-R', $manager->getEncoding());
     }
 }

@@ -28,6 +28,7 @@ class SeoOverrideExtension extends Extension
 
         $this->registerFetchersConfiguration($config['fetchers'], $container, $loader);
         $this->registerDomainsConfiguration($config['domains'], $container);
+        $this->registerEncodingConfiguration($config['encoding'] ?? null, $container);
 
         if ($container->hasParameter('kernel.debug') && $container->getParameter('kernel.debug')) {
             $loader->load('debug.yml');
@@ -49,5 +50,17 @@ class SeoOverrideExtension extends Extension
     private function registerDomainsConfiguration(array $domains, ContainerBuilder $container)
     {
         $container->setParameter('seo_override.domains', $domains);
+    }
+
+    private function registerEncodingConfiguration(string $encoding = null, ContainerBuilder $container)
+    {
+        if (!$encoding) {
+            return;
+        }
+
+        $container
+            ->getDefinition('seo_override.manager')
+            ->addMethodCall('setEncoding', [$encoding])
+        ;
     }
 }

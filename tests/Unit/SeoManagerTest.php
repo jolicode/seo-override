@@ -270,4 +270,19 @@ HTML;
 
         self::assertSame($expected, $seoManager->updateAndOverride($html, '/', 'www.example.com'));
     }
+
+    public function test_it_has_a_default_encoding()
+    {
+        $seoManager = new SeoManager([], []);
+
+        self::assertSame('UTF-8', $seoManager->getEncoding());
+    }
+
+    public function test_it_can_use_another_encoding()
+    {
+        $seoManager = new SeoManager([], []);
+        $seoManager->setEncoding('KOI8-R');
+
+        self::assertSame('KOI8-R', $seoManager->getEncoding());
+    }
 }

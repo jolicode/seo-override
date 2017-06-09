@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Allow to change encoding when converting HTML chars
+
 ## 0.2.0 (2017-06-07)
 
 * Add Web Profiler data collector

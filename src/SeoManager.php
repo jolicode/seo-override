@@ -26,6 +26,9 @@ class SeoManager implements SeoManagerInterface
     /** @var Seo */
     private $seo;
 
+    /** @var string */
+    private $encoding = 'UTF-8';
+
     /**
      * @param Fetcher[] $fetchers
      * @param string[]  $domains
@@ -36,6 +39,16 @@ class SeoManager implements SeoManagerInterface
         $this->fetchers = $fetchers;
         $this->domains = $domains;
         $this->seo = $seo ?: new Seo();
+    }
+
+    public function getEncoding(): string
+    {
+        return $this->encoding;
+    }
+
+    public function setEncoding(string $encoding)
+    {
+        $this->encoding = $encoding;
     }
 
     /**
@@ -111,13 +124,13 @@ class SeoManager implements SeoManagerInterface
                 '@<!--SEO_OG_DESCRIPTION-->(.*?)<!--/SEO_OG_DESCRIPTION-->@im',
             ],
             [
-                $seo->getTitle() ? '<title>'.htmlspecialchars($seo->getTitle()).'</title>' : '$1',
-                $seo->getDescription() ? '<meta name="description" content="'.htmlspecialchars($seo->getDescription()).'" />' : '$1',
-                $seo->getKeywords() ? '<meta name="keywords" content="'.htmlspecialchars($seo->getKeywords()).'" />' : '$1',
-                $seo->getRobots() ? '<meta name="robots" content="'.htmlspecialchars($seo->getRobots()).'" />' : '$1',
-                $seo->getCanonical() ? '<link rel="canonical" href="'.htmlspecialchars($seo->getCanonical()).'" />' : '$1',
-                $seo->getOgTitle() ? '<meta property="og:title" content="'.htmlspecialchars($seo->getOgTitle()).'" />' : '$1',
-                $seo->getOgDescription() ? '<meta property="og:description" content="'.htmlspecialchars($seo->getOgDescription()).'" />' : '$1',
+                $seo->getTitle() ? '<title>'.$this->encodeHtmlChars($seo->getTitle()).'</title>' : '$1',
+                $seo->getDescription() ? '<meta name="description" content="'.$this->encodeHtmlChars($seo->getDescription()).'" />' : '$1',
+                $seo->getKeywords() ? '<meta name="keywords" content="'.$this->encodeHtmlChars($seo->getKeywords()).'" />' : '$1',
+                $seo->getRobots() ? '<meta name="robots" content="'.$this->encodeHtmlChars($seo->getRobots()).'" />' : '$1',
+                $seo->getCanonical() ? '<link rel="canonical" href="'.$this->encodeHtmlChars($seo->getCanonical()).'" />' : '$1',
+                $seo->getOgTitle() ? '<meta property="og:title" content="'.$this->encodeHtmlChars($seo->getOgTitle()).'" />' : '$1',
+                $seo->getOgDescription() ? '<meta property="og:description" content="'.$this->encodeHtmlChars($seo->getOgDescription()).'" />' : '$1',
             ],
             $html
         );
@@ -165,5 +178,13 @@ class SeoManager implements SeoManagerInterface
         if ($seo->getOgDescription()) {
             $this->seo->setOgDescription($seo->getOgDescription());
         }
+    }
+
+    /**
+     * Wrapper around htmlspecialchars.
+     */
+    private function encodeHtmlChars(string $string): string
+    {
+        return htmlspecialchars($string, ENT_COMPAT | ENT_HTML401, $this->encoding);
     }
 }

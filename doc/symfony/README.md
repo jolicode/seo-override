@@ -92,3 +92,18 @@ Note:
 > The **order** in the `$domains` array is important. It determines the
 > **priority** - the first domain to match will be used to retrieve `Seo`
 > through fetchers.
+
+
+## Encoding
+
+You can setup the encoding that should be used when overriding the HTML markup.
+
+```yaml
+seo_override:
+    encoding: KOI8-R # Default is UTF-8
+```
+
+Note:
+> Internally the manager uses the `htmlspecialchars` function. Check out
+> [the documentation](http://php.net/manual/en/function.htmlspecialchars.php#refsect1-function.htmlspecialchars-parameters)
+> of the `$encoding` parameter to know which encoding is supported.

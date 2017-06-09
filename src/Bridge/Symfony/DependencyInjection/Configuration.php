@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
 
         $this->addFetchersSection($rootNode);
         $this->addDomainSection($rootNode);
+        $this->addEncodingSection($rootNode);
 
         return $treeBuilder;
     }
@@ -79,6 +80,17 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')
                         ->info("A regexp pattern that should match against the HTTP request's host")
                     ->end()
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addEncodingSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->children()
+                ->scalarNode('encoding')
+                    ->info('Encoding to use when overriding the HTML markup - see the documentation of the $encoding parameter of the htmlspecialchars function to know which encoding is supported.')
                 ->end()
             ->end()
         ;

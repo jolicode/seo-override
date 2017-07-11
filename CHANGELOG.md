@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 0.2.2 (2017-07-11)
 
 * Fix Symfony data collector when listener did not run (after exception for example)
 

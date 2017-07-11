@@ -3,6 +3,7 @@
 ## Not yet released
 
 * Allow to change encoding when converting HTML chars
+* Fix Symfony services visibility
 
 ## 0.2.0 (2017-06-07)
 

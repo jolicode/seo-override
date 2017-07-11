@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 0.2.1 (2017-07-11)
 
 * Allow to change encoding when converting HTML chars
 * Fix Symfony services visibility

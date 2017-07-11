@@ -10,7 +10,6 @@ services:
 
     seo_override.subscriber:
         class: Joli\SeoOverride\Bridge\Symfony\Subscriber\SeoSubscriber
-        private: true
         arguments:
             - '@seo_override.manager'
         tags:
@@ -18,7 +17,7 @@ services:
 
     seo_override.fetcher.in_memory:
         class: Joli\SeoOverride\Fetcher\InMemoryFetcher
-        private: true
+        public: false
         arguments:
             - '' # Argument configured in the DIC extension
         tags:
@@ -26,7 +25,7 @@ services:
 
     seo_override.fetcher.php:
         class: Joli\SeoOverride\Fetcher\PhpFetcher
-        private: true
+        public: false
         arguments:
             - '' # Argument configured in the DIC extension
             - '%kernel.debug%'

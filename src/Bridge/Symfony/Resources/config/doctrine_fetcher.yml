@@ -1,7 +1,7 @@
 services:
     seo_override.fetcher.doctrine:
         class: Joli\SeoOverride\Bridge\Doctrine\DoctrineFetcher
-        private: true
+        public: false
         arguments:
             - '@doctrine'
         tags:

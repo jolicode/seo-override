@@ -20,7 +20,7 @@
             {{ macros.icon }}
         </span>
 
-        <span class="sf-toolbar-value sf-toolbar-status sf-toolbar-status-{{ collector.status == constant('Joli\\SeoOverride\\Bridge\\Symfony\\DataCollector\\SeoOverrideDataCollector::STATUS_MATCHED') ? 'green' : 'red' }}">{{ collector.statusLabel }}</span>
+        <span class="sf-toolbar-value sf-toolbar-status sf-toolbar-status-{{ collector.status == constant('STATUS_MATCHED', collector) ? 'green' : 'red' }}">{{ collector.statusLabel }}</span>
     {% endset %}
 
     {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}

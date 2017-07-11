@@ -36,6 +36,7 @@ class SeoManager extends BaseSeoManager
         $this->data['fetchersMapping'] = $fetchersMapping;
         $this->data['fetchers'] = [];
         $this->data['domains'] = array_keys($domains);
+        $this->data['status'] = SeoOverrideDataCollector::STATUS_DEFAULT;
     }
 
     public function getData()
@@ -50,7 +51,6 @@ class SeoManager extends BaseSeoManager
     {
         $this->data['path'] = $path;
         $this->data['domain'] = $domain;
-        $this->data['status'] = SeoOverrideDataCollector::STATUS_DEFAULT;
 
         $this->data['seo_versions'][] = [
             'seo' => clone $this->getSeo(),

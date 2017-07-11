@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Fix Symfony data collector when listener did not run (after exception for example)
+
 ## 0.2.1 (2017-07-11)
 
 * Allow to change encoding when converting HTML chars

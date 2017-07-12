@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Joli\SeoOverride\tests\Functional;
+namespace Joli\SeoOverride\Tests\Functional;
 
 use Doctrine\ORM\EntityManager;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\Seo as DoctrineSeo;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
-use Joli\SeoOverride\tests\Functional\Fixtures\symfony\app\AppKernel;
+use Joli\SeoOverride\Tests\Functional\Fixtures\symfony\app\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Input\ArrayInput;

@@ -21,7 +21,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Joli\\SeoOverride\\tests\\": "tests/"
+            "Joli\\SeoOverride\\Tests\\": "tests/"
         }
     },
     "require": {

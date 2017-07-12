@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Joli\SeoOverride\tests\Unit\Bridge\Symfony\DependencyInjection;
+namespace Joli\SeoOverride\Tests\Unit\Bridge\Symfony\DependencyInjection;
 
 use Joli\SeoOverride\Bridge\Symfony\DependencyInjection\CompilerPass\RegisterFetcherPass;
-use Joli\SeoOverride\tests\Unit\Fixtures\FakeFetcher;
+use Joli\SeoOverride\Tests\Unit\Fixtures\FakeFetcher;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

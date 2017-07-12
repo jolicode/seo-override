@@ -1,6 +1,6 @@
 services:
     app.error_controller:
-        class: Joli\SeoOverride\tests\Functional\Fixtures\symfony\src\Controller\ErrorController
+        class: Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller\ErrorController
         calls:
             - [setContainer, ["@service_container"]]
 

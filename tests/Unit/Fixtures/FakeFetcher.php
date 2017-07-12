@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Joli\SeoOverride\tests\Unit\Fixtures;
+namespace Joli\SeoOverride\Tests\Unit\Fixtures;
 
 use Joli\SeoOverride\Fetcher;
 

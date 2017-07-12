@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\SeoOverride\tests\Functional\Fixtures\symfony\app;
+namespace Joli\SeoOverride\Tests\Functional\Fixtures\symfony\app;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;

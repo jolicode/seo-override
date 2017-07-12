@@ -28,6 +28,7 @@
         "php": "^7.0"
     },
     "require-dev": {
+        "ext-sqlite3": "*",
         "phpunit/phpunit": "~6.1",
         "friendsofphp/php-cs-fixer": "~2.2",
         "symfony/http-kernel": "~2.7|~3.0",

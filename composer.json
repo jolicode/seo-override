@@ -32,11 +32,11 @@
         "doctrine/doctrine-bundle": "~1.6",
         "doctrine/orm": "~2.5",
         "friendsofphp/php-cs-fixer": "~2.2",
-        "phpunit/phpunit": "~6.1",
         "symfony/config": "~2.7|~3.0",
         "symfony/dependency-injection": "~2.7|~3.0",
         "symfony/framework-bundle": "~2.7.25|~2.8.15|~3.0",
         "symfony/http-kernel": "~2.7|~3.0",
+        "symfony/phpunit-bridge": "^3.3",
         "symfony/twig-bundle": "~2.7|~3.0",
         "symfony/yaml": "~2.7|~3.0"
     },

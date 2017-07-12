@@ -36,10 +36,12 @@ class SymfonyTest extends KernelTestCase
         $application->setAutoExit(false);
         $application->run(new ArrayInput([
             'doctrine:database:create',
+            '--quiet' => true,
         ]));
         $application->run(new ArrayInput([
             'doctrine:schema:update',
             '--force' => true,
+            '--quiet' => true,
         ]));
 
         $seo = new DoctrineSeo();

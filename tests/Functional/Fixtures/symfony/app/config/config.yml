@@ -17,11 +17,6 @@ framework:
 doctrine:
     dbal:
         driver:   pdo_sqlite
-        host:     ''
-        port:     ''
-        dbname:   test
-        user:     ''
-        password: ''
         path:     "%kernel.root_dir%/data/data.sqlite"
         charset:  UTF8
     orm:

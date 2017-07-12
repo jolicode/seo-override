@@ -1,6 +1,6 @@
 <?php
 
-namespace Joli\SeoOverride\tests\Functional\Fixtures\symfony\src\Controller;
+namespace Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;

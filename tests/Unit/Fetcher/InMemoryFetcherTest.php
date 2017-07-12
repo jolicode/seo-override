@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Joli\SeoOverride\tests\Unit\Fetcher;
+namespace Joli\SeoOverride\Tests\Unit\Fetcher;
 
 use Joli\SeoOverride\Fetcher\InMemoryFetcher;
 use PHPUnit\Framework\TestCase;

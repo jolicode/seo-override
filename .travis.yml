@@ -19,6 +19,7 @@ env:
     global:
         - deps=high
         - check_cs=false
+        - SYMFONY_PHPUNIT_REMOVE="symfony/yaml"
 
 install:
     - if [ "$deps" = "low" ]; then composer --prefer-dist --prefer-lowest update; fi;
@@ -28,5 +29,5 @@ before_script:
     - composer install --no-interaction
 
 script:
-    - ./vendor/bin/phpunit
+    - vendor/bin/simple-phpunit
     - if [ "$check_cs" = "true" ]; then vendor/bin/php-cs-fixer fix --config=.php_cs --dry-run --diff; fi;

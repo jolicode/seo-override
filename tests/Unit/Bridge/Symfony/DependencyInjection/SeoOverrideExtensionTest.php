@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Joli\SeoOverride\tests\Unit\Bridge\Symfony\DependencyInjection;
+namespace Joli\SeoOverride\Tests\Unit\Bridge\Symfony\DependencyInjection;
 
 use Joli\SeoOverride\Bridge\Symfony\DataCollector\SeoManager as DebugSeoManager;
 use Joli\SeoOverride\Bridge\Symfony\DependencyInjection\SeoOverrideExtension;

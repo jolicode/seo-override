@@ -1,6 +1,6 @@
 services:
     app.error_controller:
-        class: Joli\SeoOverride\tests\Functional\Fixtures\symfony\src\Controller\ErrorController
+        class: Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller\ErrorController
         calls:
             - [setContainer, ["@service_container"]]
 
@@ -17,11 +17,6 @@ framework:
 doctrine:
     dbal:
         driver:   pdo_sqlite
-        host:     ''
-        port:     ''
-        dbname:   test
-        user:     ''
-        password: ''
         path:     "%kernel.root_dir%/data/data.sqlite"
         charset:  UTF8
     orm:

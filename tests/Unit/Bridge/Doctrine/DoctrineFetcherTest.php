@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Joli\SeoOverride\tests\Unit\Bridge\Doctrine;
+namespace Joli\SeoOverride\Tests\Unit\Bridge\Doctrine;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;

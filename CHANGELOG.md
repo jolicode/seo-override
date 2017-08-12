@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* [BC BREAK] Remove SeoManagerInterface
+
 ## 0.4.0 (2017-09-12)
 
 * [BC BREAK][Doctrine] Change the type of Seo Columns from string(255) to text

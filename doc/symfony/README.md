@@ -94,7 +94,7 @@ Note:
 > through fetchers.
 
 
-## Encoding
+### Encoding
 
 You can setup the encoding that should be used when overriding the HTML markup.
 
@@ -107,3 +107,33 @@ Note:
 > Internally the manager uses the `htmlspecialchars` function. Check out
 > [the documentation](http://php.net/manual/en/function.htmlspecialchars.php#refsect1-function.htmlspecialchars-parameters)
 > of the `$encoding` parameter to know which encoding is supported.
+
+### Blacklist
+
+You can blacklist some request/response to avoid fetcher to run (f.e. on non
+2xx response, on your admin, etc).
+
+There is some built-in blacklister that you can enable/configure via the config
+`blacklist`:
+
+```yaml
+seo_override:
+    blacklist:
+        - not_2xx
+        - { type: path, pattern: '^/(admin|account)' }
+```
+
+By default, only the `not_2xx` blacklister is used.
+
+You can **disable blacklist** behaviour (so fetchers are always called) by
+setting the config to `false``:
+
+```yaml
+seo_override:
+    blacklist: false
+```
+
+See [this documentation](available-blacklisters.md) to learn more about the
+built-in blacklisters and how to configure them.
+
+You need your own blacklister? Check out [this documentation](creating-your-own-blacklister.md).

@@ -14,32 +14,40 @@ namespace Joli\SeoOverride\Bridge\Symfony\DependencyInjection\CompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
-class RegisterFetcherPass extends AbstractRegisterServicePass
+class RegisterBlacklisterPass extends AbstractRegisterServicePass
 {
     protected function getTag(): string
     {
-        return 'seo_override.fetcher';
+        return 'seo_override.blacklister';
     }
 
     protected function getName(bool $plurial): string
     {
-        return $plurial ? 'fetchers' : 'fetcher';
+        return $plurial ? 'blacklisters' : 'blacklister';
     }
 
     protected function getConfigurationParameterName(): string
     {
-        return 'seo_override.fetchers_configuration';
+        return 'seo_override.blacklisters_configuration';
     }
 
     protected function processServiceList(ContainerBuilder $container, array $serviceDefinitionsByType)
     {
         if ($container->hasParameter('kernel.debug') && $container->getParameter('kernel.debug')) {
-            $container->setParameter('seo_override.fetchers_mapping', array_map(function (Definition $definition) {
+            $container->setParameter('seo_override.blacklisters_mapping', array_map(function (Definition $definition) {
                 return $definition->getClass();
             }, $serviceDefinitionsByType));
         }
 
-        $definition = $container->getDefinition('seo_override.manager');
-        $definition->replaceArgument(0, array_values($serviceDefinitionsByType));
+        if (empty($serviceDefinitionsByType)) {
+            $alias = 'seo_override.blacklister.null';
+        } else {
+            $definition = $container->getDefinition('seo_override.blacklister.chain');
+            $definition->replaceArgument(0, array_values($serviceDefinitionsByType));
+
+            $alias = 'seo_override.blacklister.chain';
+        }
+
+        $container->setAlias('seo_override.blacklister.default', $alias);
     }
 }

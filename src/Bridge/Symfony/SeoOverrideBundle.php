@@ -11,6 +11,7 @@
 
 namespace Joli\SeoOverride\Bridge\Symfony;
 
+use Joli\SeoOverride\Bridge\Symfony\DependencyInjection\CompilerPass\RegisterBlacklisterPass;
 use Joli\SeoOverride\Bridge\Symfony\DependencyInjection\CompilerPass\RegisterFetcherPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -22,5 +23,6 @@ class SeoOverrideBundle extends Bundle
         parent::build($container);
 
         $container->addCompilerPass(new RegisterFetcherPass());
+        $container->addCompilerPass(new RegisterBlacklisterPass());
     }
 }

@@ -2,7 +2,10 @@
 
 ## Not yet released
 
+## 0.3.0 (2017-08-18)
+
 * Tweak tests
+* Add Symfony Validator Asserts on Seo object
 
 ## 0.2.2 (2017-07-11)
 

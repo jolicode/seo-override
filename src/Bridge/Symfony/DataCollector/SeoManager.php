@@ -18,11 +18,19 @@ use Joli\SeoOverride\SeoManager as BaseSeoManager;
 class SeoManager extends BaseSeoManager
 {
     protected $data = [];
-    private $fetcherMapping;
+    private $fetchersMapping;
 
     public function __construct(array $fetchers, array $domains, Seo $seo = null, array $fetchersMapping)
     {
         parent::__construct($fetchers, $domains, $seo);
+
+        $this->fetchersMapping = $fetchersMapping;
+
+        $this->data['fetchersMapping'] = $fetchersMapping;
+        $this->data['fetchers'] = [];
+        $this->data['domains'] = array_keys($domains);
+        $this->data['status'] = SeoOverrideDataCollector::STATUS_NOT_RUN;
+        $this->data['seo_versions'] = [];
 
         if ($seo) {
             $this->data['seo_versions'][] = [
@@ -30,13 +38,6 @@ class SeoManager extends BaseSeoManager
                 'origin' => 'initial',
             ];
         }
-
-        $this->fetchersMapping = $fetchersMapping;
-
-        $this->data['fetchersMapping'] = $fetchersMapping;
-        $this->data['fetchers'] = [];
-        $this->data['domains'] = array_keys($domains);
-        $this->data['status'] = SeoOverrideDataCollector::STATUS_DEFAULT;
     }
 
     public function getData()
@@ -51,6 +52,7 @@ class SeoManager extends BaseSeoManager
     {
         $this->data['path'] = $path;
         $this->data['domain'] = $domain;
+        $this->data['status'] = SeoOverrideDataCollector::STATUS_NOT_MATCHED;
 
         $this->data['seo_versions'][] = [
             'seo' => clone $this->getSeo(),
@@ -89,6 +91,18 @@ class SeoManager extends BaseSeoManager
         }
 
         return $seo;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function overrideHtml(string $html): string
+    {
+        if ($this->data['status'] === SeoOverrideDataCollector::STATUS_NOT_RUN) {
+            $this->data['status'] = SeoOverrideDataCollector::STATUS_BLACKLISTED;
+        }
+
+        return parent::overrideHtml($html);
     }
 
     /**

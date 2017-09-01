@@ -2,6 +2,8 @@
 
 ## Not yet released
 
+* Fix support for BinaryFileResponse and other empty content Responses
+
 ## 0.3.0 (2017-08-18)
 
 * Tweak tests

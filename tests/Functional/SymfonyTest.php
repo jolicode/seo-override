@@ -159,6 +159,14 @@ HTML;
         $this->assertSame($expected, $response->getContent());
     }
 
+    public function test_it_does_not_override_seo_when_no_content_or_binary_response()
+    {
+        $response = $this->call('/download', 'localhost');
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(false, $response->getContent());
+    }
+
     protected static function getKernelClass()
     {
         return AppKernel::class;

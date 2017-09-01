@@ -164,7 +164,7 @@ HTML;
         $response = $this->call('/download', 'localhost');
 
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame('🎅', $response->getContent());
+        $this->assertSame(false, $response->getContent());
     }
 
     protected static function getKernelClass()

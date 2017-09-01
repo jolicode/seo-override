@@ -37,6 +37,10 @@ class SeoSubscriber implements EventSubscriberInterface
 
             $responseContent = $event->getResponse()->getContent();
 
+            if (!$responseContent) {
+                return;
+            }
+
             if ($event->getResponse()->getStatusCode() >= 300) {
                 // We do not want to trigger fetchers on non 2XX response
                 $newResponseContent = $this->seoManager->overrideHtml($responseContent);

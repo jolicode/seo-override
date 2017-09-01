@@ -8,3 +8,8 @@ error:
     path: /error
     defaults:
         _controller: app.error_controller:errorAction
+
+download:
+    path: /download
+    defaults:
+        _controller: app.error_controller:downloadAction

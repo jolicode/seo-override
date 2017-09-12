@@ -58,7 +58,7 @@ class SeoOverrideDataCollector extends DataCollector implements LateDataCollecto
 
     public function getStatusLabel()
     {
-        return $this->data['status'] === self::STATUS_MATCHED ? 'matched' : 'no match';
+        return self::STATUS_MATCHED === $this->data['status'] ? 'matched' : 'no match';
     }
 
     public function getVersions()

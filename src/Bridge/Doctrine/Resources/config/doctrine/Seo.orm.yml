@@ -3,36 +3,29 @@ Joli\SeoOverride\Bridge\Doctrine\Entity\Seo:
   fields:
     title:
       column: title
-      type: string
-      length: 255
+      type: text
       nullable: true
     description:
       column: description
-      type: string
-      length: 255
+      type: text
       nullable: true
     keywords:
       column: keywords
-      type: string
-      length: 255
+      type: text
       nullable: true
     robots:
       column: robots
-      type: string
-      length: 255
+      type: text
       nullable: true
     canonical:
       column: canonical
-      type: string
-      length: 255
+      type: text
       nullable: true
     ogTitle:
       column: og_title
-      type: string
-      length: 255
+      type: text
       nullable: true
     ogDescription:
       column: og_description
-      type: string
-      length: 255
+      type: text
       nullable: true

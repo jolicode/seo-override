@@ -13,8 +13,7 @@ Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride:
   fields:
     path:
       column: path
-      type: string
-      length: 255
+      type: text
     domainAlias:
       column: domain_alias
       type: string

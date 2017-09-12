@@ -31,7 +31,7 @@ class SeoSubscriber implements EventSubscriberInterface
 
     public function onKernelResponse(FilterResponseEvent $event)
     {
-        if ($event->getRequestType() === HttpKernelInterface::MASTER_REQUEST) {
+        if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
             $path = $event->getRequest()->getPathInfo();
             $domain = $event->getRequest()->getHost();
 

@@ -1,6 +1,9 @@
 # Changes between versions
 
-## Not yet released
+## 0.4.0 (2017-09-12)
+
+* [BC BREAK][Doctrine] Change the type of Seo Columns from string(255) to text
+* [BC BREAK][Symfony] Remove Symfony Validator Asserts on Seo object
 
 ## 0.3.1 (2017-09-01)
 

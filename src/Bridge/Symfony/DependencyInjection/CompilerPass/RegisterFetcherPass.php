@@ -53,7 +53,7 @@ class RegisterFetcherPass implements CompilerPassInterface
                 $optionNormalized = $this->camelize($option);
                 $index = array_search($optionNormalized, $arguments, true);
 
-                if ($index === false) {
+                if (false === $index) {
                     throw new LogicException(sprintf(
                         'Unkown "%s" option for fetcher "%s"',
                         $option,

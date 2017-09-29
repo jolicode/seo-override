@@ -60,6 +60,8 @@ class MyFetcher implements Joli\SeoOverride\Fetcher
     public function __construct($firstOption, $secondOption, $optionalOption = 'foobar')
     {
     }
+
+    // ...
 }
 ```
 

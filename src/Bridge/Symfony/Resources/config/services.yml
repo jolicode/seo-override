@@ -12,6 +12,7 @@ services:
         class: Joli\SeoOverride\Bridge\Symfony\Subscriber\SeoSubscriber
         arguments:
             - '@seo_override.manager'
+            - '@seo_override.blacklister.default' # Service declared in the DIC extension
         tags:
             - { name: kernel.event_subscriber }
 
@@ -31,3 +32,28 @@ services:
             - '%kernel.debug%'
         tags:
             - { name: seo_override.fetcher, alias: php, required_options: 'include_path' }
+
+    seo_override.blacklister.default:
+        alias: seo_override.blacklister.null
+
+    seo_override.blacklister.null:
+        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\NullBlacklister
+        public: false
+
+    seo_override.blacklister.chain:
+        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\ChainBlacklister
+        public: false
+        arguments:
+            - '' # Argument configured in the DIC extension
+
+    seo_override.blacklister.not_2xx:
+        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\Not2xxBlacklister
+        public: false
+        tags:
+            - { name: seo_override.blacklister, alias: not_2xx }
+
+    seo_override.blacklister.path:
+        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\Only2xxBlacklister
+        public: false
+        tags:
+            - { name: seo_override.blacklister, alias: path, required_options: 'pattern' }

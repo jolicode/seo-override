@@ -11,7 +11,8 @@
 
 namespace Joli\SeoOverride\Bridge\Symfony\Subscriber;
 
-use Joli\SeoOverride\SeoManagerInterface;
+use Joli\SeoOverride\Bridge\Symfony\Blacklister;
+use Joli\SeoOverride\SeoManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -20,13 +21,19 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class SeoSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var SeoManagerInterface
+     * @var SeoManager
      */
     private $seoManager;
 
-    public function __construct(SeoManagerInterface $seoManager)
+    /**
+     * @var Blacklister
+     */
+    private $blacklister;
+
+    public function __construct(SeoManager $seoManager, Blacklister $blacklister)
     {
         $this->seoManager = $seoManager;
+        $this->blacklister = $blacklister;
     }
 
     public function onKernelResponse(FilterResponseEvent $event)
@@ -41,8 +48,8 @@ class SeoSubscriber implements EventSubscriberInterface
                 return;
             }
 
-            if ($event->getResponse()->getStatusCode() >= 300) {
-                // We do not want to trigger fetchers on non 2XX response
+            if ($this->blacklister->isBlacklisted($event->getRequest(), $event->getResponse())) {
+                // Overrides HTML to remove custom comment without running fetchers
                 $newResponseContent = $this->seoManager->overrideHtml($responseContent);
             } else {
                 $newResponseContent = $this->seoManager->updateAndOverride($responseContent, $path, $domain);

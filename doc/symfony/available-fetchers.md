@@ -8,7 +8,7 @@
 
 ## doctrine
 
-The `doctrine` fetcher does not has option. You only need to add our entity in
+The `doctrine` fetcher does not have option. You only need to add our entity in
 Doctrine ORM's mappings:
 
 ```yaml

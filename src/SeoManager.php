@@ -15,7 +15,7 @@ namespace Joli\SeoOverride;
  * This manager is the main class you should use to manually configure the SEO
  * of the current action.
  */
-class SeoManager implements SeoManagerInterface
+class SeoManager
 {
     /** @var Fetcher[] */
     private $fetchers;
@@ -52,7 +52,7 @@ class SeoManager implements SeoManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get the current Seo object.
      */
     public function getSeo(): Seo
     {
@@ -60,7 +60,7 @@ class SeoManager implements SeoManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Update and override the Seo of the HTML for the given path and domain.
      */
     public function updateAndOverride(string $html, string $path, string $domain): string
     {
@@ -70,7 +70,7 @@ class SeoManager implements SeoManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Update the Seo from the fetchers for a specific path and domain.
      */
     public function updateSeo(string $path, string $domain): Seo
     {
@@ -89,7 +89,9 @@ class SeoManager implements SeoManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Fetch Seo from a Fetcher.
+     *
+     * @return Seo|null
      */
     public function fetch(Fetcher $fetcher, string $path, string $domainAlias = null)
     {
@@ -107,7 +109,7 @@ class SeoManager implements SeoManagerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Perform the override of HTML SEO related tags.
      */
     public function overrideHtml(string $html): string
     {

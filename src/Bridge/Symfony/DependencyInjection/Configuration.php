@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
         $this->addFetchersSection($rootNode);
         $this->addDomainSection($rootNode);
         $this->addEncodingSection($rootNode);
+        $this->addBlacklisterSection($rootNode);
 
         return $treeBuilder;
     }
@@ -91,6 +92,43 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('encoding')
                     ->info('Encoding to use when overriding the HTML markup - see the documentation of the $encoding parameter of the htmlspecialchars function to know which encoding is supported.')
+                ->end()
+            ->end()
+        ;
+    }
+
+    private function addBlacklisterSection(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode
+            ->beforeNormalization()
+                ->ifTrue(function ($v) { return !isset($v['blacklist']) || !$v['blacklist']; })
+                ->then(function ($v) {
+                    if (isset($v['blacklist']) && false === $v['blacklist']) {
+                        $v['blacklist'] = [];
+                    } else {
+                        $v['blacklist'] = [
+                            ['type' => 'not_2xx'],
+                        ];
+                    }
+
+                    return $v;
+                })
+            ->end()
+            ->children()
+                ->arrayNode('blacklist')
+                    ->info('Blacklister will decide whether SeoOverride should run fetchers.')
+                    ->prototype('array')
+                        ->beforeNormalization()
+                            ->ifString()
+                                ->then(function ($v) { return ['type' => $v]; })
+                            ->end()
+                            ->prototype('variable')->end()
+                            ->children()
+                                ->scalarNode('type')
+                                ->info('Type of the blacklister (see the available blacklisters in the documentation)')
+                            ->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ;

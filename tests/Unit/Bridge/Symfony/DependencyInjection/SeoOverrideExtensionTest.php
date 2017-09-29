@@ -48,6 +48,9 @@ class SeoOverrideExtensionTest extends TestCase
 
         self::assertEmpty($container->getDefinition('seo_override.manager')->getMethodCalls());
         self::assertSame('UTF-8', $container->get('seo_override.manager')->getEncoding());
+
+        self::assertTrue($container->hasParameter('seo_override.blacklisters_configuration'));
+        self::assertSame([], $container->getParameter('seo_override.blacklisters_configuration'));
     }
 
     public function test_it_supports_fetcher_configuration()
@@ -248,5 +251,72 @@ class SeoOverrideExtensionTest extends TestCase
 
         $manager = $container->get('seo_override.manager');
         self::assertSame('KOI8-R', $manager->getEncoding());
+    }
+
+    public function test_it_supports_blacklist_configuration()
+    {
+        $container = new ContainerBuilder();
+        $this->extension->load([
+            'seo_override' => [
+                'blacklist' => [
+                    [
+                        'type' => 'blacklister1',
+                        'option1' => 'hello world',
+                    ],
+                ],
+            ],
+        ], $container);
+
+        self::assertTrue($container->hasParameter('seo_override.blacklisters_configuration'));
+
+        $blacklisters = $container->getParameter('seo_override.blacklisters_configuration');
+
+        self::assertInternalType('array', $blacklisters);
+        self::assertCount(1, $blacklisters);
+
+        self::assertInternalType('array', $blacklisters[0]);
+
+        self::assertArrayHasKey('type', $blacklisters[0]);
+        self::assertSame('blacklister1', $blacklisters[0]['type']);
+
+        self::assertArrayHasKey('option1', $blacklisters[0]);
+        self::assertSame('hello world', $blacklisters[0]['option1']);
+    }
+
+    public function test_it_supports_short_syntax_for_blacklist()
+    {
+        $container = new ContainerBuilder();
+        $this->extension->load([
+            'seo_override' => [
+                'blacklist' => [
+                    'blacklister1',
+                ],
+            ],
+        ], $container);
+
+        $blacklisters = $container->getParameter('seo_override.blacklisters_configuration');
+
+        self::assertInternalType('array', $blacklisters);
+        self::assertCount(1, $blacklisters);
+
+        self::assertInternalType('array', $blacklisters[0]);
+
+        self::assertArrayHasKey('type', $blacklisters[0]);
+        self::assertSame('blacklister1', $blacklisters[0]['type']);
+    }
+
+    public function test_it_supports_blacklist_desactivation()
+    {
+        $container = new ContainerBuilder();
+        $this->extension->load([
+            'seo_override' => [
+                'blacklist' => false,
+            ],
+        ], $container);
+
+        $blacklisters = $container->getParameter('seo_override.blacklisters_configuration');
+
+        self::assertInternalType('array', $blacklisters);
+        self::assertCount(0, $blacklisters);
     }
 }

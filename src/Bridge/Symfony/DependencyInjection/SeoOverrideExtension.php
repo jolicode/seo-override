@@ -29,6 +29,7 @@ class SeoOverrideExtension extends Extension
         $this->registerFetchersConfiguration($config['fetchers'], $container, $loader);
         $this->registerDomainsConfiguration($config['domains'], $container);
         $this->registerEncodingConfiguration($config['encoding'] ?? null, $container);
+        $this->registerBlacklistersConfiguration($config['blacklist'], $container);
 
         if ($container->hasParameter('kernel.debug') && $container->getParameter('kernel.debug')) {
             $loader->load('debug.yml');
@@ -62,5 +63,11 @@ class SeoOverrideExtension extends Extension
             ->getDefinition('seo_override.manager')
             ->addMethodCall('setEncoding', [$encoding])
         ;
+    }
+
+    private function registerBlacklistersConfiguration(array $blacklisters, ContainerBuilder $container)
+    {
+        // This parameter will only be used in the compiler pass
+        $container->setParameter('seo_override.blacklisters_configuration', $blacklisters);
     }
 }

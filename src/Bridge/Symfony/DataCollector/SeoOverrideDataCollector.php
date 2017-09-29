@@ -18,8 +18,17 @@ use Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
 
 class SeoOverrideDataCollector extends DataCollector implements LateDataCollectorInterface
 {
-    const STATUS_DEFAULT = 'default';
+    const STATUS_NOT_RUN = 'not run';
+    const STATUS_BLACKLISTED = 'blacklisted';
+    const STATUS_NOT_MATCHED = 'not_match';
     const STATUS_MATCHED = 'matched';
+
+    const STATUS_LABELS = [
+        self::STATUS_NOT_RUN => 'not run',
+        self::STATUS_BLACKLISTED => 'blacklisted',
+        self::STATUS_NOT_MATCHED => 'not matched',
+        self::STATUS_MATCHED => 'matched',
+    ];
 
     /**
      * @var SeoManager
@@ -58,7 +67,7 @@ class SeoOverrideDataCollector extends DataCollector implements LateDataCollecto
 
     public function getStatusLabel()
     {
-        return self::STATUS_MATCHED === $this->data['status'] ? 'matched' : 'no match';
+        return self::STATUS_LABELS[$this->data['status']];
     }
 
     public function getVersions()

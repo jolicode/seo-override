@@ -53,21 +53,26 @@
             <span class="label">Status</span>
         </div>
 
-        <div class="metric">
-            <span class="value">{{ collector.path }}</span>
-            <span class="label">Matched path</span>
-        </div>
-
-        <div class="metric">
-            <span class="value">{{ collector.domain }}</span>
-            <span class="label">Domain</span>
-        </div>
-
-        {% if collector.domains|length > 0 %}
-            <div class="metric {{ collector.domainAlias ? '' : 'status-error' }}">
-                <span class="value">{{ collector.domainAlias ? collector.domainAlias : 'Unkown domain' }}</span>
-                <span class="label ">Matched domain alias</span>
+        {% if collector.status not in [
+            constant('Joli\\SeoOverride\\Bridge\\Symfony\\DataCollector\\SeoOverrideDataCollector::STATUS_NOT_RUN'),
+            constant('Joli\\SeoOverride\\Bridge\\Symfony\\DataCollector\\SeoOverrideDataCollector::STATUS_BLACKLISTED')
+        ] %}
+            <div class="metric">
+                <span class="value">{{ collector.path }}</span>
+                <span class="label">Matched path</span>
             </div>
+
+            <div class="metric">
+                <span class="value">{{ collector.domain }}</span>
+                <span class="label">Domain</span>
+            </div>
+
+            {% if collector.domains|length > 0 %}
+                <div class="metric {{ collector.domainAlias ? '' : 'status-error' }}">
+                    <span class="value">{{ collector.domainAlias ? collector.domainAlias : 'Unkown domain' }}</span>
+                    <span class="label ">Matched domain alias</span>
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 
@@ -93,13 +98,17 @@
 
     <h3>Seo versions</h3>
 
-    <ol>
-        {% for version in collector.versions %}
-            <li>
-                <h4>{{ version.origin|capitalize }}</h4>
-                {{ dump(version.seo) }}
-            </li>
-        {% endfor %}
-    </ol>
+    {% if collector.versions|length > 0 %}
+        <ol>
+            {% for version in collector.versions %}
+                <li>
+                    <h4>{{ version.origin|capitalize }}</h4>
+                    {{ dump(version.seo) }}
+                </li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <p>None.</p>
+    {% endif %}
 
 {% endblock %}

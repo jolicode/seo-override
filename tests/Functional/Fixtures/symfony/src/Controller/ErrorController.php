@@ -15,7 +15,7 @@ class ErrorController extends Controller
 
     public function downloadAction()
     {
-        $tmpfname = tempnam("/tmp", "FOO");
+        $tmpfname = tempnam('/tmp', 'FOO');
 
         return new BinaryFileResponse($tmpfname);
     }

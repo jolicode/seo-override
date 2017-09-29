@@ -103,7 +103,7 @@ class Configuration implements ConfigurationInterface
             ->beforeNormalization()
                 ->ifTrue(function ($v) { return !isset($v['blacklist']) || !$v['blacklist']; })
                 ->then(function ($v) {
-                    if (isset($v['blacklist']) && $v['blacklist'] === false) {
+                    if (isset($v['blacklist']) && false === $v['blacklist']) {
                         $v['blacklist'] = [];
                     } else {
                         $v['blacklist'] = [

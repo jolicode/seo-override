@@ -98,7 +98,7 @@ class SeoManager extends BaseSeoManager
      */
     public function overrideHtml(string $html): string
     {
-        if ($this->data['status'] === SeoOverrideDataCollector::STATUS_NOT_RUN) {
+        if (SeoOverrideDataCollector::STATUS_NOT_RUN === $this->data['status']) {
             $this->data['status'] = SeoOverrideDataCollector::STATUS_BLACKLISTED;
         }
 

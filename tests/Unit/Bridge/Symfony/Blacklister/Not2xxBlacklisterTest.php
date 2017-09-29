@@ -32,6 +32,9 @@ class Not2xxBlacklisterTest extends TestCase
     {
         $request = new Request();
 
+        $response = new Response('', 100);
+        self::assertTrue($this->blacklister->isBlacklisted($request, $response));
+
         $response = new Response('', 300);
         self::assertTrue($this->blacklister->isBlacklisted($request, $response));
 

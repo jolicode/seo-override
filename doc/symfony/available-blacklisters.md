@@ -7,8 +7,8 @@
 
 ## not_2xx
 
-The `not_2xx` blacklister refuses response whose status code is >= 300. It does
-not have option. You only need to register it:
+The `not_2xx` blacklister refuses response whose status code is >= 300 or < 200. It does
+not have any option. You only need to register it:
 
 ```yaml
 seo_override:

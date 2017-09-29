@@ -19,6 +19,6 @@ class Not2xxBlacklister implements Blacklister
 {
     public function isBlacklisted(Request $request, Response $response): bool
     {
-        return $response->getStatusCode() >= 300;
+        return $response->getStatusCode() >= 300 || $response->getStatusCode() < 200;
     }
 }

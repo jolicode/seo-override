@@ -1,5 +1,6 @@
 # SeoOverride
 
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Latest Stable Version](https://poser.pugx.org/jolicode/seo-override/v/stable)](https://packagist.org/packages/jolicode/seo-override)
 [![Total Downloads](https://poser.pugx.org/jolicode/seo-override/downloads)](https://packagist.org/packages/jolicode/seo-override)
 [![Latest Unstable Version](https://poser.pugx.org/seo-override/jolinotif/v/unstable)](https://packagist.org/packages/jolicode/seo-override)
@@ -42,4 +43,4 @@ And finally some meta documentation:
 
 ## License
 
-View the [LICENSE](LICENSE) file attach to this project.
+View the [The MIT License (MIT)](LICENSE) file attach to this project.

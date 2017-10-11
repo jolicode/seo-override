@@ -52,6 +52,24 @@ services:
         tags:
             - { name: seo_override.blacklister, alias: not_2xx }
 
+    seo_override.blacklister.get_method:
+        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\GetMethodBlacklister
+        public: false
+        tags:
+            - { name: seo_override.blacklister, alias: get_method }
+
+    seo_override.blacklister.post_method:
+        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\PostMethodBlacklister
+        public: false
+        tags:
+            - { name: seo_override.blacklister, alias: post_method }
+
+    seo_override.blacklister.xml_http:
+        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\XmlHttpBlacklister
+        public: false
+        tags:
+            - { name: seo_override.blacklister, alias: xml_http }
+
     seo_override.blacklister.path:
         class: Joli\SeoOverride\Bridge\Symfony\Blacklister\Only2xxBlacklister
         public: false

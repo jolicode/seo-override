@@ -36,7 +36,7 @@ class XmlHttpBlacklisterTest extends TestCase
         self::assertTrue($this->blacklister->isBlacklisted($request, new Response()));
     }
 
-    public function test_it_does_not_blacklist_xml_http_requests()
+    public function test_it_does_not_blacklist_not_xml_http_requests()
     {
         $request = new Request();
 

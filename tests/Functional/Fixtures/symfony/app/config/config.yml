@@ -52,3 +52,5 @@ seo_override:
     blacklist:
         - not_2xx
         - { type: path, pattern: '^/admin' }
+        - { type: not_method, method: ['GET', 'POST'] }
+        - xml_http

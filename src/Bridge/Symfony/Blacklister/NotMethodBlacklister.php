@@ -15,19 +15,27 @@ use Joli\SeoOverride\Bridge\Symfony\Blacklister;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class PostBlacklister.
- */
-class PostMethodBlacklister implements Blacklister
+class NotMethodBlacklister implements Blacklister
 {
+    /** @var string[] */
+    private $methods;
+
     /**
-     * @param Request  $request
-     * @param Response $response
-     *
-     * @return bool
+     * @param string|string[] $method
      */
+    public function __construct($method)
+    {
+        $this->methods = (array) $method;
+    }
+
     public function isBlacklisted(Request $request, Response $response): bool
     {
-        return $request->isMethod('post');
+        foreach ($this->methods as $method) {
+            if ($request->isMethod($method)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -4,6 +4,7 @@
 
 * [BC BREAK] Remove SeoManagerInterface
 * Add blacklist behaviour to avoid useless fetcher runs
+* Add blacklisters checking for XHR or HTTP methods
 
 ## 0.4.0 (2017-09-12)
 

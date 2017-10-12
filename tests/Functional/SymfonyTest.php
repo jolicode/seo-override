@@ -186,16 +186,34 @@ HTML;
         $this->assertSame($expected, $response->getContent());
     }
 
+    public function test_it_does_not_override_seo_when_request_use_not_allowed_action()
+    {
+        $response = $this->call('/', 'localhost', 'PUT');
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(self::NOT_OVERRIDDEN_HOMEPAGE_CONTENT, $response->getContent());
+    }
+
+    public function test_it_does_not_override_seo_when_request_is_xhr()
+    {
+        $response = $this->call('/', 'localhost', 'GET', [
+            'X-Requested-With' => 'XMLHttpRequest',
+        ]);
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(self::NOT_OVERRIDDEN_HOMEPAGE_CONTENT, $response->getContent());
+    }
+
     protected static function getKernelClass()
     {
         return AppKernel::class;
     }
 
-    private function call(string $uri, string $host)
+    private function call(string $uri, string $host, string $method = 'GET', array $server = [])
     {
-        $request = Request::create($uri, 'GET', [], [], [], [
-            'HTTP_HOST' => $host,
-        ]);
+        $server['HTTP_HOST'] = $host;
+
+        $request = Request::create($uri, $method, [], [], [], $server);
 
         return self::$kernel->handle($request);
     }

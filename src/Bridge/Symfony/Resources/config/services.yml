@@ -71,7 +71,9 @@ services:
             - { name: seo_override.blacklister, alias: xml_http }
 
     seo_override.blacklister.path:
-        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\Only2xxBlacklister
+        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\PathBlacklister
         public: false
+        arguments:
+          - ''
         tags:
             - { name: seo_override.blacklister, alias: path, required_options: 'pattern' }

@@ -1,6 +1,6 @@
 services:
-    app.error_controller:
-        class: Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller\ErrorController
+    app.controller:
+        class: Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller\AppController
         calls:
             - [setContainer, ["@service_container"]]
 
@@ -40,6 +40,8 @@ seo_override:
                 '':
                     '/error':
                         title: 'new title for error page'
+                    '/admin':
+                        title: 'new title for admin'
         -
             type: php
             include_path: "%kernel.root_dir%/config/seo_overrides.php"
@@ -47,3 +49,8 @@ seo_override:
         domain_doctrine: 'domain_doctrine.com'
         domain_in_memory: 'domain_in_memory.com'
         domain_php: 'domain_php.com'
+    blacklist:
+        - not_2xx
+        - { type: path, pattern: '^/admin' }
+        - { type: not_method, method: ['GET', 'POST'] }
+        - xml_http

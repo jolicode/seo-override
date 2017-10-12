@@ -111,7 +111,7 @@ Note:
 ### Blacklist
 
 You can blacklist some request/response to avoid fetcher to run (f.e. on non
-2xx response, on your admin, etc).
+2xx response, on your admin, on XHR calls, etc).
 
 There is some built-in blacklister that you can enable/configure via the config
 `blacklist`:

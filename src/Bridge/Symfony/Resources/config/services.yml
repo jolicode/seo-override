@@ -52,17 +52,13 @@ services:
         tags:
             - { name: seo_override.blacklister, alias: not_2xx }
 
-    seo_override.blacklister.get_method:
-        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\GetMethodBlacklister
+    seo_override.blacklister.not_method:
+        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\NotMethodBlacklister
         public: false
+        arguments:
+            - '' # Argument configured in the DIC extension
         tags:
-            - { name: seo_override.blacklister, alias: get_method }
-
-    seo_override.blacklister.post_method:
-        class: Joli\SeoOverride\Bridge\Symfony\Blacklister\PostMethodBlacklister
-        public: false
-        tags:
-            - { name: seo_override.blacklister, alias: post_method }
+            - { name: seo_override.blacklister, alias: not_method, required_options: 'method' }
 
     seo_override.blacklister.xml_http:
         class: Joli\SeoOverride\Bridge\Symfony\Blacklister\XmlHttpBlacklister
@@ -74,6 +70,6 @@ services:
         class: Joli\SeoOverride\Bridge\Symfony\Blacklister\PathBlacklister
         public: false
         arguments:
-          - ''
+            - '' # Argument configured in the DIC extension
         tags:
             - { name: seo_override.blacklister, alias: path, required_options: 'pattern' }

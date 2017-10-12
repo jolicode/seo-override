@@ -15,17 +15,8 @@ use Joli\SeoOverride\Bridge\Symfony\Blacklister;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class XmlHttpBlacklister.
- */
 class XmlHttpBlacklister implements Blacklister
 {
-    /**
-     * @param Request  $request
-     * @param Response $response
-     *
-     * @return bool
-     */
     public function isBlacklisted(Request $request, Response $response): bool
     {
         return $request->isXmlHttpRequest();

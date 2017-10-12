@@ -74,6 +74,6 @@ services:
         class: Joli\SeoOverride\Bridge\Symfony\Blacklister\PathBlacklister
         public: false
         arguments:
-          - ''
+            - '' # Argument configured in the DIC extension
         tags:
             - { name: seo_override.blacklister, alias: path, required_options: 'pattern' }

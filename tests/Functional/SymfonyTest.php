@@ -22,6 +22,19 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SymfonyTest extends KernelTestCase
 {
+    const NOT_OVERRIDDEN_HOMEPAGE_CONTENT = <<<'HTML'
+<html>
+    <head>
+        <title>old title for homepage</title>
+        <meta name="description" content="description for homepage" />
+    </head>
+    <body>
+        <h1>Hello world</h1>
+    </body>
+</html>
+
+HTML;
+
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
@@ -120,22 +133,17 @@ HTML;
 
     public function test_it_does_not_override_seo_when_no_fetcher_matching()
     {
-        $expected = <<<'HTML'
-<html>
-    <head>
-        <title>old title for homepage</title>
-        <meta name="description" content="description for homepage" />
-    </head>
-    <body>
-        <h1>Hello world</h1>
-    </body>
-</html>
-
-HTML;
-
         $response = $this->call('/', 'domain_unkown.com');
 
-        $this->assertSame($expected, $response->getContent());
+        $this->assertSame(self::NOT_OVERRIDDEN_HOMEPAGE_CONTENT, $response->getContent());
+    }
+
+    public function test_it_does_not_override_seo_when_no_content_or_binary_response()
+    {
+        $response = $this->call('/download', 'localhost');
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(false, $response->getContent());
     }
 
     public function test_it_does_not_override_seo_when_no_2XX_response()
@@ -152,19 +160,30 @@ HTML;
 </html>
 
 HTML;
-
         $response = $this->call('/error', 'localhost');
 
         $this->assertSame(400, $response->getStatusCode());
         $this->assertSame($expected, $response->getContent());
     }
 
-    public function test_it_does_not_override_seo_when_no_content_or_binary_response()
+    public function test_it_does_not_override_seo_when_request_path_does_not_match()
     {
-        $response = $this->call('/download', 'localhost');
+        $expected = <<<'HTML'
+<html>
+    <head>
+        <title>old title for admin</title>
+        <meta name="description" content="description for admin" />
+    </head>
+    <body>
+        <h1>Hello admin</h1>
+    </body>
+</html>
+
+HTML;
+        $response = $this->call('/admin', 'localhost');
 
         $this->assertSame(200, $response->getStatusCode());
-        $this->assertSame(false, $response->getContent());
+        $this->assertSame($expected, $response->getContent());
     }
 
     protected static function getKernelClass()
@@ -172,7 +191,7 @@ HTML;
         return AppKernel::class;
     }
 
-    private function call($uri, $host)
+    private function call(string $uri, string $host)
     {
         $request = Request::create($uri, 'GET', [], [], [], [
             'HTTP_HOST' => $host,

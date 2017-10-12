@@ -7,9 +7,14 @@ index:
 error:
     path: /error
     defaults:
-        _controller: app.error_controller:errorAction
+        _controller: app.controller:errorAction
 
 download:
     path: /download
     defaults:
-        _controller: app.error_controller:downloadAction
+        _controller: app.controller:downloadAction
+
+admin:
+    path: /admin
+    defaults:
+        _controller: app.controller:adminAction

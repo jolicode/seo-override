@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 0.5.0 (2017-10-12)
 
 * [BC BREAK] Remove SeoManagerInterface
 * Add blacklist behaviour to avoid useless fetcher runs

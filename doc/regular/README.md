@@ -55,7 +55,7 @@ than if it should parse your HTML itself.
 
 Note:
 > If a SEO property is not present in your HTML or not wrapped by our special
-> comments then it will simply not be overriden without SeoOverride throwing
+> comments then it will simply not be overridden without SeoOverride throwing
 > any error.
 
 Note:

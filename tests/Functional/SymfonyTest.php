@@ -133,7 +133,7 @@ HTML;
 
     public function test_it_does_not_override_seo_when_no_fetcher_matching()
     {
-        $response = $this->call('/', 'domain_unkown.com');
+        $response = $this->call('/', 'domain_unknown.com');
 
         $this->assertSame(self::NOT_OVERRIDDEN_HOMEPAGE_CONTENT, $response->getContent());
     }

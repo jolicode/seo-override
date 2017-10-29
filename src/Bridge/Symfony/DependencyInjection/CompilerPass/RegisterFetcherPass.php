@@ -21,9 +21,9 @@ class RegisterFetcherPass extends AbstractRegisterServicePass
         return 'seo_override.fetcher';
     }
 
-    protected function getName(bool $plurial): string
+    protected function getName(bool $plural): string
     {
-        return $plurial ? 'fetchers' : 'fetcher';
+        return $plural ? 'fetchers' : 'fetcher';
     }
 
     protected function getConfigurationParameterName(): string

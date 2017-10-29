@@ -21,9 +21,9 @@ class RegisterBlacklisterPass extends AbstractRegisterServicePass
         return 'seo_override.blacklister';
     }
 
-    protected function getName(bool $plurial): string
+    protected function getName(bool $plural): string
     {
-        return $plurial ? 'blacklisters' : 'blacklister';
+        return $plural ? 'blacklisters' : 'blacklister';
     }
 
     protected function getConfigurationParameterName(): string

@@ -135,7 +135,7 @@ class RegisterBlacklisterPassTest extends TestCase
             $this->compilerPass->process($this->container->reveal());
             self::fail('An exception should have been thrown');
         } catch (LogicException $e) {
-            self::assertSame('Unkown "blacklister2" blacklister. Available blacklisters are: blacklister1', $e->getMessage());
+            self::assertSame('Unknown "blacklister2" blacklister. Available blacklisters are: blacklister1', $e->getMessage());
         }
     }
 
@@ -231,7 +231,7 @@ class RegisterBlacklisterPassTest extends TestCase
             $this->compilerPass->process($this->container->reveal());
             self::fail('An exception should have been thrown');
         } catch (LogicException $e) {
-            self::assertSame('Unkown "unknownOption" option for blacklister "blacklister1"', $e->getMessage());
+            self::assertSame('Unknown "unknownOption" option for blacklister "blacklister1"', $e->getMessage());
         }
     }
 

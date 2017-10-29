@@ -136,7 +136,7 @@ class RegisterFetcherPassTest extends TestCase
             $this->compilerPass->process($this->container->reveal());
             self::fail('An exception should have been thrown');
         } catch (LogicException $e) {
-            self::assertSame('Unkown "fetcher2" fetcher. Available fetchers are: fetcher1', $e->getMessage());
+            self::assertSame('Unknown "fetcher2" fetcher. Available fetchers are: fetcher1', $e->getMessage());
         }
     }
 
@@ -231,7 +231,7 @@ class RegisterFetcherPassTest extends TestCase
             $this->compilerPass->process($this->container->reveal());
             self::fail('An exception should have been thrown');
         } catch (LogicException $e) {
-            self::assertSame('Unkown "unknownOption" option for fetcher "fetcher1"', $e->getMessage());
+            self::assertSame('Unknown "unknownOption" option for fetcher "fetcher1"', $e->getMessage());
         }
     }
 

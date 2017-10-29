@@ -305,7 +305,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('blacklister1', $blacklisters[0]['type']);
     }
 
-    public function test_it_supports_blacklist_desactivation()
+    public function test_it_supports_blacklist_deactivation()
     {
         $container = new ContainerBuilder();
         $this->extension->load([

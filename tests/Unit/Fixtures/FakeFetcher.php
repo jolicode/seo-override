@@ -19,12 +19,12 @@ class FakeFetcher implements Fetcher
     private $requiredOption;
 
     /** @var string */
-    private $facultativeOption;
+    private $optionalOption;
 
-    public function __construct(string $requiredOption, $facultativeOption = 'yolo')
+    public function __construct(string $requiredOption, $optionalOption = 'yolo')
     {
         $this->requiredOption = $requiredOption;
-        $this->facultativeOption = $facultativeOption;
+        $this->optionalOption = $optionalOption;
     }
 
     public function fetch(string $path, string $domainAlias = null)

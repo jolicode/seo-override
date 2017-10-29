@@ -36,7 +36,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
             // Check if the configured type correspond to an existing service
             if (!array_key_exists($type, $serviceByAlias)) {
                 throw new LogicException(sprintf(
-                    'Unkown "%s" %s. Available %s are: %s',
+                    'Unknown "%s" %s. Available %s are: %s',
                     $type,
                     $this->getName(false),
                     $this->getName(true),
@@ -52,7 +52,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
             );
 
             $serviceDefinition = $container->getDefinition($serviceByAlias[$type]['id']);
-            $arguments = $this->getContructorArguments($serviceDefinition);
+            $arguments = $this->getConstructorArguments($serviceDefinition);
 
             // Configure service constructor's argument
             foreach ($serviceConfiguration as $option => $value) {
@@ -63,7 +63,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
                 // Ensure the option matches a constructor's argument
                 if (false === $index) {
                     throw new LogicException(sprintf(
-                        'Unkown "%s" option for %s "%s"',
+                        'Unknown "%s" option for %s "%s"',
                         $option,
                         $this->getName(false),
                         $type
@@ -84,7 +84,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
 
     abstract protected function getTag(): string;
 
-    abstract protected function getName(bool $plurial): string;
+    abstract protected function getName(bool $plural): string;
 
     abstract protected function getConfigurationParameterName(): string;
 
@@ -158,7 +158,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
         }
     }
 
-    private function getContructorArguments(Definition $definition): array
+    private function getConstructorArguments(Definition $definition): array
     {
         $argumentsOrderByName = [];
         $class = new ReflectionClass($definition->getClass());

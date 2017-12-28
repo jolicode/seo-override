@@ -1,6 +1,7 @@
 services:
     app.controller:
         class: Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller\AppController
+        public: true
         calls:
             - [setContainer, ["@service_container"]]
 

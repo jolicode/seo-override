@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Unreleased
+
+* Fix Symfony 3.4 / 4.0 compatibility with DataCollector
+
 ## 0.5.0 (2017-10-12)
 
 * [BC BREAK] Remove SeoManagerInterface

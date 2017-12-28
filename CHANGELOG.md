@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Unreleased
+## 0.5.1 (2017-12-28)
 
 * Fix Symfony 3.4 / 4.0 compatibility with DataCollector
 

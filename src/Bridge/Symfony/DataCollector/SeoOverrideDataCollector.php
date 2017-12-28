@@ -55,6 +55,14 @@ class SeoOverrideDataCollector extends DataCollector implements LateDataCollecto
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function reset()
+    {
+        $this->data = array();
+    }
+
     public function getFetchers()
     {
         return $this->data['fetchers'];

@@ -60,7 +60,7 @@ class SeoOverrideDataCollector extends DataCollector implements LateDataCollecto
      */
     public function reset()
     {
-        $this->data = array();
+        $this->data = [];
     }
 
     public function getFetchers()

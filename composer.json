@@ -32,6 +32,8 @@
         "doctrine/doctrine-bundle": "~1.6",
         "doctrine/orm": "~2.5",
         "friendsofphp/php-cs-fixer": "~2.2",
+        "phpdocumentor/reflection-docblock": "^4.0",
+        "phpspec/prophecy": "^1.7",
         "symfony/config": "~3.0|~4.0",
         "symfony/dependency-injection": "~3.0|~4.0",
         "symfony/framework-bundle": "~3.0|~4.0",

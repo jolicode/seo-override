@@ -1,7 +1,7 @@
 index:
     path: /
     defaults:
-        _controller: FrameworkBundle:Template:template
+        _controller: app.controller:templateAction
         template:    index.html.twig
 
 error:

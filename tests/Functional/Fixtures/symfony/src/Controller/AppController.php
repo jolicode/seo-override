@@ -8,6 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AppController extends Controller
 {
+    public function templateAction(string $template)
+    {
+        return new Response($this->renderView($template), 200);
+    }
+
     public function errorAction()
     {
         return new Response($this->renderView('error.html.twig'), 400);

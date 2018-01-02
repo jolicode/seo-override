@@ -32,13 +32,13 @@
         "doctrine/doctrine-bundle": "~1.6",
         "doctrine/orm": "~2.5",
         "friendsofphp/php-cs-fixer": "~2.2",
-        "symfony/config": "~2.7|~3.0",
-        "symfony/dependency-injection": "~2.7|~3.0",
-        "symfony/framework-bundle": "~2.7.25|~2.8.15|~3.0",
-        "symfony/http-kernel": "~2.7|~3.0",
-        "symfony/phpunit-bridge": "^3.3",
-        "symfony/twig-bundle": "~2.7|~3.0",
-        "symfony/yaml": "~2.7|~3.0"
+        "symfony/config": "~3.0|~4.0",
+        "symfony/dependency-injection": "~3.0|~4.0",
+        "symfony/framework-bundle": "~3.0|~4.0",
+        "symfony/http-kernel": "~3.0|~4.0",
+        "symfony/phpunit-bridge": "^3.3|~4.0",
+        "symfony/twig-bundle": "~3.0|~4.0",
+        "symfony/yaml": "~3.0|~4.0"
     },
     "config": {
         "sort-packages": true
@@ -47,10 +47,5 @@
         "branch-alias": {
             "dev-master": "0.x-dev"
         }
-    },
-    "scripts": {
-        "test": [
-            "SYMFONY_PHPUNIT_REMOVE=\"symfony/yaml\" vendor/bin/simple-phpunit"
-        ]
     }
 }

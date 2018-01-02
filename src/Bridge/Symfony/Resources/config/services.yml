@@ -10,6 +10,7 @@ services:
 
     seo_override.subscriber:
         class: Joli\SeoOverride\Bridge\Symfony\Subscriber\SeoSubscriber
+        public: true
         arguments:
             - '@seo_override.manager'
             - '@seo_override.blacklister.default' # Service declared in the DIC extension

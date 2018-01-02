@@ -1,8 +1,0 @@
-imports:
-    - { resource: config.yml }
-
-framework:
-    templating:
-        enabled: false
-    assets:
-        enabled: false

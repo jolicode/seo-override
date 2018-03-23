@@ -17,7 +17,7 @@ Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride:
     hashedPath:
       column: hashed_path
       type: string
-      length: 32
+      length: 40
     domainAlias:
       column: domain_alias
       type: string

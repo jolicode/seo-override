@@ -23,7 +23,7 @@ class SeoOverrideRepository extends EntityRepository
     {
         return $this->createQueryBuilder('s')
              ->andWhere('s.hashedPath = :hashedPath')
-             ->setParameter('hashedPath', md5($path))
+             ->setParameter('hashedPath', sha1($path))
              ->andWhere('s.domainAlias = :domainAlias')
              ->setParameter('domainAlias', $domainAlias)
              ->setMaxResults(1)

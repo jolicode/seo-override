@@ -51,7 +51,7 @@ class SeoOverride
     public function setPath(string $path)
     {
         $this->path = $path;
-        $this->hashedPath = md5($path);
+        $this->hashedPath = sha1($path);
     }
 
     public function getHashedPath()

@@ -2,8 +2,9 @@
 
 ## Not yet released
 
-* Dropped compatibility with Symfony < 3.0
-* Added compatibility with Symfony 4.0
+* Drop compatibility with Symfony < 3.0
+* Add compatibility with Symfony 4.0
+* [BC BREAK][Doctrine] Changed SeoOverride SQL index to use a md5 of the path
 
 ## 0.5.1 (2017-12-28)
 

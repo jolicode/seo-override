@@ -22,12 +22,13 @@ class SeoOverrideRepository extends EntityRepository
     public function findOneForPathAndDomain(string $path, string $domainAlias = null)
     {
         return $this->createQueryBuilder('s')
-             ->andWhere('s.path = :path')
-             ->setParameter('path', $path)
+             ->andWhere('s.hashedPath = :hashedPath')
+             ->setParameter('hashedPath', md5($path))
              ->andWhere('s.domainAlias = :domainAlias')
              ->setParameter('domainAlias', $domainAlias)
              ->setMaxResults(1)
              ->getQuery()
-             ->getOneOrNullResult();
+             ->getOneOrNullResult()
+        ;
     }
 }

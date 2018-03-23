@@ -24,6 +24,11 @@ class SeoOverride
     private $path;
 
     /**
+     * @var string
+     */
+    private $hashedPath;
+
+    /**
      * @var string|null
      */
     private $domainAlias;
@@ -46,6 +51,12 @@ class SeoOverride
     public function setPath(string $path)
     {
         $this->path = $path;
+        $this->hashedPath = md5($path);
+    }
+
+    public function getHashedPath()
+    {
+        return $this->hashedPath;
     }
 
     public function getDomainAlias()

@@ -5,6 +5,7 @@
 * Drop compatibility with Symfony < 3.0
 * Add compatibility with Symfony 4.0
 * [BC BREAK][Doctrine] Changed SeoOverride SQL index to use a hash of the path
+(you should update your database schema due to SQL column and index changes)
 
 ## 0.5.1 (2017-12-28)
 

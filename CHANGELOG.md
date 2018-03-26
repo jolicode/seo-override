@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 0.6.0 (2018-03-26)
 
 * Drop compatibility with Symfony < 3.0
 * Add compatibility with Symfony 4.0

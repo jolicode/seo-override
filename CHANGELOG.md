@@ -1,5 +1,9 @@
 # Changes between versions
 
+## Not yet released
+
+* Fix HTML overrides when tags contain new lines
+
 ## 0.6.0 (2018-03-26)
 
 * Drop compatibility with Symfony < 3.0

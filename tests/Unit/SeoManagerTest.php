@@ -214,6 +214,40 @@ HTML;
         self::assertSame($expected, $seoManager->overrideHtml($html));
     }
 
+    public function test_it_overrides_html_with_new_lines()
+    {
+        $seo = new Seo();
+        $seo->setTitle('new title');
+        $seo->setDescription('new description');
+
+        $seoManager = new SeoManager([], [], $seo);
+
+        $html = <<<'HTML'
+<html>
+<head>
+<!--SEO_TITLE--><title>
+old title
+</title><!--/SEO_TITLE-->
+<!--SEO_DESCRIPTION-->
+<meta name="description" content="old description">
+<!--/SEO_DESCRIPTION-->
+</head>
+<body></body>
+</html>
+HTML;
+        $expected = <<<'HTML'
+<html>
+<head>
+<title>new title</title>
+<meta name="description" content="new description" />
+</head>
+<body></body>
+</html>
+HTML;
+
+        self::assertSame($expected, $seoManager->overrideHtml($html));
+    }
+
     public function test_it_does_not_override_html_when_no_override()
     {
         $seoManager = new SeoManager([], []);

@@ -117,13 +117,13 @@ class SeoManager
 
         return preg_replace(
             [
-                '@<!--SEO_TITLE-->(.+)<!--/SEO_TITLE-->@im',
-                '@<!--SEO_DESCRIPTION-->(.*?)<!--/SEO_DESCRIPTION-->@im',
-                '@<!--SEO_KEYWORDS-->(.*?)<!--/SEO_KEYWORDS-->@im',
-                '@<!--SEO_ROBOTS-->(.*?)<!--/SEO_ROBOTS-->@im',
-                '@<!--SEO_CANONICAL-->(.*?)<!--/SEO_CANONICAL-->@im',
-                '@<!--SEO_OG_TITLE-->(.*?)<!--/SEO_OG_TITLE-->@im',
-                '@<!--SEO_OG_DESCRIPTION-->(.*?)<!--/SEO_OG_DESCRIPTION-->@im',
+                '@<!--SEO_TITLE-->(.+)<!--/SEO_TITLE-->@ims',
+                '@<!--SEO_DESCRIPTION-->(.*?)<!--/SEO_DESCRIPTION-->@ims',
+                '@<!--SEO_KEYWORDS-->(.*?)<!--/SEO_KEYWORDS-->@ims',
+                '@<!--SEO_ROBOTS-->(.*?)<!--/SEO_ROBOTS-->@ims',
+                '@<!--SEO_CANONICAL-->(.*?)<!--/SEO_CANONICAL-->@ims',
+                '@<!--SEO_OG_TITLE-->(.*?)<!--/SEO_OG_TITLE-->@ims',
+                '@<!--SEO_OG_DESCRIPTION-->(.*?)<!--/SEO_OG_DESCRIPTION-->@ims',
             ],
             [
                 $seo->getTitle() ? '<title>'.$this->encodeHtmlChars($seo->getTitle()).'</title>' : '$1',

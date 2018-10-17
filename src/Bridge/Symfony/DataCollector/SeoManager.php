@@ -11,30 +11,31 @@
 
 namespace Joli\SeoOverride\Bridge\Symfony\DataCollector;
 
+use Joli\SeoOverride\AbstractSeoManager;
 use Joli\SeoOverride\Fetcher;
 use Joli\SeoOverride\Seo;
-use Joli\SeoOverride\SeoManager as BaseSeoManager;
+use Joli\SeoOverride\SeoManagerInterface;
 
-class SeoManager extends BaseSeoManager
+class SeoManager extends AbstractSeoManager implements SeoManagerInterface
 {
+    protected $baseSeoManager;
     protected $data = [];
     private $fetchersMapping;
 
-    public function __construct(array $fetchers, array $domains, Seo $seo = null, array $fetchersMapping)
+    public function __construct(SeoManagerInterface $seoManager, array $fetchersMapping)
     {
-        parent::__construct($fetchers, $domains, $seo);
-
+        $this->baseSeoManager = $seoManager;
         $this->fetchersMapping = $fetchersMapping;
 
         $this->data['fetchersMapping'] = $fetchersMapping;
         $this->data['fetchers'] = [];
-        $this->data['domains'] = array_keys($domains);
+        $this->data['domains'] = array_keys($this->baseSeoManager->getDomains());
         $this->data['status'] = SeoOverrideDataCollector::STATUS_NOT_RUN;
         $this->data['seo_versions'] = [];
 
-        if ($seo) {
+        if ($this->baseSeoManager->getSeo()) {
             $this->data['seo_versions'][] = [
-                'seo' => clone $seo,
+                'seo' => clone $this->baseSeoManager->getSeo(),
                 'origin' => 'initial',
             ];
         }
@@ -45,9 +46,26 @@ class SeoManager extends BaseSeoManager
         return $this->data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function getSeo(): Seo
+    {
+        return $this->baseSeoManager->getSeo();
+    }
+
+    public function getDomains(): array
+    {
+        return $this->baseSeoManager->getDomains();
+    }
+
+    public function getEncoding(): string
+    {
+        return $this->baseSeoManager->getEncoding();
+    }
+
+    public function getFetchers(): array
+    {
+        return $this->baseSeoManager->getFetchers();
+    }
+
     public function updateSeo(string $path, string $domain): Seo
     {
         $this->data['path'] = $path;
@@ -62,15 +80,12 @@ class SeoManager extends BaseSeoManager
         return parent::updateSeo($path, $domain);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function fetch(Fetcher $fetcher, string $path, string $domainAlias = null)
     {
         $callback = function (string $path, string $domainAlias = null, Seo $seo = null) use ($fetcher) {
             $this->data['fetchers'][] = [
-                'type' => array_search(get_class($fetcher), $this->fetchersMapping, true),
-                'class' => get_class($fetcher),
+                'type' => array_search(\get_class($fetcher), $this->fetchersMapping, true),
+                'class' => \get_class($fetcher),
                 'matched' => $seo instanceof Seo,
                 'domain_alias' => $domainAlias,
             ];
@@ -78,41 +93,32 @@ class SeoManager extends BaseSeoManager
         $callback->bindTo($this);
 
         $collectorFetcher = new CallbackFetcher($fetcher, $callback);
-        $seo = parent::fetch($collectorFetcher, $path, $domainAlias);
+        $seo = $this->baseSeoManager->fetch($collectorFetcher, $path, $domainAlias);
 
         if ($seo) {
             $this->data['status'] = SeoOverrideDataCollector::STATUS_MATCHED;
             $this->data['seo_versions'][] = [
                 'seo' => clone $seo,
-                'fetcher_type' => array_search(get_class($fetcher), $this->fetchersMapping, true),
-                'fetcher_class' => get_class($fetcher),
+                'fetcher_type' => array_search(\get_class($fetcher), $this->fetchersMapping, true),
+                'fetcher_class' => \get_class($fetcher),
                 'origin' => 'from fetcher',
             ];
         }
 
-        return $seo;
+        return parent::fetch($fetcher, $path, $domainAlias);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function overrideHtml(string $html): string
     {
         if (SeoOverrideDataCollector::STATUS_NOT_RUN === $this->data['status']) {
             $this->data['status'] = SeoOverrideDataCollector::STATUS_BLACKLISTED;
         }
 
-        return parent::overrideHtml($html);
+        return $this->baseSeoManager->overrideHtml($html);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function findDomainAlias(string $domain)
     {
-        $domainAlias = parent::findDomainAlias($domain);
-        $this->data['domain_alias'] = $domainAlias;
-
-        return $domainAlias;
+        return $this->data['domain_alias'] = $this->baseSeoManager->findDomainAlias($domain);
     }
 }

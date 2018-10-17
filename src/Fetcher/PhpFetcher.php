@@ -45,7 +45,7 @@ class PhpFetcher implements Fetcher
             if (file_exists($this->includePath)) {
                 $overrides = require $this->includePath;
 
-                if (!is_array($overrides)) {
+                if (!\is_array($overrides)) {
                     if ($this->strict) {
                         throw new \LogicException(sprintf('Included file "%s" should return an array', $this->includePath));
                     }

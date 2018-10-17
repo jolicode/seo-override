@@ -11,6 +11,7 @@
 
 namespace Joli\SeoOverride\Bridge\Symfony\DataCollector;
 
+use Joli\SeoOverride\SeoManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
@@ -31,7 +32,7 @@ class SeoOverrideDataCollector extends DataCollector implements LateDataCollecto
     ];
 
     /**
-     * @var SeoManager
+     * @var SeoManagerInterface
      */
     private $seoManager;
 
@@ -40,24 +41,15 @@ class SeoOverrideDataCollector extends DataCollector implements LateDataCollecto
         $this->seoManager = $seoManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function lateCollect()
     {
         $this->data = $this->seoManager->getData();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function reset()
     {
         $this->data = [];
@@ -103,9 +95,6 @@ class SeoOverrideDataCollector extends DataCollector implements LateDataCollecto
         return $this->data['domain_alias'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'seo-override';

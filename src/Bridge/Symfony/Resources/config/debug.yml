@@ -2,14 +2,14 @@ parameters:
     seo_override.fetchers_mapping: [] # Parameter configured in the DIC extension
 
 services:
-    seo_override.manager:
+    seo_override.debug_manager:
         class: Joli\SeoOverride\Bridge\Symfony\DataCollector\SeoManager
+        decorates: seo_override.manager
+        decoration_priority: -1000
         arguments:
-            - []
-            - '%seo_override.domains%'
-            - ~
+            - '@seo_override.debug_manager.inner'
             - '%seo_override.fetchers_mapping%'
-        public: true
+        public: false
 
     seo_override.data_collector:
         class: Joli\SeoOverride\Bridge\Symfony\DataCollector\SeoOverrideDataCollector
@@ -17,7 +17,7 @@ services:
             - '@seo_override.manager'
         tags:
             -
-                name:     data_collector
+                name: data_collector
                 template: '@SeoOverride/data_collector/seo-override.html.twig'
-                id:       'seo-override'
+                id: 'seo-override'
         public: false

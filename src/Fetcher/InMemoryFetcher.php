@@ -54,11 +54,11 @@ class InMemoryFetcher implements Fetcher
     {
         $domainAlias = $domainAlias ?: '';
 
-        if (!array_key_exists($domainAlias, $this->overrides) || !is_array($this->overrides[$domainAlias])) {
+        if (!array_key_exists($domainAlias, $this->overrides) || !\is_array($this->overrides[$domainAlias])) {
             return null;
         }
 
-        if (!array_key_exists($path, $this->overrides[$domainAlias]) || !is_array($this->overrides[$domainAlias][$path])) {
+        if (!array_key_exists($path, $this->overrides[$domainAlias]) || !\is_array($this->overrides[$domainAlias][$path])) {
             return null;
         }
 

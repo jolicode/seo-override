@@ -113,7 +113,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
         }
 
         // Error here if at least one service is missing an alias
-        if (count($serviceIdsMissingAlias) > 0) {
+        if (\count($serviceIdsMissingAlias) > 0) {
             throw new LogicException(sprintf(
                 'These %s services do not define an "alias" attribute on their "%s" tags: %s',
                 $this->getName(false),
@@ -125,7 +125,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
         // Iterate over services list, ensure aliases are unique and flatten the service list
         $serviceByAlias = [];
         foreach ($servicesByAlias as $alias => $services) {
-            if (count($services) > 1) {
+            if (\count($services) > 1) {
                 throw new LogicException(sprintf(
                     '%s aliases should be unique. The "%s" alias is defined by these %s: %s',
                     ucfirst($this->getName(false)),

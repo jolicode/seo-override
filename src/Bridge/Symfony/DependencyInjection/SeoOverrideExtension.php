@@ -20,7 +20,7 @@ class SeoOverrideExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(\dirname(__DIR__).'/Resources/config'));
         $loader->load('services.yml');
 
         $configuration = $this->getConfiguration($configs, $container);
@@ -43,7 +43,7 @@ class SeoOverrideExtension extends Extension
 
         $types = array_column($fetchers, 'type');
 
-        if (in_array('doctrine', $types, true)) {
+        if (\in_array('doctrine', $types, true)) {
             $loader->load('doctrine_fetcher.yml');
         }
     }

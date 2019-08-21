@@ -12,11 +12,14 @@
 namespace Joli\SeoOverride\Bridge\Doctrine\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
 
 class SeoOverrideRepository extends EntityRepository
 {
     /**
+     * @throws NonUniqueResultException
+     *
      * @return SeoOverride|null
      */
     public function findOneForPathAndDomain(string $path, string $domainAlias = null)
@@ -25,17 +28,15 @@ class SeoOverrideRepository extends EntityRepository
             ->andWhere('s.hashedPath = :hashedPath')
             ->setParameter('hashedPath', sha1($path));
 
-        if ($domainAlias === null) {
-                $qb->andWhere('s.domainAlias IS NULL');
+        if (null === $domainAlias) {
+            $qb->andWhere('s.domainAlias IS NULL');
         } else {
-            $qb ->andWhere('s.domainAlias = :domainAlias')
+            $qb->andWhere('s.domainAlias = :domainAlias')
                 ->setParameter('domainAlias', $domainAlias);
         }
 
-        $qb->setMaxResults(1)
+        return $qb->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
-
-        return $qb;
     }
 }

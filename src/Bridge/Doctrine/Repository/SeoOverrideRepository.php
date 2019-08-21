@@ -18,8 +18,6 @@ use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
 class SeoOverrideRepository extends EntityRepository
 {
     /**
-     * @throws NonUniqueResultException
-     *
      * @return SeoOverride|null
      */
     public function findOneForPathAndDomain(string $path, string $domainAlias = null)

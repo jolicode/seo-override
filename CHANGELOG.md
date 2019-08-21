@@ -3,6 +3,7 @@
 ## Not yet released
 
 * Fix SQL issue for some database when domain is null
+* Fix deprecation messages and fix lowest package dependencies
 
 ## 0.6.1 (2018-04-24)
 

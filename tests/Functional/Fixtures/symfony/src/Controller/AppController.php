@@ -2,11 +2,11 @@
 
 namespace Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class AppController extends Controller
+class AppController extends AbstractController
 {
     public function templateAction(string $template)
     {

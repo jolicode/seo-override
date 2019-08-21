@@ -69,8 +69,8 @@ class SeoManager extends BaseSeoManager
     {
         $callback = function (string $path, string $domainAlias = null, Seo $seo = null) use ($fetcher) {
             $this->data['fetchers'][] = [
-                'type' => array_search(get_class($fetcher), $this->fetchersMapping, true),
-                'class' => get_class($fetcher),
+                'type' => array_search(\get_class($fetcher), $this->fetchersMapping, true),
+                'class' => \get_class($fetcher),
                 'matched' => $seo instanceof Seo,
                 'domain_alias' => $domainAlias,
             ];
@@ -84,8 +84,8 @@ class SeoManager extends BaseSeoManager
             $this->data['status'] = SeoOverrideDataCollector::STATUS_MATCHED;
             $this->data['seo_versions'][] = [
                 'seo' => clone $seo,
-                'fetcher_type' => array_search(get_class($fetcher), $this->fetchersMapping, true),
-                'fetcher_class' => get_class($fetcher),
+                'fetcher_type' => array_search(\get_class($fetcher), $this->fetchersMapping, true),
+                'fetcher_class' => \get_class($fetcher),
                 'origin' => 'from fetcher',
             ];
         }

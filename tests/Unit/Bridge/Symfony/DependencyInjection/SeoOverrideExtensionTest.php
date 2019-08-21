@@ -188,7 +188,7 @@ class SeoOverrideExtensionTest extends TestCase
 
         $parameters = $container->getParameter('seo_override.domains');
 
-        self::assertTrue(is_array($parameters));
+        self::assertTrue(\is_array($parameters));
         self::assertCount(1, $parameters);
         self::assertArrayHasKey('domain1', $parameters);
         self::assertSame('example.fr', $parameters['domain1']);
@@ -211,7 +211,7 @@ class SeoOverrideExtensionTest extends TestCase
 
         $parameters = $container->getParameter('seo_override.domains');
 
-        self::assertTrue(is_array($parameters));
+        self::assertTrue(\is_array($parameters));
         self::assertCount(3, $parameters);
         self::assertArrayHasKey('domain1', $parameters);
         self::assertArrayHasKey('domain2', $parameters);

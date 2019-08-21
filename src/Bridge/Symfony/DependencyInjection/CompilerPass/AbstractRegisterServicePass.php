@@ -34,7 +34,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
             unset($serviceConfiguration['type']);
 
             // Check if the configured type correspond to an existing service
-            if (!array_key_exists($type, $serviceByAlias)) {
+            if (!\array_key_exists($type, $serviceByAlias)) {
                 throw new LogicException(sprintf(
                     'Unknown "%s" %s. Available %s are: %s',
                     $type,
@@ -99,7 +99,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
         foreach ($availableServiceIds as $serviceId => $tags) {
             foreach ($tags as $attributes) {
                 // Missing alias attribute
-                if (!array_key_exists('alias', $attributes)) {
+                if (!\array_key_exists('alias', $attributes)) {
                     $serviceIdsMissingAlias[] = $serviceId;
                     continue;
                 }
@@ -113,7 +113,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
         }
 
         // Error here if at least one service is missing an alias
-        if (count($serviceIdsMissingAlias) > 0) {
+        if (\count($serviceIdsMissingAlias) > 0) {
             throw new LogicException(sprintf(
                 'These %s services do not define an "alias" attribute on their "%s" tags: %s',
                 $this->getName(false),
@@ -125,7 +125,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
         // Iterate over services list, ensure aliases are unique and flatten the service list
         $serviceByAlias = [];
         foreach ($servicesByAlias as $alias => $services) {
-            if (count($services) > 1) {
+            if (\count($services) > 1) {
                 throw new LogicException(sprintf(
                     '%s aliases should be unique. The "%s" alias is defined by these %s: %s',
                     ucfirst($this->getName(false)),
@@ -143,10 +143,10 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
 
     private function assertServiceHasMandatoryOption(array $serviceConfiguration, array $tagAttributes, string $type)
     {
-        if (array_key_exists('required_options', $tagAttributes)) {
+        if (\array_key_exists('required_options', $tagAttributes)) {
             $requiredOptions = explode(',', $tagAttributes['required_options']);
             foreach ($requiredOptions as $option) {
-                if (!array_key_exists($option, $serviceConfiguration)) {
+                if (!\array_key_exists($option, $serviceConfiguration)) {
                     throw new LogicException(sprintf(
                         'The "%s" option is mandatory for %s "%s"',
                         $option,

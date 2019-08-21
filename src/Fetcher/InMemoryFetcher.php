@@ -54,11 +54,11 @@ class InMemoryFetcher implements Fetcher
     {
         $domainAlias = $domainAlias ?: '';
 
-        if (!array_key_exists($domainAlias, $this->overrides) || !is_array($this->overrides[$domainAlias])) {
+        if (!\array_key_exists($domainAlias, $this->overrides) || !\is_array($this->overrides[$domainAlias])) {
             return null;
         }
 
-        if (!array_key_exists($path, $this->overrides[$domainAlias]) || !is_array($this->overrides[$domainAlias][$path])) {
+        if (!\array_key_exists($path, $this->overrides[$domainAlias]) || !\is_array($this->overrides[$domainAlias][$path])) {
             return null;
         }
 
@@ -69,25 +69,25 @@ class InMemoryFetcher implements Fetcher
     {
         $seo = new Seo();
 
-        if (array_key_exists('title', $array)) {
+        if (\array_key_exists('title', $array)) {
             $seo->setTitle($array['title']);
         }
-        if (array_key_exists('description', $array)) {
+        if (\array_key_exists('description', $array)) {
             $seo->setDescription($array['description']);
         }
-        if (array_key_exists('keywords', $array)) {
+        if (\array_key_exists('keywords', $array)) {
             $seo->setKeywords($array['keywords']);
         }
-        if (array_key_exists('robots', $array)) {
+        if (\array_key_exists('robots', $array)) {
             $seo->setRobots($array['robots']);
         }
-        if (array_key_exists('canonical', $array)) {
+        if (\array_key_exists('canonical', $array)) {
             $seo->setCanonical($array['canonical']);
         }
-        if (array_key_exists('ogTitle', $array)) {
+        if (\array_key_exists('ogTitle', $array)) {
             $seo->setOgTitle($array['ogTitle']);
         }
-        if (array_key_exists('ogDescription', $array)) {
+        if (\array_key_exists('ogDescription', $array)) {
             $seo->setOgDescription($array['ogDescription']);
         }
 

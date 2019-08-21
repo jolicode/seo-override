@@ -12,7 +12,6 @@
 namespace Joli\SeoOverride\Bridge\Doctrine\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
 
 class SeoOverrideRepository extends EntityRepository
@@ -33,8 +32,7 @@ class SeoOverrideRepository extends EntityRepository
                 ->setParameter('domainAlias', $domainAlias);
         }
 
-        return $qb->setMaxResults(1)
-            ->getQuery()
+        return $qb->getQuery()
             ->getOneOrNullResult();
     }
 }

@@ -32,7 +32,8 @@ class SeoOverrideRepository extends EntityRepository
                 ->setParameter('domainAlias', $domainAlias);
         }
 
-        return $qb->getQuery()
+        return $qb->setMaxResults(1)
+            ->getQuery()
             ->getOneOrNullResult();
     }
 }

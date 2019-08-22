@@ -1,6 +1,6 @@
 # Changes between versions
 
-## Not yet released
+## 0.6.2 (2019-08-22)
 
 * Fix SQL issue for some database when domain is null
 * Fix deprecation messages and fix lowest package dependencies

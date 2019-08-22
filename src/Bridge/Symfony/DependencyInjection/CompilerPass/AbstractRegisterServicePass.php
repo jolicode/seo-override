@@ -34,7 +34,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
             unset($serviceConfiguration['type']);
 
             // Check if the configured type correspond to an existing service
-            if (!array_key_exists($type, $serviceByAlias)) {
+            if (!\array_key_exists($type, $serviceByAlias)) {
                 throw new LogicException(sprintf(
                     'Unknown "%s" %s. Available %s are: %s',
                     $type,
@@ -99,7 +99,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
         foreach ($availableServiceIds as $serviceId => $tags) {
             foreach ($tags as $attributes) {
                 // Missing alias attribute
-                if (!array_key_exists('alias', $attributes)) {
+                if (!\array_key_exists('alias', $attributes)) {
                     $serviceIdsMissingAlias[] = $serviceId;
                     continue;
                 }
@@ -143,10 +143,10 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
 
     private function assertServiceHasMandatoryOption(array $serviceConfiguration, array $tagAttributes, string $type)
     {
-        if (array_key_exists('required_options', $tagAttributes)) {
+        if (\array_key_exists('required_options', $tagAttributes)) {
             $requiredOptions = explode(',', $tagAttributes['required_options']);
             foreach ($requiredOptions as $option) {
-                if (!array_key_exists($option, $serviceConfiguration)) {
+                if (!\array_key_exists($option, $serviceConfiguration)) {
                     throw new LogicException(sprintf(
                         'The "%s" option is mandatory for %s "%s"',
                         $option,

@@ -40,7 +40,7 @@ HTML;
         parent::setUpBeforeClass();
         self::bootKernel();
 
-        $databasePath = self::$kernel->getRootDir().'/data/data.sqlite';
+        $databasePath = static::$kernel->getProjectDir().'/data/data.sqlite';
         if (file_exists($databasePath)) {
             unlink($databasePath);
         }

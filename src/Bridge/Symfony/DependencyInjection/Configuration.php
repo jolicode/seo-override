@@ -19,8 +19,8 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('seo_override');
+        $treeBuilder = new TreeBuilder('seo_override');
+        $rootNode = method_exists(TreeBuilder::class, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('seo_override');
 
         $this->addFetchersSection($rootNode);
         $this->addDomainSection($rootNode);

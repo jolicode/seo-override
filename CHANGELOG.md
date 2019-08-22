@@ -2,7 +2,7 @@
 
 ## Not yet released
 
-NC
+* Fix SQL issue for some database when domain is null
 
 ## 0.6.1 (2018-04-24)
 

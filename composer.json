@@ -29,18 +29,15 @@
     },
     "require-dev": {
         "ext-sqlite3": "*",
-        "doctrine/doctrine-bundle": "~1.6",
-        "doctrine/orm": "~2.5",
-        "friendsofphp/php-cs-fixer": "~2.2",
+        "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5",
+        "friendsofphp/php-cs-fixer": "^2.2",
         "phpdocumentor/reflection-docblock": "^4.0",
         "phpspec/prophecy": "^1.7",
-        "symfony/config": "~3.0|~4.0",
-        "symfony/dependency-injection": "~3.0|~4.0",
-        "symfony/framework-bundle": "~3.0|~4.0",
-        "symfony/http-kernel": "~3.0|~4.0",
-        "symfony/phpunit-bridge": "^3.3|~4.0",
-        "symfony/twig-bundle": "~3.0|~4.0",
-        "symfony/yaml": "~3.0|~4.0"
+        "symfony/framework-bundle": "^3.4.25|~4.0",
+        "symfony/phpunit-bridge": "^3.4.30|~4.0",
+        "symfony/twig-bundle": "^3.4|~4.0",
+        "symfony/yaml": "^3.4|~4.0"
     },
     "config": {
         "sort-packages": true
@@ -49,5 +46,15 @@
         "branch-alias": {
             "dev-master": "0.x-dev"
         }
-    }
+    },
+    "conflict": {
+        "doctrine/doctrine-bundle": "<1.6",
+        "doctrine/orm": "<2.5",
+        "symfony/framework-bundle": "<3.4.25",
+        "symfony/twig-bundle": "<3.4",
+        "symfony/yaml": "<3.4",
+        "symfony/symfony": "<3.4"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

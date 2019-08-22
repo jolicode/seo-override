@@ -8,24 +8,24 @@ services:
 framework:
     secret: 'azertyuiop'
     router:
-        resource: '%kernel.root_dir%/config/routing.yml'
+        resource: '%kernel.project_dir%/app/config/routing.yml'
         strict_requirements: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
         handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        save_path:   "%kernel.project_dir%/var/sessions/%kernel.environment%"
 
 doctrine:
     dbal:
         driver:   pdo_sqlite
-        path:     "%kernel.root_dir%/data/data.sqlite"
+        path:     "%kernel.project_dir%/app/data/data.sqlite"
         charset:  UTF8
     orm:
         mappings:
             SeoOverride:
                 type: yml
                 is_bundle: false
-                dir: '%kernel.root_dir%/../../../../../src/Bridge/Doctrine/Resources/config/doctrine'
+                dir: '%kernel.project_dir%/../../../../src/Bridge/Doctrine/Resources/config/doctrine'
                 prefix: Joli\SeoOverride\Bridge\Doctrine\Entity
                 alias: SeoOverride
 
@@ -45,7 +45,7 @@ seo_override:
                         title: 'new title for admin'
         -
             type: php
-            include_path: "%kernel.root_dir%/config/seo_overrides.php"
+            include_path: "%kernel.project_dir%/app/config/seo_overrides.php"
     domains:
         domain_doctrine: 'domain_doctrine.com'
         domain_in_memory: 'domain_in_memory.com'
@@ -55,3 +55,8 @@ seo_override:
         - { type: path, pattern: '^/admin' }
         - { type: not_method, method: ['GET', 'POST'] }
         - xml_http
+
+twig:
+    strict_variables: "%kernel.debug%"
+    paths:
+        '%kernel.project_dir%/templates': ~

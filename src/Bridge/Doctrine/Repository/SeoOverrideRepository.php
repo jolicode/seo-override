@@ -21,14 +21,19 @@ class SeoOverrideRepository extends EntityRepository
      */
     public function findOneForPathAndDomain(string $path, string $domainAlias = null)
     {
-        return $this->createQueryBuilder('s')
-             ->andWhere('s.hashedPath = :hashedPath')
-             ->setParameter('hashedPath', sha1($path))
-             ->andWhere('s.domainAlias = :domainAlias')
-             ->setParameter('domainAlias', $domainAlias)
-             ->setMaxResults(1)
-             ->getQuery()
-             ->getOneOrNullResult()
-        ;
+        $qb = $this->createQueryBuilder('s')
+            ->andWhere('s.hashedPath = :hashedPath')
+            ->setParameter('hashedPath', sha1($path));
+
+        if (null === $domainAlias) {
+            $qb->andWhere('s.domainAlias IS NULL');
+        } else {
+            $qb->andWhere('s.domainAlias = :domainAlias')
+                ->setParameter('domainAlias', $domainAlias);
+        }
+
+        return $qb->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

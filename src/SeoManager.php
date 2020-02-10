@@ -115,7 +115,7 @@ class SeoManager
     {
         $seo = $this->getSeo();
 
-        return preg_replace(
+        $replaced = preg_replace(
             [
                 '@<!--SEO_TITLE-->(.+)<!--/SEO_TITLE-->@ims',
                 '@<!--SEO_DESCRIPTION-->(.*?)<!--/SEO_DESCRIPTION-->@ims',
@@ -136,6 +136,9 @@ class SeoManager
             ],
             $html
         );
+
+        // @todo Log an error and get the preg_last_error()
+        return $replaced ?? $html;
     }
 
     /**

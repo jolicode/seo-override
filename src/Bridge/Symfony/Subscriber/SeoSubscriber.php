@@ -14,7 +14,7 @@ namespace Joli\SeoOverride\Bridge\Symfony\Subscriber;
 use Joli\SeoOverride\Bridge\Symfony\Blacklister;
 use Joli\SeoOverride\SeoManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -36,7 +36,7 @@ class SeoSubscriber implements EventSubscriberInterface
         $this->blacklister = $blacklister;
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
             $path = $event->getRequest()->getPathInfo();
@@ -62,7 +62,7 @@ class SeoSubscriber implements EventSubscriberInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::RESPONSE => [

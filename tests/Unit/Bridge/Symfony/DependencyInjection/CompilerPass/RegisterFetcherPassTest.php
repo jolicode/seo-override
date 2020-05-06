@@ -9,11 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Joli\SeoOverride\Tests\Unit\Bridge\Symfony\DependencyInjection;
+namespace Joli\SeoOverride\Tests\Unit\Bridge\Symfony\DependencyInjection\CompilerPass;
 
 use Joli\SeoOverride\Bridge\Symfony\DependencyInjection\CompilerPass\RegisterFetcherPass;
 use Joli\SeoOverride\Tests\Unit\Fixtures\FakeFetcher;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -22,6 +24,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class RegisterFetcherPassTest extends TestCase
 {
+    use ProphecyTrait;
+
     /** @var RegisterFetcherPass */
     private $compilerPass;
 
@@ -102,7 +106,10 @@ class RegisterFetcherPassTest extends TestCase
             ],
         ];
 
-        $this->managerDefinition->replaceArgument(0, [])->shouldBeCalled();
+        $this->managerDefinition->replaceArgument(0, [])
+            ->shouldBeCalled()
+            ->willReturn($this->managerDefinition)
+        ;
 
         $this->container->getParameter('seo_override.fetchers_configuration')->willReturn([]);
         $this->container->findTaggedServiceIds('seo_override.fetcher')->willReturn($tags);
@@ -188,9 +195,15 @@ class RegisterFetcherPassTest extends TestCase
 
         $fetcherDefinition = $this->prophesize(Definition::class);
         $fetcherDefinition->getClass()->willReturn(FakeFetcher::class);
-        $fetcherDefinition->replaceArgument(0, 'yolo')->shouldBeCalled();
+        $fetcherDefinition->replaceArgument(0, Argument::type('string'))
+            ->shouldBeCalled()
+            ->willReturn($fetcherDefinition)
+        ;
 
-        $this->managerDefinition->replaceArgument(0, [$fetcherDefinition])->shouldBeCalled();
+        $this->managerDefinition->replaceArgument(0, [$fetcherDefinition])
+            ->shouldBeCalled()
+            ->willReturn($this->managerDefinition)
+        ;
 
         $this->container->getParameter('seo_override.fetchers_configuration')->willReturn($fetchersConfiguration);
         $this->container->findTaggedServiceIds('seo_override.fetcher')->willReturn($tags);
@@ -281,17 +294,29 @@ class RegisterFetcherPassTest extends TestCase
 
         $fetcherDefinition1 = $this->prophesize(Definition::class);
         $fetcherDefinition1->getClass()->willReturn(FakeFetcher::class);
-        $fetcherDefinition1->replaceArgument(0, '1')->shouldBeCalled();
+        $fetcherDefinition1->replaceArgument(0, '1')
+            ->shouldBeCalled()
+            ->willReturn($fetcherDefinition1)
+        ;
 
         $fetcherDefinition2 = $this->prophesize(Definition::class);
         $fetcherDefinition2->getClass()->willReturn(FakeFetcher::class);
-        $fetcherDefinition2->replaceArgument(0, '2')->shouldBeCalled();
+        $fetcherDefinition2->replaceArgument(0, '2')
+            ->shouldBeCalled()
+            ->willReturn($fetcherDefinition2)
+        ;
 
         $fetcherDefinition3 = $this->prophesize(Definition::class);
         $fetcherDefinition3->getClass()->willReturn(FakeFetcher::class);
-        $fetcherDefinition3->replaceArgument(0, '3')->shouldBeCalled();
+        $fetcherDefinition3->replaceArgument(0, '3')
+            ->shouldBeCalled()
+            ->willReturn($fetcherDefinition3)
+        ;
 
-        $this->managerDefinition->replaceArgument(0, [$fetcherDefinition1, $fetcherDefinition2, $fetcherDefinition3])->shouldBeCalled();
+        $this->managerDefinition->replaceArgument(0, [$fetcherDefinition1, $fetcherDefinition2, $fetcherDefinition3])
+            ->shouldBeCalled()
+            ->willReturn($this->managerDefinition)
+        ;
 
         $this->container->getParameter('seo_override.fetchers_configuration')->willReturn($fetchersConfiguration);
         $this->container->findTaggedServiceIds('seo_override.fetcher')->willReturn($tags);
@@ -335,7 +360,10 @@ class RegisterFetcherPassTest extends TestCase
         $fetcherDefinition2 = $this->prophesize(Definition::class);
         $fetcherDefinition2->getClass()->willReturn(FakeFetcher::class);
 
-        $this->managerDefinition->replaceArgument(0, [$fetcherDefinition1, $fetcherDefinition2])->shouldBeCalled();
+        $this->managerDefinition->replaceArgument(0, [$fetcherDefinition1, $fetcherDefinition2])
+            ->shouldBeCalled()
+            ->willReturn($this->managerDefinition)
+        ;
 
         $this->container->getParameter('seo_override.fetchers_configuration')->willReturn($fetchersConfiguration);
         $this->container->findTaggedServiceIds('seo_override.fetcher')->willReturn($tags);

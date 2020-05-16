@@ -35,13 +35,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
 
             // Check if the configured type correspond to an existing service
             if (!\array_key_exists($type, $serviceByAlias)) {
-                throw new LogicException(sprintf(
-                    'Unknown "%s" %s. Available %s are: %s',
-                    $type,
-                    $this->getName(false),
-                    $this->getName(true),
-                    implode(',', array_keys($serviceByAlias))
-                ));
+                throw new LogicException(sprintf('Unknown "%s" %s. Available %s are: %s', $type, $this->getName(false), $this->getName(true), implode(',', array_keys($serviceByAlias))));
             }
 
             // Check service will receive mandatory options
@@ -62,12 +56,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
 
                 // Ensure the option matches a constructor's argument
                 if (false === $index) {
-                    throw new LogicException(sprintf(
-                        'Unknown "%s" option for %s "%s"',
-                        $option,
-                        $this->getName(false),
-                        $type
-                    ));
+                    throw new LogicException(sprintf('Unknown "%s" option for %s "%s"', $option, $this->getName(false), $type));
                 }
 
                 $serviceDefinition->replaceArgument($index, $value);
@@ -114,25 +103,14 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
 
         // Error here if at least one service is missing an alias
         if (\count($serviceIdsMissingAlias) > 0) {
-            throw new LogicException(sprintf(
-                'These %s services do not define an "alias" attribute on their "%s" tags: %s',
-                $this->getName(false),
-                $this->getTag(),
-                implode(', ', array_unique($serviceIdsMissingAlias))
-            ));
+            throw new LogicException(sprintf('These %s services do not define an "alias" attribute on their "%s" tags: %s', $this->getName(false), $this->getTag(), implode(', ', array_unique($serviceIdsMissingAlias))));
         }
 
         // Iterate over services list, ensure aliases are unique and flatten the service list
         $serviceByAlias = [];
         foreach ($servicesByAlias as $alias => $services) {
             if (\count($services) > 1) {
-                throw new LogicException(sprintf(
-                    '%s aliases should be unique. The "%s" alias is defined by these %s: %s',
-                    ucfirst($this->getName(false)),
-                    $alias,
-                    $this->getName(true),
-                    implode(', ', array_column($services, 'id'))
-                ));
+                throw new LogicException(sprintf('%s aliases should be unique. The "%s" alias is defined by these %s: %s', ucfirst($this->getName(false)), $alias, $this->getName(true), implode(', ', array_column($services, 'id'))));
             }
 
             $serviceByAlias[$alias] = $services[0];
@@ -147,12 +125,7 @@ abstract class AbstractRegisterServicePass implements CompilerPassInterface
             $requiredOptions = explode(',', $tagAttributes['required_options']);
             foreach ($requiredOptions as $option) {
                 if (!\array_key_exists($option, $serviceConfiguration)) {
-                    throw new LogicException(sprintf(
-                        'The "%s" option is mandatory for %s "%s"',
-                        $option,
-                        $this->getName(false),
-                        $type
-                    ));
+                    throw new LogicException(sprintf('The "%s" option is mandatory for %s "%s"', $option, $this->getName(false), $type));
                 }
             }
         }

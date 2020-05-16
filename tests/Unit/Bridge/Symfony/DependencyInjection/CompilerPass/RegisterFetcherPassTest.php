@@ -34,7 +34,7 @@ class RegisterFetcherPassTest extends TestCase
     /** @var ObjectProphecy */
     private $managerDefinition;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

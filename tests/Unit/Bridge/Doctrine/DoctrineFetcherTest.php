@@ -28,7 +28,7 @@ class DoctrineFetcherTest extends TestCase
     /** @var ObjectProphecy */
     private $repository;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

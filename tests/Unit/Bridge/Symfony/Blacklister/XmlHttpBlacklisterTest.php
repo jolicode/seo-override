@@ -21,7 +21,7 @@ class XmlHttpBlacklisterTest extends TestCase
     /** @var XmlHttpBlacklisterTest */
     private $blacklister;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

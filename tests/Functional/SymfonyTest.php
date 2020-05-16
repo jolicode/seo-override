@@ -35,7 +35,7 @@ class SymfonyTest extends KernelTestCase
 
 HTML;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         self::bootKernel();
@@ -45,7 +45,7 @@ HTML;
             unlink($databasePath);
         }
 
-        $application = new Application(self::$kernel);
+        $application = new Application(static::$kernel);
         $application->setAutoExit(false);
         $application->run(new ArrayInput([
             'doctrine:database:create',
@@ -66,7 +66,7 @@ HTML;
         $seoOverride->setSeo($seo);
 
         /** @var EntityManager $manager */
-        $manager = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $manager = static::$kernel->getContainer()->get('doctrine')->getManager();
         $manager->persist($seoOverride);
         $manager->flush();
     }
@@ -215,6 +215,10 @@ HTML;
 
         $request = Request::create($uri, $method, [], [], [], $server);
 
-        return self::$kernel->handle($request);
+        if (!static::$booted) {
+            static::bootKernel();
+        }
+
+        return static::$kernel->handle($request);
     }
 }

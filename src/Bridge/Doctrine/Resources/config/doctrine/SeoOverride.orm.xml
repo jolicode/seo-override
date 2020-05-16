@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride" table="joli_seo_override" repository-class="Joli\SeoOverride\Bridge\Doctrine\Repository\SeoOverrideRepository">
+    <indexes>
+      <index name="request_index" columns="hashed_path,domain_alias"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="path" type="text" column="path" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="hashedPath" type="string" column="hashed_path" length="40" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="domainAlias" type="string" column="domain_alias" length="255" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <embedded name="seo" class="Joli\SeoOverride\Bridge\Doctrine\Entity\Seo" column-prefix="seo"></embedded>
+  </entity>
+</doctrine-mapping>

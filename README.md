@@ -8,6 +8,8 @@
 
 Override your seo markup on the fly.
 
+⚠️ We do not maintain actively this package, instead we recommend to use [Redirection.io](https://redirection.io/) which is the perfect tool for managing HTTP redirections for businesses, marketing and SEO. It allows you to override SEO metadata as well as this package.
+
 ## Installation
 
 Use [Composer](http://getcomposer.org/) to install SeoOverride in your project:

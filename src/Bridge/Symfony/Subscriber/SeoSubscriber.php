@@ -12,7 +12,7 @@
 namespace Joli\SeoOverride\Bridge\Symfony\Subscriber;
 
 use Joli\SeoOverride\Bridge\Symfony\Blacklister;
-use Joli\SeoOverride\SeoManager;
+use Joli\SeoOverride\SeoManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class SeoSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var SeoManager
+     * @var SeoManagerInterface
      */
     private $seoManager;
 
@@ -30,7 +30,7 @@ class SeoSubscriber implements EventSubscriberInterface
      */
     private $blacklister;
 
-    public function __construct(SeoManager $seoManager, Blacklister $blacklister)
+    public function __construct(SeoManagerInterface $seoManager, Blacklister $blacklister)
     {
         $this->seoManager = $seoManager;
         $this->blacklister = $blacklister;
@@ -52,7 +52,8 @@ class SeoSubscriber implements EventSubscriberInterface
                 // Overrides HTML to remove custom comment without running fetchers
                 $newResponseContent = $this->seoManager->overrideHtml($responseContent);
             } else {
-                $newResponseContent = $this->seoManager->updateAndOverride($responseContent, $path, $domain);
+                $this->seoManager->updateSeo($path, $domain);
+                $newResponseContent = $this->seoManager->overrideHtml($responseContent);
             }
 
             $event->getResponse()->setContent($newResponseContent);

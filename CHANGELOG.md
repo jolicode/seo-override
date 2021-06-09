@@ -8,6 +8,7 @@
 ## 0.6.1 (2018-04-24)
 
 * Fix HTML overrides when tags contain new lines
+* Make SeoManager easily extensible in Symfony applications
 
 ## 0.6.0 (2018-03-26)
 

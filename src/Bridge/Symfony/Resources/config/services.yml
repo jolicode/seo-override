@@ -4,6 +4,7 @@ parameters:
 services:
     seo_override.manager:
         class: Joli\SeoOverride\SeoManager
+        public: true
         arguments:
             - []
             - '%seo_override.domains%'

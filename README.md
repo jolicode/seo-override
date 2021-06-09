@@ -8,7 +8,12 @@
 
 Override your seo markup on the fly.
 
-⚠️ We do not maintain actively this package, instead we recommend to use [Redirection.io](https://redirection.io/) which is the perfect tool for managing HTTP redirections for businesses, marketing and SEO. It allows you to override SEO metadata as well as this package.
+⚠️ We consider this library as stable and do not plan to add new features. We will still merge any bug fixes or support for new dependencies versions.
+If you need more powerful SEO features, we recommend to use [redirection.io](https://redirection.io/) which is the perfect tool for businesses, marketing and SEO. It allows you to:
+- override SEO metadata (as well as this package);
+- manage HTTP redirections;
+- find and fix 404 errors;
+- etc.
 
 ## Installation
 

@@ -118,7 +118,7 @@ class SeoManager
 
         return preg_replace(
             [
-                '@<!--SEO_TITLE-->(.+)<!--/SEO_TITLE-->@ims',
+                '@<!--SEO_TITLE-->(.*?)<!--/SEO_TITLE-->@ims',
                 '@<!--SEO_DESCRIPTION-->(.*?)<!--/SEO_DESCRIPTION-->@ims',
                 '@<!--SEO_KEYWORDS-->(.*?)<!--/SEO_KEYWORDS-->@ims',
                 '@<!--SEO_ROBOTS-->(.*?)<!--/SEO_ROBOTS-->@ims',

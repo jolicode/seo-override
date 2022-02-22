@@ -23,24 +23,24 @@ use Symfony\Component\HttpFoundation\Request;
 class SymfonyTest extends KernelTestCase
 {
     const NOT_OVERRIDDEN_HOMEPAGE_CONTENT = <<<'HTML'
-<html>
-    <head>
-        <title>old title for homepage</title>
-        <meta name="description" content="description for homepage" />
-    </head>
-    <body>
-        <h1>Hello world</h1>
-    </body>
-</html>
+        <html>
+            <head>
+                <title>old title for homepage</title>
+                <meta name="description" content="description for homepage" />
+            </head>
+            <body>
+                <h1>Hello world</h1>
+            </body>
+        </html>
 
-HTML;
+        HTML;
 
     public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
         self::bootKernel();
 
-        $databasePath = static::$kernel->getProjectDir().'/data/data.sqlite';
+        $databasePath = static::$kernel->getProjectDir() . '/data/data.sqlite';
         if (file_exists($databasePath)) {
             unlink($databasePath);
         }
@@ -71,74 +71,74 @@ HTML;
         $manager->flush();
     }
 
-    public function test_it_overrides_seo_handled_with_doctrine_fetcher()
+    public function testItOverridesSeoHandledWithDoctrineFetcher()
     {
         $expected = <<<'HTML'
-<html>
-    <head>
-        <title>new title for homepage of domain_doctrine</title>
-        <meta name="description" content="description for homepage" />
-    </head>
-    <body>
-        <h1>Hello world</h1>
-    </body>
-</html>
+            <html>
+                <head>
+                    <title>new title for homepage of domain_doctrine</title>
+                    <meta name="description" content="description for homepage" />
+                </head>
+                <body>
+                    <h1>Hello world</h1>
+                </body>
+            </html>
 
-HTML;
+            HTML;
 
         $response = $this->call('/', 'domain_doctrine.com');
 
         $this->assertSame($expected, $response->getContent());
     }
 
-    public function test_it_overrides_seo_handled_with_in_memory_fetcher()
+    public function testItOverridesSeoHandledWithInMemoryFetcher()
     {
         $expected = <<<'HTML'
-<html>
-    <head>
-        <title>new title for homepage of domain_in_memory</title>
-        <meta name="description" content="description for homepage" />
-    </head>
-    <body>
-        <h1>Hello world</h1>
-    </body>
-</html>
+            <html>
+                <head>
+                    <title>new title for homepage of domain_in_memory</title>
+                    <meta name="description" content="description for homepage" />
+                </head>
+                <body>
+                    <h1>Hello world</h1>
+                </body>
+            </html>
 
-HTML;
+            HTML;
 
         $response = $this->call('/', 'domain_in_memory.com');
 
         $this->assertSame($expected, $response->getContent());
     }
 
-    public function test_it_overrides_seo_handled_with_php_fetcher()
+    public function testItOverridesSeoHandledWithPhpFetcher()
     {
         $expected = <<<'HTML'
-<html>
-    <head>
-        <title>new title for homepage of domain_php</title>
-        <meta name="description" content="description for homepage" />
-    </head>
-    <body>
-        <h1>Hello world</h1>
-    </body>
-</html>
+            <html>
+                <head>
+                    <title>new title for homepage of domain_php</title>
+                    <meta name="description" content="description for homepage" />
+                </head>
+                <body>
+                    <h1>Hello world</h1>
+                </body>
+            </html>
 
-HTML;
+            HTML;
 
         $response = $this->call('/', 'domain_php.com');
 
         $this->assertSame($expected, $response->getContent());
     }
 
-    public function test_it_does_not_override_seo_when_no_fetcher_matching()
+    public function testItDoesNotOverrideSeoWhenNoFetcherMatching()
     {
         $response = $this->call('/', 'domain_unknown.com');
 
         $this->assertSame(self::NOT_OVERRIDDEN_HOMEPAGE_CONTENT, $response->getContent());
     }
 
-    public function test_it_does_not_override_seo_when_no_content_or_binary_response()
+    public function testItDoesNotOverrideSeoWhenNoContentOrBinaryResponse()
     {
         $response = $this->call('/download', 'localhost');
 
@@ -146,47 +146,47 @@ HTML;
         $this->assertFalse($response->getContent());
     }
 
-    public function test_it_does_not_override_seo_when_no_2XX_response()
+    public function testItDoesNotOverrideSeoWhenNo2XXResponse()
     {
         $expected = <<<'HTML'
-<html>
-    <head>
-        <title>old title for error page</title>
-        <meta name="description" content="description for error page" />
-    </head>
-    <body>
-        <h1>Hello error</h1>
-    </body>
-</html>
+            <html>
+                <head>
+                    <title>old title for error page</title>
+                    <meta name="description" content="description for error page" />
+                </head>
+                <body>
+                    <h1>Hello error</h1>
+                </body>
+            </html>
 
-HTML;
+            HTML;
         $response = $this->call('/error', 'localhost');
 
         $this->assertSame(400, $response->getStatusCode());
         $this->assertSame($expected, $response->getContent());
     }
 
-    public function test_it_does_not_override_seo_when_request_path_does_not_match()
+    public function testItDoesNotOverrideSeoWhenRequestPathDoesNotMatch()
     {
         $expected = <<<'HTML'
-<html>
-    <head>
-        <title>old title for admin</title>
-        <meta name="description" content="description for admin" />
-    </head>
-    <body>
-        <h1>Hello admin</h1>
-    </body>
-</html>
+            <html>
+                <head>
+                    <title>old title for admin</title>
+                    <meta name="description" content="description for admin" />
+                </head>
+                <body>
+                    <h1>Hello admin</h1>
+                </body>
+            </html>
 
-HTML;
+            HTML;
         $response = $this->call('/admin', 'localhost');
 
         $this->assertSame(200, $response->getStatusCode());
         $this->assertSame($expected, $response->getContent());
     }
 
-    public function test_it_does_not_override_seo_when_request_use_not_allowed_action()
+    public function testItDoesNotOverrideSeoWhenRequestUseNotAllowedAction()
     {
         $response = $this->call('/', 'localhost', 'PUT');
 
@@ -194,7 +194,7 @@ HTML;
         $this->assertSame(self::NOT_OVERRIDDEN_HOMEPAGE_CONTENT, $response->getContent());
     }
 
-    public function test_it_does_not_override_seo_when_request_is_xhr()
+    public function testItDoesNotOverrideSeoWhenRequestIsXhr()
     {
         $response = $this->call('/', 'localhost', 'GET', [
             'X-Requested-With' => 'XMLHttpRequest',

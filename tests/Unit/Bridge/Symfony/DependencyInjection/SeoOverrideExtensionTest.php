@@ -22,14 +22,14 @@ class SeoOverrideExtensionTest extends TestCase
     /** @var SeoOverrideExtension */
     private $extension;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
         $this->extension = new SeoOverrideExtension();
     }
 
-    public function test_it_has_a_default_configuration()
+    public function testItHasADefaultConfiguration()
     {
         $container = new ContainerBuilder();
         $this->extension->load([], $container);
@@ -53,7 +53,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame([], $container->getParameter('seo_override.blacklisters_configuration'));
     }
 
-    public function test_it_supports_fetcher_configuration()
+    public function testItSupportsFetcherConfiguration()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -83,7 +83,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('hello world', $fetchers[0]['option1']);
     }
 
-    public function test_it_preserves_fetchers_order()
+    public function testItPreservesFetchersOrder()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -123,7 +123,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('fetcher3', $fetchers[2]['type']);
     }
 
-    public function test_it_supports_short_syntax_for_fetcher()
+    public function testItSupportsShortSyntaxForFetcher()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -145,7 +145,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('fetcher1', $fetchers[0]['type']);
     }
 
-    public function test_it_does_not_load_doctrine_service_when_fetcher_not_configured()
+    public function testItDoesNotLoadDoctrineServiceWhenFetcherNotConfigured()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -159,7 +159,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertFalse($container->has('seo_override.fetcher.doctrine'));
     }
 
-    public function test_it_loads_doctrine_service_when_fetcher_configured()
+    public function testItLoadsDoctrineServiceWhenFetcherConfigured()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -173,7 +173,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertTrue($container->has('seo_override.fetcher.doctrine'));
     }
 
-    public function test_it_supports_domains_configuration()
+    public function testItSupportsDomainsConfiguration()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -194,7 +194,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('example.fr', $parameters['domain1']);
     }
 
-    public function test_it_preserves_domains_order()
+    public function testItPreservesDomainsOrder()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -224,7 +224,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('example.es', array_shift($parameters));
     }
 
-    public function test_it_decorates_manager_when_in_debug()
+    public function testItDecoratesManagerWhenInDebug()
     {
         $container = new ContainerBuilder();
         $container->setParameter('kernel.debug', true);
@@ -236,7 +236,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertInstanceOf(DebugSeoManager::class, $container->get('seo_override.manager'));
     }
 
-    public function test_it_set_encoding_when_specified()
+    public function testItSetEncodingWhenSpecified()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -253,7 +253,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('KOI8-R', $manager->getEncoding());
     }
 
-    public function test_it_supports_blacklist_configuration()
+    public function testItSupportsBlacklistConfiguration()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -283,7 +283,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('hello world', $blacklisters[0]['option1']);
     }
 
-    public function test_it_supports_short_syntax_for_blacklist()
+    public function testItSupportsShortSyntaxForBlacklist()
     {
         $container = new ContainerBuilder();
         $this->extension->load([
@@ -305,7 +305,7 @@ class SeoOverrideExtensionTest extends TestCase
         self::assertSame('blacklister1', $blacklisters[0]['type']);
     }
 
-    public function test_it_supports_blacklist_deactivation()
+    public function testItSupportsBlacklistDeactivation()
     {
         $container = new ContainerBuilder();
         $this->extension->load([

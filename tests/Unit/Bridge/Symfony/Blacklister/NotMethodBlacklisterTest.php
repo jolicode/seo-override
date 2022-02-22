@@ -21,12 +21,12 @@ class NotMethodBlacklisterTest extends TestCase
     /** @var NotMethodBlacklisterTest */
     private $blacklister;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
     }
 
-    public function test_it_blacklists_not_accepted_method_requests()
+    public function testItBlacklistsNotAcceptedMethodRequests()
     {
         $request = new Request();
         $request->setMethod('put');
@@ -36,7 +36,7 @@ class NotMethodBlacklisterTest extends TestCase
         self::assertTrue($blacklister->isBlacklisted($request, new Response()));
     }
 
-    public function test_it_does_not_blacklist_accepted_method_requests()
+    public function testItDoesNotBlacklistAcceptedMethodRequests()
     {
         $request = new Request();
         $request->setMethod('get');

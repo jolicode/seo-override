@@ -16,54 +16,54 @@ use PHPUnit\Framework\TestCase;
 
 class PhpFetcherTest extends TestCase
 {
-    public function test_it_returns_null_when_not_existing_file_given_in_non_strict_mode()
+    public function testItReturnsNullWhenNotExistingFileGivenInNonStrictMode()
     {
-        $fetcher = new PhpFetcher(__DIR__.'/../Fixtures/PhpFetcher/not_existing_file.php', false);
+        $fetcher = new PhpFetcher(__DIR__ . '/../Fixtures/PhpFetcher/not_existing_file.php', false);
 
         self::assertNull($fetcher->fetch('/url', 'domain_alias_1'));
     }
 
-    public function test_it_throws_exception_when_not_existing_file_given_in_strict_mode()
+    public function testItThrowsExceptionWhenNotExistingFileGivenInStrictMode()
     {
-        $fetcher = new PhpFetcher(__DIR__.'/../Fixtures/PhpFetcher/not_existing_file.php', true);
+        $fetcher = new PhpFetcher(__DIR__ . '/../Fixtures/PhpFetcher/not_existing_file.php', true);
 
         try {
             $fetcher->fetch('/url', 'domain_alias_1');
             self::fail('An exception should have been thrown');
         } catch (\LogicException $e) {
-            self::assertSame('No file to include was found at "'.__DIR__.'/../Fixtures/PhpFetcher/not_existing_file.php"', $e->getMessage());
+            self::assertSame('No file to include was found at "' . __DIR__ . '/../Fixtures/PhpFetcher/not_existing_file.php"', $e->getMessage());
         }
     }
 
-    public function test_it_returns_null_when_included_file_does_not_return_an_array_in_non_strict_mode()
+    public function testItReturnsNullWhenIncludedFileDoesNotReturnAnArrayInNonStrictMode()
     {
-        $fetcher = new PhpFetcher(__DIR__.'/../Fixtures/PhpFetcher/no_array_returned.php', false);
+        $fetcher = new PhpFetcher(__DIR__ . '/../Fixtures/PhpFetcher/no_array_returned.php', false);
 
         self::assertNull($fetcher->fetch('/url', 'domain_alias_1'));
     }
 
-    public function test_it_throws_exception_when_included_file_does_not_return_an_array_in_strict_mode()
+    public function testItThrowsExceptionWhenIncludedFileDoesNotReturnAnArrayInStrictMode()
     {
-        $fetcher = new PhpFetcher(__DIR__.'/../Fixtures/PhpFetcher/no_array_returned.php', true);
+        $fetcher = new PhpFetcher(__DIR__ . '/../Fixtures/PhpFetcher/no_array_returned.php', true);
 
         try {
             $fetcher->fetch('/url', 'domain_alias_1');
             self::fail('An exception should have been thrown');
         } catch (\LogicException $e) {
-            self::assertSame('Included file "'.__DIR__.'/../Fixtures/PhpFetcher/no_array_returned.php" should return an array', $e->getMessage());
+            self::assertSame('Included file "' . __DIR__ . '/../Fixtures/PhpFetcher/no_array_returned.php" should return an array', $e->getMessage());
         }
     }
 
-    public function test_it_returns_null_when_included_file_return_an_empty_array()
+    public function testItReturnsNullWhenIncludedFileReturnAnEmptyArray()
     {
-        $fetcher = new PhpFetcher(__DIR__.'/../Fixtures/PhpFetcher/empty_array.php', false);
+        $fetcher = new PhpFetcher(__DIR__ . '/../Fixtures/PhpFetcher/empty_array.php', false);
 
         self::assertNull($fetcher->fetch('/url', 'domain_alias_1'));
     }
 
-    public function test_it_returns_seo_when_included_file_contains_matching_overrides()
+    public function testItReturnsSeoWhenIncludedFileContainsMatchingOverrides()
     {
-        $fetcher = new PhpFetcher(__DIR__.'/../Fixtures/PhpFetcher/sample.php', false);
+        $fetcher = new PhpFetcher(__DIR__ . '/../Fixtures/PhpFetcher/sample.php', false);
 
         $seo1 = $fetcher->fetch('/url1', 'domain_alias_1');
 

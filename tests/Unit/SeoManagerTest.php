@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 class SeoManagerTest extends TestCase
 {
-    public function test_it_updates_full_seo_from_fetcher()
+    public function testItUpdatesFullSeoFromFetcher()
     {
         $seo = new Seo();
         $seo->setTitle('new title');
@@ -51,7 +51,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('new og:description', $seoManager->getSeo()->getOgDescription());
     }
 
-    public function test_it_updates_partial_seo()
+    public function testItUpdatesPartialSeo()
     {
         $seo1 = new Seo();
         $seo1->setTitle('title1');
@@ -85,7 +85,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('og:description1', $seoManager->getSeo()->getOgDescription());
     }
 
-    public function test_it_respects_priority_in_fetcher()
+    public function testItRespectsPriorityInFetcher()
     {
         $seo1 = new Seo();
         $seo1->setTitle('title1');
@@ -109,7 +109,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('title1', $seoManager->getSeo()->getTitle());
     }
 
-    public function test_it_determines_domain_alias()
+    public function testItDeterminesDomainAlias()
     {
         $seo = new Seo();
         $seo->setTitle('title');
@@ -129,7 +129,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('title', $seoManager->getSeo()->getTitle());
     }
 
-    public function test_it_respects_priority_in_domain_alias()
+    public function testItRespectsPriorityInDomainAlias()
     {
         $seo = new Seo();
         $seo->setTitle('title');
@@ -149,7 +149,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('title', $seoManager->getSeo()->getTitle());
     }
 
-    public function test_it_looks_for_catch_all_domain_when_no_override_found()
+    public function testItLooksForCatchAllDomainWhenNoOverrideFound()
     {
         $seo = new Seo();
         $seo->setTitle('title');
@@ -169,7 +169,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('title', $seoManager->getSeo()->getTitle());
     }
 
-    public function test_it_overrides_html()
+    public function testItOverridesHtml()
     {
         $seo = new Seo();
         $seo->setTitle('new title');
@@ -183,38 +183,38 @@ class SeoManagerTest extends TestCase
         $seoManager = new SeoManager([], [], $seo);
 
         $html = <<<'HTML'
-<html>
-<head>
-<!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
-<!--SEO_DESCRIPTION--><meta name="description" content="old description"><!--/SEO_DESCRIPTION-->
-<!--SEO_KEYWORDS--><meta name="keywords" content="old keywords"><!--/SEO_KEYWORDS-->
-<!--SEO_ROBOTS--><meta name="robots" content="old robots"><!--/SEO_ROBOTS-->
-<!--SEO_CANONICAL--><link rel="canonical" href="/old-canonical"><!--/SEO_CANONICAL-->
-<!--SEO_OG_TITLE--><meta property="og:title" content="old og:title"><!--/SEO_OG_TITLE-->
-<!--SEO_OG_DESCRIPTION--><meta property="og:description" content="old og:description"><!--/SEO_OG_DESCRIPTION-->
-</head>
-<body></body>
-</html>
-HTML;
+            <html>
+            <head>
+            <!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
+            <!--SEO_DESCRIPTION--><meta name="description" content="old description"><!--/SEO_DESCRIPTION-->
+            <!--SEO_KEYWORDS--><meta name="keywords" content="old keywords"><!--/SEO_KEYWORDS-->
+            <!--SEO_ROBOTS--><meta name="robots" content="old robots"><!--/SEO_ROBOTS-->
+            <!--SEO_CANONICAL--><link rel="canonical" href="/old-canonical"><!--/SEO_CANONICAL-->
+            <!--SEO_OG_TITLE--><meta property="og:title" content="old og:title"><!--/SEO_OG_TITLE-->
+            <!--SEO_OG_DESCRIPTION--><meta property="og:description" content="old og:description"><!--/SEO_OG_DESCRIPTION-->
+            </head>
+            <body></body>
+            </html>
+            HTML;
         $expected = <<<'HTML'
-<html>
-<head>
-<title>new title</title>
-<meta name="description" content="new description" />
-<meta name="keywords" content="new keywords" />
-<meta name="robots" content="new robots" />
-<link rel="canonical" href="/new-canonical" />
-<meta property="og:title" content="new og:title" />
-<meta property="og:description" content="new og:description" />
-</head>
-<body></body>
-</html>
-HTML;
+            <html>
+            <head>
+            <title>new title</title>
+            <meta name="description" content="new description" />
+            <meta name="keywords" content="new keywords" />
+            <meta name="robots" content="new robots" />
+            <link rel="canonical" href="/new-canonical" />
+            <meta property="og:title" content="new og:title" />
+            <meta property="og:description" content="new og:description" />
+            </head>
+            <body></body>
+            </html>
+            HTML;
 
         self::assertSame($expected, $seoManager->overrideHtml($html));
     }
 
-    public function test_it_overrides_html_with_new_lines()
+    public function testItOverridesHtmlWithNewLines()
     {
         $seo = new Seo();
         $seo->setTitle('new title');
@@ -223,54 +223,54 @@ HTML;
         $seoManager = new SeoManager([], [], $seo);
 
         $html = <<<'HTML'
-<html>
-<head>
-<!--SEO_TITLE--><title>
-old title
-</title><!--/SEO_TITLE-->
-<!--SEO_DESCRIPTION-->
-<meta name="description" content="old description">
-<!--/SEO_DESCRIPTION-->
-</head>
-<body></body>
-</html>
-HTML;
+            <html>
+            <head>
+            <!--SEO_TITLE--><title>
+            old title
+            </title><!--/SEO_TITLE-->
+            <!--SEO_DESCRIPTION-->
+            <meta name="description" content="old description">
+            <!--/SEO_DESCRIPTION-->
+            </head>
+            <body></body>
+            </html>
+            HTML;
         $expected = <<<'HTML'
-<html>
-<head>
-<title>new title</title>
-<meta name="description" content="new description" />
-</head>
-<body></body>
-</html>
-HTML;
+            <html>
+            <head>
+            <title>new title</title>
+            <meta name="description" content="new description" />
+            </head>
+            <body></body>
+            </html>
+            HTML;
 
         self::assertSame($expected, $seoManager->overrideHtml($html));
     }
 
-    public function test_it_does_not_override_html_when_no_override()
+    public function testItDoesNotOverrideHtmlWhenNoOverride()
     {
         $seoManager = new SeoManager([], []);
 
         $html = <<<'HTML'
-<html>
-<head>
-<title>old title</title>
-<meta name="description" content="old description">
-<meta name="keywords" content="old keywords">
-<meta name="robots" content="old robots">
-<link rel="canonical" href="/old-canonical">
-<meta property="og:title" content="old og:title">
-<meta property="og:description" content="old og:description">
-</head>
-<body></body>
-</html>
-HTML;
+            <html>
+            <head>
+            <title>old title</title>
+            <meta name="description" content="old description">
+            <meta name="keywords" content="old keywords">
+            <meta name="robots" content="old robots">
+            <link rel="canonical" href="/old-canonical">
+            <meta property="og:title" content="old og:title">
+            <meta property="og:description" content="old og:description">
+            </head>
+            <body></body>
+            </html>
+            HTML;
 
         self::assertSame($html, $seoManager->overrideHtml($html));
     }
 
-    public function test_it_updates_seo_and_overrides_html()
+    public function testItUpdatesSeoAndOverridesHtml()
     {
         $seo = new Seo();
         $seo->setTitle('new title');
@@ -286,33 +286,33 @@ HTML;
         ]);
 
         $html = <<<'HTML'
-<html>
-<head>
-<!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
-</head>
-<body></body>
-</html>
-HTML;
+            <html>
+            <head>
+            <!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
+            </head>
+            <body></body>
+            </html>
+            HTML;
         $expected = <<<'HTML'
-<html>
-<head>
-<title>new title</title>
-</head>
-<body></body>
-</html>
-HTML;
+            <html>
+            <head>
+            <title>new title</title>
+            </head>
+            <body></body>
+            </html>
+            HTML;
 
         self::assertSame($expected, $seoManager->updateAndOverride($html, '/', 'www.example.com'));
     }
 
-    public function test_it_has_a_default_encoding()
+    public function testItHasADefaultEncoding()
     {
         $seoManager = new SeoManager([], []);
 
         self::assertSame('UTF-8', $seoManager->getEncoding());
     }
 
-    public function test_it_can_use_another_encoding()
+    public function testItCanUseAnotherEncoding()
     {
         $seoManager = new SeoManager([], []);
         $seoManager->setEncoding('KOI8-R');

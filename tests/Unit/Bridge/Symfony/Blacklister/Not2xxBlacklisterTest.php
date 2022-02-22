@@ -21,14 +21,14 @@ class Not2xxBlacklisterTest extends TestCase
     /** @var Not2xxBlacklister */
     private $blacklister;
 
-    public function setUp()
+    protected function setUp()
     {
         parent::setUp();
 
         $this->blacklister = new Not2xxBlacklister();
     }
 
-    public function test_it_blacklists_non_2xx_responses()
+    public function testItBlacklistsNon2xxResponses()
     {
         $request = new Request();
 
@@ -45,7 +45,7 @@ class Not2xxBlacklisterTest extends TestCase
         self::assertTrue($this->blacklister->isBlacklisted($request, $response));
     }
 
-    public function test_it_does_not_blacklist_2xx_responses()
+    public function testItDoesNotBlacklist2xxResponses()
     {
         $request = new Request();
 

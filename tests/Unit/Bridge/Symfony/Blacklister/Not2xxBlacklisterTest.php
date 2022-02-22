@@ -21,7 +21,7 @@ class Not2xxBlacklisterTest extends TestCase
     /** @var Not2xxBlacklister */
     private $blacklister;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

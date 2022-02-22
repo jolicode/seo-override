@@ -11,8 +11,8 @@
 
 namespace Joli\SeoOverride\Tests\Unit\Bridge\Doctrine;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Joli\SeoOverride\Bridge\Doctrine\DoctrineFetcher;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\Seo;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
@@ -28,7 +28,7 @@ class DoctrineFetcherTest extends TestCase
     /** @var ObjectProphecy */
     private $repository;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

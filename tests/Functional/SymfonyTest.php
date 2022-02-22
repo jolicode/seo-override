@@ -18,24 +18,25 @@ use Joli\SeoOverride\Tests\Functional\Fixtures\symfony\app\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\Request;
 
 class SymfonyTest extends KernelTestCase
 {
     const NOT_OVERRIDDEN_HOMEPAGE_CONTENT = <<<'HTML'
-        <html>
-            <head>
-                <title>old title for homepage</title>
-                <meta name="description" content="description for homepage" />
-            </head>
-            <body>
-                <h1>Hello world</h1>
-            </body>
-        </html>
+<html>
+    <head>
+        <title>old title for homepage</title>
+        <meta name="description" content="description for homepage" />
+    </head>
+    <body>
+        <h1>Hello world</h1>
+    </body>
+</html>
 
-        HTML;
+HTML;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         self::bootKernel();
@@ -45,17 +46,17 @@ class SymfonyTest extends KernelTestCase
             unlink($databasePath);
         }
 
-        $application = new Application(self::$kernel);
+        $application = new Application(static::$kernel);
         $application->setAutoExit(false);
-        $application->run(new ArrayInput([
-            'doctrine:database:create',
+        $command = $application->find('doctrine:database:create');
+        $command->run(new ArrayInput([
             '--quiet' => true,
-        ]));
-        $application->run(new ArrayInput([
-            'doctrine:schema:update',
+        ]), new NullOutput());
+        $command = $application->find('doctrine:schema:update');
+        $command->run(new ArrayInput([
             '--force' => true,
             '--quiet' => true,
-        ]));
+        ]), new NullOutput());
 
         $seo = new DoctrineSeo();
         $seo->setTitle('new title for homepage of domain_doctrine');
@@ -66,7 +67,7 @@ class SymfonyTest extends KernelTestCase
         $seoOverride->setSeo($seo);
 
         /** @var EntityManager $manager */
-        $manager = self::$kernel->getContainer()->get('doctrine')->getManager();
+        $manager = static::$kernel->getContainer()->get('doctrine')->getManager();
         $manager->persist($seoOverride);
         $manager->flush();
     }
@@ -74,17 +75,17 @@ class SymfonyTest extends KernelTestCase
     public function testItOverridesSeoHandledWithDoctrineFetcher()
     {
         $expected = <<<'HTML'
-            <html>
-                <head>
-                    <title>new title for homepage of domain_doctrine</title>
-                    <meta name="description" content="description for homepage" />
-                </head>
-                <body>
-                    <h1>Hello world</h1>
-                </body>
-            </html>
+<html>
+    <head>
+        <title>new title for homepage of domain_doctrine</title>
+        <meta name="description" content="description for homepage" />
+    </head>
+    <body>
+        <h1>Hello world</h1>
+    </body>
+</html>
 
-            HTML;
+HTML;
 
         $response = $this->call('/', 'domain_doctrine.com');
 
@@ -94,17 +95,17 @@ class SymfonyTest extends KernelTestCase
     public function testItOverridesSeoHandledWithInMemoryFetcher()
     {
         $expected = <<<'HTML'
-            <html>
-                <head>
-                    <title>new title for homepage of domain_in_memory</title>
-                    <meta name="description" content="description for homepage" />
-                </head>
-                <body>
-                    <h1>Hello world</h1>
-                </body>
-            </html>
+<html>
+    <head>
+        <title>new title for homepage of domain_in_memory</title>
+        <meta name="description" content="description for homepage" />
+    </head>
+    <body>
+        <h1>Hello world</h1>
+    </body>
+</html>
 
-            HTML;
+HTML;
 
         $response = $this->call('/', 'domain_in_memory.com');
 
@@ -114,17 +115,17 @@ class SymfonyTest extends KernelTestCase
     public function testItOverridesSeoHandledWithPhpFetcher()
     {
         $expected = <<<'HTML'
-            <html>
-                <head>
-                    <title>new title for homepage of domain_php</title>
-                    <meta name="description" content="description for homepage" />
-                </head>
-                <body>
-                    <h1>Hello world</h1>
-                </body>
-            </html>
+<html>
+    <head>
+        <title>new title for homepage of domain_php</title>
+        <meta name="description" content="description for homepage" />
+    </head>
+    <body>
+        <h1>Hello world</h1>
+    </body>
+</html>
 
-            HTML;
+HTML;
 
         $response = $this->call('/', 'domain_php.com');
 
@@ -149,17 +150,18 @@ class SymfonyTest extends KernelTestCase
     public function testItDoesNotOverrideSeoWhenNo2XXResponse()
     {
         $expected = <<<'HTML'
-            <html>
-                <head>
-                    <title>old title for error page</title>
-                    <meta name="description" content="description for error page" />
-                </head>
-                <body>
-                    <h1>Hello error</h1>
-                </body>
-            </html>
+<html>
+    <head>
+        <title>old title for error page</title>
+        <meta name="description" content="description for error page" />
+    </head>
+    <body>
+        <h1>Hello error</h1>
+    </body>
+</html>
 
-            HTML;
+HTML;
+
         $response = $this->call('/error', 'localhost');
 
         $this->assertSame(400, $response->getStatusCode());
@@ -169,17 +171,18 @@ class SymfonyTest extends KernelTestCase
     public function testItDoesNotOverrideSeoWhenRequestPathDoesNotMatch()
     {
         $expected = <<<'HTML'
-            <html>
-                <head>
-                    <title>old title for admin</title>
-                    <meta name="description" content="description for admin" />
-                </head>
-                <body>
-                    <h1>Hello admin</h1>
-                </body>
-            </html>
+<html>
+    <head>
+        <title>old title for admin</title>
+        <meta name="description" content="description for admin" />
+    </head>
+    <body>
+        <h1>Hello admin</h1>
+    </body>
+</html>
 
-            HTML;
+HTML;
+
         $response = $this->call('/admin', 'localhost');
 
         $this->assertSame(200, $response->getStatusCode());
@@ -215,6 +218,10 @@ class SymfonyTest extends KernelTestCase
 
         $request = Request::create($uri, $method, [], [], [], $server);
 
-        return self::$kernel->handle($request);
+        if (null === static::$kernel) {
+            static::bootKernel();
+        }
+
+        return static::$kernel->handle($request);
     }
 }

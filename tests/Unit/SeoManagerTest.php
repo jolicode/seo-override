@@ -183,33 +183,33 @@ class SeoManagerTest extends TestCase
         $seoManager = new SeoManager([], [], $seo);
 
         $html = <<<'HTML'
-            <html>
-            <head>
-            <!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
-            <!--SEO_DESCRIPTION--><meta name="description" content="old description"><!--/SEO_DESCRIPTION-->
-            <!--SEO_KEYWORDS--><meta name="keywords" content="old keywords"><!--/SEO_KEYWORDS-->
-            <!--SEO_ROBOTS--><meta name="robots" content="old robots"><!--/SEO_ROBOTS-->
-            <!--SEO_CANONICAL--><link rel="canonical" href="/old-canonical"><!--/SEO_CANONICAL-->
-            <!--SEO_OG_TITLE--><meta property="og:title" content="old og:title"><!--/SEO_OG_TITLE-->
-            <!--SEO_OG_DESCRIPTION--><meta property="og:description" content="old og:description"><!--/SEO_OG_DESCRIPTION-->
-            </head>
-            <body></body>
-            </html>
-            HTML;
+<html>
+<head>
+<!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
+<!--SEO_DESCRIPTION--><meta name="description" content="old description"><!--/SEO_DESCRIPTION-->
+<!--SEO_KEYWORDS--><meta name="keywords" content="old keywords"><!--/SEO_KEYWORDS-->
+<!--SEO_ROBOTS--><meta name="robots" content="old robots"><!--/SEO_ROBOTS-->
+<!--SEO_CANONICAL--><link rel="canonical" href="/old-canonical"><!--/SEO_CANONICAL-->
+<!--SEO_OG_TITLE--><meta property="og:title" content="old og:title"><!--/SEO_OG_TITLE-->
+<!--SEO_OG_DESCRIPTION--><meta property="og:description" content="old og:description"><!--/SEO_OG_DESCRIPTION-->
+</head>
+<body></body>
+</html>
+HTML;
         $expected = <<<'HTML'
-            <html>
-            <head>
-            <title>new title</title>
-            <meta name="description" content="new description" />
-            <meta name="keywords" content="new keywords" />
-            <meta name="robots" content="new robots" />
-            <link rel="canonical" href="/new-canonical" />
-            <meta property="og:title" content="new og:title" />
-            <meta property="og:description" content="new og:description" />
-            </head>
-            <body></body>
-            </html>
-            HTML;
+<html>
+<head>
+<title>new title</title>
+<meta name="description" content="new description" />
+<meta name="keywords" content="new keywords" />
+<meta name="robots" content="new robots" />
+<link rel="canonical" href="/new-canonical" />
+<meta property="og:title" content="new og:title" />
+<meta property="og:description" content="new og:description" />
+</head>
+<body></body>
+</html>
+HTML;
 
         self::assertSame($expected, $seoManager->overrideHtml($html));
     }
@@ -223,27 +223,27 @@ class SeoManagerTest extends TestCase
         $seoManager = new SeoManager([], [], $seo);
 
         $html = <<<'HTML'
-            <html>
-            <head>
-            <!--SEO_TITLE--><title>
-            old title
-            </title><!--/SEO_TITLE-->
-            <!--SEO_DESCRIPTION-->
-            <meta name="description" content="old description">
-            <!--/SEO_DESCRIPTION-->
-            </head>
-            <body></body>
-            </html>
-            HTML;
+<html>
+<head>
+<!--SEO_TITLE--><title>
+old title
+</title><!--/SEO_TITLE-->
+<!--SEO_DESCRIPTION-->
+<meta name="description" content="old description">
+<!--/SEO_DESCRIPTION-->
+</head>
+<body></body>
+</html>
+HTML;
         $expected = <<<'HTML'
-            <html>
-            <head>
-            <title>new title</title>
-            <meta name="description" content="new description" />
-            </head>
-            <body></body>
-            </html>
-            HTML;
+<html>
+<head>
+<title>new title</title>
+<meta name="description" content="new description" />
+</head>
+<body></body>
+</html>
+HTML;
 
         self::assertSame($expected, $seoManager->overrideHtml($html));
     }
@@ -253,19 +253,19 @@ class SeoManagerTest extends TestCase
         $seoManager = new SeoManager([], []);
 
         $html = <<<'HTML'
-            <html>
-            <head>
-            <title>old title</title>
-            <meta name="description" content="old description">
-            <meta name="keywords" content="old keywords">
-            <meta name="robots" content="old robots">
-            <link rel="canonical" href="/old-canonical">
-            <meta property="og:title" content="old og:title">
-            <meta property="og:description" content="old og:description">
-            </head>
-            <body></body>
-            </html>
-            HTML;
+<html>
+<head>
+<title>old title</title>
+<meta name="description" content="old description">
+<meta name="keywords" content="old keywords">
+<meta name="robots" content="old robots">
+<link rel="canonical" href="/old-canonical">
+<meta property="og:title" content="old og:title">
+<meta property="og:description" content="old og:description">
+</head>
+<body></body>
+</html>
+HTML;
 
         self::assertSame($html, $seoManager->overrideHtml($html));
     }
@@ -286,21 +286,21 @@ class SeoManagerTest extends TestCase
         ]);
 
         $html = <<<'HTML'
-            <html>
-            <head>
-            <!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
-            </head>
-            <body></body>
-            </html>
-            HTML;
+<html>
+<head>
+<!--SEO_TITLE--><title>old title</title><!--/SEO_TITLE-->
+</head>
+<body></body>
+</html>
+HTML;
         $expected = <<<'HTML'
-            <html>
-            <head>
-            <title>new title</title>
-            </head>
-            <body></body>
-            </html>
-            HTML;
+<html>
+<head>
+<title>new title</title>
+</head>
+<body></body>
+</html>
+HTML;
 
         self::assertSame($expected, $seoManager->updateAndOverride($html, '/', 'www.example.com'));
     }

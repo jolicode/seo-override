@@ -21,7 +21,7 @@ class PathBlacklisterTest extends TestCase
     /** @var PathBlacklister */
     private $blacklister;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

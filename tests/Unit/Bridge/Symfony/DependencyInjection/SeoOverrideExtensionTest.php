@@ -22,7 +22,7 @@ class SeoOverrideExtensionTest extends TestCase
     /** @var SeoOverrideExtension */
     private $extension;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -71,10 +71,10 @@ class SeoOverrideExtensionTest extends TestCase
 
         $fetchers = $container->getParameter('seo_override.fetchers_configuration');
 
-        self::assertInternalType('array', $fetchers);
+        self::assertIsArray($fetchers);
         self::assertCount(1, $fetchers);
 
-        self::assertInternalType('array', $fetchers[0]);
+        self::assertIsArray($fetchers[0]);
 
         self::assertArrayHasKey('type', $fetchers[0]);
         self::assertSame('fetcher1', $fetchers[0]['type']);
@@ -106,12 +106,12 @@ class SeoOverrideExtensionTest extends TestCase
 
         $fetchers = $container->getParameter('seo_override.fetchers_configuration');
 
-        self::assertInternalType('array', $fetchers);
+        self::assertIsArray($fetchers);
         self::assertCount(3, $fetchers);
 
-        self::assertInternalType('array', $fetchers[0]);
-        self::assertInternalType('array', $fetchers[1]);
-        self::assertInternalType('array', $fetchers[2]);
+        self::assertIsArray($fetchers[0]);
+        self::assertIsArray($fetchers[1]);
+        self::assertIsArray($fetchers[2]);
 
         self::assertArrayHasKey('type', $fetchers[0]);
         self::assertSame('fetcher1', $fetchers[0]['type']);
@@ -136,10 +136,10 @@ class SeoOverrideExtensionTest extends TestCase
 
         $fetchers = $container->getParameter('seo_override.fetchers_configuration');
 
-        self::assertInternalType('array', $fetchers);
+        self::assertIsArray($fetchers);
         self::assertCount(1, $fetchers);
 
-        self::assertInternalType('array', $fetchers[0]);
+        self::assertIsArray($fetchers[0]);
 
         self::assertArrayHasKey('type', $fetchers[0]);
         self::assertSame('fetcher1', $fetchers[0]['type']);
@@ -271,10 +271,10 @@ class SeoOverrideExtensionTest extends TestCase
 
         $blacklisters = $container->getParameter('seo_override.blacklisters_configuration');
 
-        self::assertInternalType('array', $blacklisters);
+        self::assertIsArray($blacklisters);
         self::assertCount(1, $blacklisters);
 
-        self::assertInternalType('array', $blacklisters[0]);
+        self::assertIsArray($blacklisters[0]);
 
         self::assertArrayHasKey('type', $blacklisters[0]);
         self::assertSame('blacklister1', $blacklisters[0]['type']);
@@ -296,10 +296,10 @@ class SeoOverrideExtensionTest extends TestCase
 
         $blacklisters = $container->getParameter('seo_override.blacklisters_configuration');
 
-        self::assertInternalType('array', $blacklisters);
+        self::assertIsArray($blacklisters);
         self::assertCount(1, $blacklisters);
 
-        self::assertInternalType('array', $blacklisters[0]);
+        self::assertIsArray($blacklisters[0]);
 
         self::assertArrayHasKey('type', $blacklisters[0]);
         self::assertSame('blacklister1', $blacklisters[0]['type']);
@@ -316,7 +316,7 @@ class SeoOverrideExtensionTest extends TestCase
 
         $blacklisters = $container->getParameter('seo_override.blacklisters_configuration');
 
-        self::assertInternalType('array', $blacklisters);
+        self::assertIsArray($blacklisters);
         self::assertCount(0, $blacklisters);
     }
 }

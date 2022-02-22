@@ -21,7 +21,7 @@ class NotMethodBlacklisterTest extends TestCase
     /** @var NotMethodBlacklisterTest */
     private $blacklister;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
     }

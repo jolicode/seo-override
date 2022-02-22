@@ -34,7 +34,7 @@ class RegisterBlacklisterPassTest extends TestCase
     /** @var ObjectProphecy */
     private $chainBlacklisterDefinition;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

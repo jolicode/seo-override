@@ -25,17 +25,18 @@
         }
     },
     "require": {
-        "php": "^7.0 || ^8.0"
+        "php": "^7.2 || ^8.0"
     },
     "require-dev": {
         "ext-sqlite3": "*",
-        "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.12|~2.0",
+        "doctrine/orm": "^2.7",
         "friendsofphp/php-cs-fixer": "^2.2",
-        "phpdocumentor/reflection-docblock": "^4.0",
+        "phpdocumentor/reflection-docblock": "^4.0|~5.0",
         "phpspec/prophecy": "^1.7",
         "symfony/framework-bundle": "^3.4.25|~4.0",
-        "symfony/phpunit-bridge": "^3.4.30|~4.0",
+        "symfony/mime": "^4.4.|~5.0",
+        "symfony/phpunit-bridge": "~5.0",
         "symfony/twig-bundle": "^3.4|~4.0",
         "symfony/yaml": "^3.4|~4.0"
     },
@@ -48,8 +49,13 @@
         }
     },
     "conflict": {
-        "doctrine/doctrine-bundle": "<1.6",
-        "doctrine/orm": "<2.5",
+        "doctrine/doctrine-bundle": "<1.12",
+        "doctrine/common": "<2.8",
+        "doctrine/orm": "<2.7",
+        "doctrine/persistence": "<1.3.8",
+        "phpspec/prophecy": "<1.10.0",
+        "sebastian/comparator": "<1.2.3",
+        "symfony/doctrine-bridge": "<3.4",
         "symfony/framework-bundle": "<3.4.25",
         "symfony/twig-bundle": "<3.4",
         "symfony/yaml": "<3.4",

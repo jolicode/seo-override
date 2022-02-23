@@ -11,7 +11,7 @@
 
 namespace Joli\SeoOverride\Bridge\Doctrine;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
 use Joli\SeoOverride\Fetcher;
 

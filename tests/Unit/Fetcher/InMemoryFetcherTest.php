@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 class InMemoryFetcherTest extends TestCase
 {
-    public function test_it_returns_null_when_no_overrides_given()
+    public function testItReturnsNullWhenNoOverridesGiven()
     {
         $fetcher = new InMemoryFetcher([]);
 
@@ -24,7 +24,7 @@ class InMemoryFetcherTest extends TestCase
         self::assertNull($fetcher->fetch('/url1', null));
     }
 
-    public function test_it_returns_null_when_none_override_for_domains()
+    public function testItReturnsNullWhenNoneOverrideForDomains()
     {
         $fetcher = new InMemoryFetcher([
             'domain_alias_1' => null,
@@ -36,7 +36,7 @@ class InMemoryFetcherTest extends TestCase
         self::assertNull($fetcher->fetch('/url1', null));
     }
 
-    public function test_it_returns_null_with_no_matching_overrides()
+    public function testItReturnsNullWithNoMatchingOverrides()
     {
         $fetcher = new InMemoryFetcher([
             'domain_alias_1' => [],
@@ -49,7 +49,7 @@ class InMemoryFetcherTest extends TestCase
         self::assertNull($fetcher->fetch('/url1', null));
     }
 
-    public function test_it_returns_null_with_invalid_matching_overrides()
+    public function testItReturnsNullWithInvalidMatchingOverrides()
     {
         $fetcher = new InMemoryFetcher([
             'domain_alias_1' => [
@@ -68,7 +68,7 @@ class InMemoryFetcherTest extends TestCase
         self::assertNull($fetcher->fetch('/url1', null));
     }
 
-    public function test_it_returns_seo_with_matching_overrides()
+    public function testItReturnsSeoWithMatchingOverrides()
     {
         $fetcher = new InMemoryFetcher([
             'domain_alias_1' => [
@@ -98,7 +98,7 @@ class InMemoryFetcherTest extends TestCase
         self::assertNull($seo3->getTitle());
     }
 
-    public function test_it_returns_seo_with_matching_overrides_from_right_domain()
+    public function testItReturnsSeoWithMatchingOverridesFromRightDomain()
     {
         $fetcher = new InMemoryFetcher([
             'domain_alias_1' => [
@@ -124,7 +124,7 @@ class InMemoryFetcherTest extends TestCase
         self::assertSame('title 2', $seo2->getTitle());
     }
 
-    public function test_it_returns_correctly_hydrated_seo_for_matching_overrides()
+    public function testItReturnsCorrectlyHydratedSeoForMatchingOverrides()
     {
         $fetcher = new InMemoryFetcher([
             'domain_alias_1' => [
@@ -166,7 +166,7 @@ class InMemoryFetcherTest extends TestCase
         self::assertNull($seo2->getOgDescription());
     }
 
-    public function test_it_handles_catch_all_domain()
+    public function testItHandlesCatchAllDomain()
     {
         $fetcher = new InMemoryFetcher([
             '' => [

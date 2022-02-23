@@ -21,14 +21,14 @@ class PathBlacklisterTest extends TestCase
     /** @var PathBlacklister */
     private $blacklister;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->blacklister = new PathBlacklister('^/(admin|account)');
     }
 
-    public function test_it_blacklists_matching_requests()
+    public function testItBlacklistsMatchingRequests()
     {
         $response = new Response(200);
 
@@ -48,7 +48,7 @@ class PathBlacklisterTest extends TestCase
         self::assertTrue($this->blacklister->isBlacklisted($request, $response));
     }
 
-    public function test_it_does_not_blacklist_not_matching_requests()
+    public function testItDoesNotBlacklistNotMatchingRequests()
     {
         $response = new Response(200);
 

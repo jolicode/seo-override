@@ -29,6 +29,6 @@ class PathBlacklister implements Blacklister
 
     public function isBlacklisted(Request $request, Response $response): bool
     {
-        return preg_match('#'.$this->pattern.'#i', $request->getPathInfo());
+        return preg_match('#' . $this->pattern . '#i', $request->getPathInfo());
     }
 }

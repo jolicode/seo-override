@@ -21,14 +21,14 @@ class XmlHttpBlacklisterTest extends TestCase
     /** @var XmlHttpBlacklisterTest */
     private $blacklister;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->blacklister = new XmlHttpBlacklister();
     }
 
-    public function test_it_blacklists_xml_http_requests()
+    public function testItBlacklistsXmlHttpRequests()
     {
         $request = new Request();
         $request->headers->set('X-Requested-With', 'XMLHttpRequest');
@@ -36,7 +36,7 @@ class XmlHttpBlacklisterTest extends TestCase
         self::assertTrue($this->blacklister->isBlacklisted($request, new Response()));
     }
 
-    public function test_it_does_not_blacklist_not_xml_http_requests()
+    public function testItDoesNotBlacklistNotXmlHttpRequests()
     {
         $request = new Request();
 

@@ -11,8 +11,8 @@
 
 namespace Joli\SeoOverride\Tests\Unit\Bridge\Doctrine;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Joli\SeoOverride\Bridge\Doctrine\DoctrineFetcher;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\Seo;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
@@ -28,7 +28,7 @@ class DoctrineFetcherTest extends TestCase
     /** @var ObjectProphecy */
     private $repository;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,7 +40,7 @@ class DoctrineFetcherTest extends TestCase
         $manager->getRepository(SeoOverride::class)->willReturn($this->repository->reveal());
     }
 
-    public function test_it_returns_null_with_no_matching_overrides_for_given_domain()
+    public function testItReturnsNullWithNoMatchingOverridesForGivenDomain()
     {
         $this->repository->findOneForPathAndDomain('/url1', 'domain_alias_1')->willReturn(null);
 
@@ -49,7 +49,7 @@ class DoctrineFetcherTest extends TestCase
         self::assertNull($fetcher->fetch('/url1', 'domain_alias_1'));
     }
 
-    public function test_it_returns_null_with_no_matching_overrides_for_catch_all_domain()
+    public function testItReturnsNullWithNoMatchingOverridesForCatchAllDomain()
     {
         $this->repository->findOneForPathAndDomain('/url1', null)->willReturn(null);
 
@@ -58,7 +58,7 @@ class DoctrineFetcherTest extends TestCase
         self::assertNull($fetcher->fetch('/url1', null));
     }
 
-    public function test_it_returns_seo_with_matching_overrides()
+    public function testItReturnsSeoWithMatchingOverrides()
     {
         $expectedSeo = new Seo();
         $seoOverride = new SeoOverride();

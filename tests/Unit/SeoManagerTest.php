@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 class SeoManagerTest extends TestCase
 {
-    public function test_it_updates_full_seo_from_fetcher()
+    public function testItUpdatesFullSeoFromFetcher()
     {
         $seo = new Seo();
         $seo->setTitle('new title');
@@ -51,7 +51,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('new og:description', $seoManager->getSeo()->getOgDescription());
     }
 
-    public function test_it_updates_partial_seo()
+    public function testItUpdatesPartialSeo()
     {
         $seo1 = new Seo();
         $seo1->setTitle('title1');
@@ -85,7 +85,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('og:description1', $seoManager->getSeo()->getOgDescription());
     }
 
-    public function test_it_respects_priority_in_fetcher()
+    public function testItRespectsPriorityInFetcher()
     {
         $seo1 = new Seo();
         $seo1->setTitle('title1');
@@ -109,7 +109,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('title1', $seoManager->getSeo()->getTitle());
     }
 
-    public function test_it_determines_domain_alias()
+    public function testItDeterminesDomainAlias()
     {
         $seo = new Seo();
         $seo->setTitle('title');
@@ -129,7 +129,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('title', $seoManager->getSeo()->getTitle());
     }
 
-    public function test_it_respects_priority_in_domain_alias()
+    public function testItRespectsPriorityInDomainAlias()
     {
         $seo = new Seo();
         $seo->setTitle('title');
@@ -149,7 +149,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('title', $seoManager->getSeo()->getTitle());
     }
 
-    public function test_it_looks_for_catch_all_domain_when_no_override_found()
+    public function testItLooksForCatchAllDomainWhenNoOverrideFound()
     {
         $seo = new Seo();
         $seo->setTitle('title');
@@ -169,7 +169,7 @@ class SeoManagerTest extends TestCase
         self::assertSame('title', $seoManager->getSeo()->getTitle());
     }
 
-    public function test_it_overrides_html()
+    public function testItOverridesHtml()
     {
         $seo = new Seo();
         $seo->setTitle('new title');
@@ -214,7 +214,7 @@ HTML;
         self::assertSame($expected, $seoManager->overrideHtml($html));
     }
 
-    public function test_it_overrides_html_with_new_lines()
+    public function testItOverridesHtmlWithNewLines()
     {
         $seo = new Seo();
         $seo->setTitle('new title');
@@ -248,7 +248,7 @@ HTML;
         self::assertSame($expected, $seoManager->overrideHtml($html));
     }
 
-    public function test_it_does_not_override_html_when_no_override()
+    public function testItDoesNotOverrideHtmlWhenNoOverride()
     {
         $seoManager = new SeoManager([], []);
 
@@ -270,7 +270,7 @@ HTML;
         self::assertSame($html, $seoManager->overrideHtml($html));
     }
 
-    public function test_it_updates_seo_and_overrides_html()
+    public function testItUpdatesSeoAndOverridesHtml()
     {
         $seo = new Seo();
         $seo->setTitle('new title');
@@ -305,14 +305,14 @@ HTML;
         self::assertSame($expected, $seoManager->updateAndOverride($html, '/', 'www.example.com'));
     }
 
-    public function test_it_has_a_default_encoding()
+    public function testItHasADefaultEncoding()
     {
         $seoManager = new SeoManager([], []);
 
         self::assertSame('UTF-8', $seoManager->getEncoding());
     }
 
-    public function test_it_can_use_another_encoding()
+    public function testItCanUseAnotherEncoding()
     {
         $seoManager = new SeoManager([], []);
         $seoManager->setEncoding('KOI8-R');

@@ -34,7 +34,7 @@ class RegisterFetcherPassTest extends TestCase
     /** @var ObjectProphecy */
     private $managerDefinition;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +46,7 @@ class RegisterFetcherPassTest extends TestCase
         $this->container->getParameterBag()->willReturn($this->parameterBag->reveal());
     }
 
-    public function test_it_throws_exception_with_tag_not_defining_alias()
+    public function testItThrowsExceptionWithTagNotDefiningAlias()
     {
         $tags = [
             'service1' => [
@@ -67,7 +67,7 @@ class RegisterFetcherPassTest extends TestCase
         }
     }
 
-    public function test_it_throws_exception_with_alias_used_multiple_times()
+    public function testItThrowsExceptionWithAliasUsedMultipleTimes()
     {
         $tags = [
             'service1' => [
@@ -92,7 +92,7 @@ class RegisterFetcherPassTest extends TestCase
         }
     }
 
-    public function test_it_accepts_no_configured_fetchers()
+    public function testItAcceptsNoConfiguredFetchers()
     {
         $tags = [
             'service1' => [
@@ -113,7 +113,7 @@ class RegisterFetcherPassTest extends TestCase
         $this->compilerPass->process($this->container->reveal());
     }
 
-    public function test_it_throws_exception_with_unknown_fetcher()
+    public function testItThrowsExceptionWithUnknownFetcher()
     {
         $fetchersConfiguration = [
             [
@@ -140,7 +140,7 @@ class RegisterFetcherPassTest extends TestCase
         }
     }
 
-    public function test_it_throws_exception_when_missing_mandatory_option_for_fetcher()
+    public function testItThrowsExceptionWhenMissingMandatoryOptionForFetcher()
     {
         $fetchersConfiguration = [
             [
@@ -168,7 +168,7 @@ class RegisterFetcherPassTest extends TestCase
         }
     }
 
-    public function test_it_configures_option_for_fetcher()
+    public function testItConfiguresOptionForFetcher()
     {
         $fetchersConfiguration = [
             [
@@ -202,7 +202,7 @@ class RegisterFetcherPassTest extends TestCase
         $this->compilerPass->process($this->container->reveal());
     }
 
-    public function test_it_throws_exception_with_unknown_option_for_fetcher()
+    public function testItThrowsExceptionWithUnknownOptionForFetcher()
     {
         $fetchersConfiguration = [
             [
@@ -235,7 +235,7 @@ class RegisterFetcherPassTest extends TestCase
         }
     }
 
-    public function test_it_preserves_fetcher_order()
+    public function testItPreservesFetcherOrder()
     {
         $fetchersConfiguration = [
             [
@@ -305,7 +305,7 @@ class RegisterFetcherPassTest extends TestCase
         $this->compilerPass->process($this->container->reveal());
     }
 
-    public function test_it_defines_fetcher_mapping_when_in_debug()
+    public function testItDefinesFetcherMappingWhenInDebug()
     {
         $fetchersConfiguration = [
             [

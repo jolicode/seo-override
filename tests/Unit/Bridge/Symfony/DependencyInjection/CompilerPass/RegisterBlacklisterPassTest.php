@@ -34,7 +34,7 @@ class RegisterBlacklisterPassTest extends TestCase
     /** @var ObjectProphecy */
     private $chainBlacklisterDefinition;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +46,7 @@ class RegisterBlacklisterPassTest extends TestCase
         $this->container->getParameterBag()->willReturn($this->parameterBag->reveal());
     }
 
-    public function test_it_throws_exception_with_tag_not_defining_alias()
+    public function testItThrowsExceptionWithTagNotDefiningAlias()
     {
         $tags = [
             'service1' => [
@@ -67,7 +67,7 @@ class RegisterBlacklisterPassTest extends TestCase
         }
     }
 
-    public function test_it_throws_exception_with_alias_used_multiple_times()
+    public function testItThrowsExceptionWithAliasUsedMultipleTimes()
     {
         $tags = [
             'service1' => [
@@ -92,7 +92,7 @@ class RegisterBlacklisterPassTest extends TestCase
         }
     }
 
-    public function test_it_accepts_no_configured_blacklisters()
+    public function testItAcceptsNoConfiguredBlacklisters()
     {
         $tags = [
             'service1' => [
@@ -112,7 +112,7 @@ class RegisterBlacklisterPassTest extends TestCase
         $this->compilerPass->process($this->container->reveal());
     }
 
-    public function test_it_throws_exception_with_unknown_blacklister()
+    public function testItThrowsExceptionWithUnknownBlacklister()
     {
         $blacklistersConfiguration = [
             [
@@ -139,7 +139,7 @@ class RegisterBlacklisterPassTest extends TestCase
         }
     }
 
-    public function test_it_throws_exception_when_missing_mandatory_option_for_blacklister()
+    public function testItThrowsExceptionWhenMissingMandatoryOptionForBlacklister()
     {
         $blacklistersConfiguration = [
             [
@@ -167,7 +167,7 @@ class RegisterBlacklisterPassTest extends TestCase
         }
     }
 
-    public function test_it_configures_option_for_blacklister()
+    public function testItConfiguresOptionForBlacklister()
     {
         $blacklistersConfiguration = [
             [
@@ -202,7 +202,7 @@ class RegisterBlacklisterPassTest extends TestCase
         $this->compilerPass->process($this->container->reveal());
     }
 
-    public function test_it_throws_exception_with_unknown_option_for_blacklister()
+    public function testItThrowsExceptionWithUnknownOptionForBlacklister()
     {
         $blacklistersConfiguration = [
             [
@@ -235,7 +235,7 @@ class RegisterBlacklisterPassTest extends TestCase
         }
     }
 
-    public function test_it_defines_blacklister_mapping_when_in_debug()
+    public function testItDefinesBlacklisterMappingWhenInDebug()
     {
         $blacklistersConfiguration = [
             [

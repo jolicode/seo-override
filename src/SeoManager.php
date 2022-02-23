@@ -81,6 +81,7 @@ class SeoManager
 
             if ($seo) {
                 $this->mergeSeo($seo);
+
                 break;
             }
         }
@@ -126,13 +127,13 @@ class SeoManager
                 '@<!--SEO_OG_DESCRIPTION-->(.*?)<!--/SEO_OG_DESCRIPTION-->@ims',
             ],
             [
-                $seo->getTitle() ? '<title>'.$this->encodeHtmlChars($seo->getTitle()).'</title>' : '$1',
-                $seo->getDescription() ? '<meta name="description" content="'.$this->encodeHtmlChars($seo->getDescription()).'" />' : '$1',
-                $seo->getKeywords() ? '<meta name="keywords" content="'.$this->encodeHtmlChars($seo->getKeywords()).'" />' : '$1',
-                $seo->getRobots() ? '<meta name="robots" content="'.$this->encodeHtmlChars($seo->getRobots()).'" />' : '$1',
-                $seo->getCanonical() ? '<link rel="canonical" href="'.$this->encodeHtmlChars($seo->getCanonical()).'" />' : '$1',
-                $seo->getOgTitle() ? '<meta property="og:title" content="'.$this->encodeHtmlChars($seo->getOgTitle()).'" />' : '$1',
-                $seo->getOgDescription() ? '<meta property="og:description" content="'.$this->encodeHtmlChars($seo->getOgDescription()).'" />' : '$1',
+                $seo->getTitle() ? '<title>' . $this->encodeHtmlChars($seo->getTitle()) . '</title>' : '$1',
+                $seo->getDescription() ? '<meta name="description" content="' . $this->encodeHtmlChars($seo->getDescription()) . '" />' : '$1',
+                $seo->getKeywords() ? '<meta name="keywords" content="' . $this->encodeHtmlChars($seo->getKeywords()) . '" />' : '$1',
+                $seo->getRobots() ? '<meta name="robots" content="' . $this->encodeHtmlChars($seo->getRobots()) . '" />' : '$1',
+                $seo->getCanonical() ? '<link rel="canonical" href="' . $this->encodeHtmlChars($seo->getCanonical()) . '" />' : '$1',
+                $seo->getOgTitle() ? '<meta property="og:title" content="' . $this->encodeHtmlChars($seo->getOgTitle()) . '" />' : '$1',
+                $seo->getOgDescription() ? '<meta property="og:description" content="' . $this->encodeHtmlChars($seo->getOgDescription()) . '" />' : '$1',
             ],
             $html
         );
@@ -146,7 +147,7 @@ class SeoManager
     protected function findDomainAlias(string $domain)
     {
         foreach ($this->domains as $domainAlias => $pattern) {
-            if (preg_match('#'.$pattern.'#i', $domain)) {
+            if (preg_match('#' . $pattern . '#i', $domain)) {
                 return $domainAlias;
             }
         }
@@ -187,6 +188,6 @@ class SeoManager
      */
     private function encodeHtmlChars(string $string): string
     {
-        return htmlspecialchars($string, ENT_COMPAT | ENT_HTML401, $this->encoding);
+        return htmlspecialchars($string, \ENT_COMPAT | \ENT_HTML401, $this->encoding);
     }
 }

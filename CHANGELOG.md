@@ -1,5 +1,10 @@
 # Changes between versions
 
+## 0.6.3 (2022-02-24)
+
+* Allow PHP 8
+* Fix error "Backtrack limit exhausted" with really big page
+
 ## 0.6.2 (2019-08-22)
 
 * Fix SQL issue for some database when domain is null

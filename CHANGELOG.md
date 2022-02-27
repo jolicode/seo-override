@@ -1,5 +1,10 @@
 # Changes between versions
 
+## Not yet released
+
+* Drop support for PHP < 7.4
+* Drop support for Symfony < 4.4
+
 ## 0.6.3 (2022-02-24)
 
 * Allow PHP 8

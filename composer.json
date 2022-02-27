@@ -35,9 +35,10 @@
         "phpdocumentor/reflection-docblock": "^4.4|^5.0",
         "phpspec/prophecy": "^1.7",
         "phpspec/prophecy-phpunit": "^2.0",
+        "phpunit/phpunit": "^9.5",
         "symfony/framework-bundle": "^4.4|^5.0|^6.0",
         "symfony/mime": "^4.4.|^5.0|^6.0",
-        "symfony/phpunit-bridge": "^5.0|^6.0",
+        "symfony/phpunit-bridge": "^6.0",
         "symfony/twig-bundle": "^4.4|^5.0|^6.0",
         "symfony/yaml": "^4.4|^5.0|^6.0"
     },

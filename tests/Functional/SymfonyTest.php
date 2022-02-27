@@ -14,7 +14,7 @@ namespace Joli\SeoOverride\Tests\Functional;
 use Doctrine\ORM\EntityManager;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\Seo as DoctrineSeo;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
-use Joli\SeoOverride\Tests\Functional\Fixtures\symfony\app\AppKernel;
+use Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Kernel;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -210,7 +210,7 @@ HTML;
 
     protected static function getKernelClass(): string
     {
-        return AppKernel::class;
+        return Kernel::class;
     }
 
     private function call(string $uri, string $host, string $method = 'GET', array $server = []): Response

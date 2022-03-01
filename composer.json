@@ -38,7 +38,6 @@
         "phpunit/phpunit": "^9.5",
         "symfony/framework-bundle": "^4.4|^5.0|^6.0",
         "symfony/mime": "^4.4.|^5.0|^6.0",
-        "symfony/phpunit-bridge": "^6.0",
         "symfony/twig-bundle": "^4.4|^5.0|^6.0",
         "symfony/yaml": "^4.4|^5.0|^6.0"
     },

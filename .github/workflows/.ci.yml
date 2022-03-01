@@ -59,4 +59,4 @@ jobs:
         run: |
           composer update --prefer-dist --no-interaction ${{ matrix.composer-flags }}
       - name: Run Tests
-        run: php vendor/bin/phpunit
+        run: make test

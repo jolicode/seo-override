@@ -65,7 +65,7 @@ class SeoManager extends BaseSeoManager
     /**
      * {@inheritdoc}
      */
-    public function fetch(Fetcher $fetcher, string $path, string $domainAlias = null)
+    public function fetch(Fetcher $fetcher, string $path, string $domainAlias = null): ?Seo
     {
         $callback = function (string $path, string $domainAlias = null, Seo $seo = null) use ($fetcher) {
             $this->data['fetchers'][] = [
@@ -108,7 +108,7 @@ class SeoManager extends BaseSeoManager
     /**
      * {@inheritdoc}
      */
-    protected function findDomainAlias(string $domain)
+    protected function findDomainAlias(string $domain): ?string
     {
         $domainAlias = parent::findDomainAlias($domain);
         $this->data['domain_alias'] = $domainAlias;

@@ -12,6 +12,7 @@
 namespace Joli\SeoOverride\Bridge\Symfony\DataCollector;
 
 use Joli\SeoOverride\Fetcher;
+use Joli\SeoOverride\Seo;
 
 class CallbackFetcher implements Fetcher
 {
@@ -27,7 +28,7 @@ class CallbackFetcher implements Fetcher
         $this->callback = $callback;
     }
 
-    public function fetch(string $path, string $domainAlias = null)
+    public function fetch(string $path, string $domainAlias = null): ?Seo
     {
         $seo = $this->fetcher->fetch($path, $domainAlias);
 

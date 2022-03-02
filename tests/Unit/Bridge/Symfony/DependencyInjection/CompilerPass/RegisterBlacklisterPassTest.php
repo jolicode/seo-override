@@ -9,11 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Joli\SeoOverride\Tests\Unit\Bridge\Symfony\DependencyInjection;
+namespace Joli\SeoOverride\Tests\Unit\Bridge\Symfony\DependencyInjection\CompilerPass;
 
 use Joli\SeoOverride\Bridge\Symfony\DependencyInjection\CompilerPass\RegisterBlacklisterPass;
 use Joli\SeoOverride\Tests\Unit\Fixtures\FakeBlacklister;
 use PHPUnit\Framework\TestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -22,6 +24,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class RegisterBlacklisterPassTest extends TestCase
 {
+    use ProphecyTrait;
+
     /** @var RegisterBlacklisterPass */
     private $compilerPass;
 
@@ -187,9 +191,15 @@ class RegisterBlacklisterPassTest extends TestCase
 
         $blacklisterDefinition = $this->prophesize(Definition::class);
         $blacklisterDefinition->getClass()->willReturn(FakeBlacklister::class);
-        $blacklisterDefinition->replaceArgument(0, 'yolo')->shouldBeCalled();
+        $blacklisterDefinition->replaceArgument(0, Argument::type('string'))
+            ->shouldBeCalled()
+            ->willReturn($blacklisterDefinition)
+        ;
 
-        $this->chainBlacklisterDefinition->replaceArgument(0, [$blacklisterDefinition])->shouldBeCalled();
+        $this->chainBlacklisterDefinition->replaceArgument(0, [$blacklisterDefinition])
+            ->shouldBeCalled()
+            ->willReturn($this->chainBlacklisterDefinition)
+        ;
 
         $this->container->getParameter('seo_override.blacklisters_configuration')->willReturn($blacklistersConfiguration);
         $this->container->findTaggedServiceIds('seo_override.blacklister')->willReturn($tags);
@@ -265,7 +275,10 @@ class RegisterBlacklisterPassTest extends TestCase
         $blacklisterDefinition2 = $this->prophesize(Definition::class);
         $blacklisterDefinition2->getClass()->willReturn(FakeBlacklister::class);
 
-        $this->chainBlacklisterDefinition->replaceArgument(0, [$blacklisterDefinition1, $blacklisterDefinition2])->shouldBeCalled();
+        $this->chainBlacklisterDefinition->replaceArgument(0, [$blacklisterDefinition1, $blacklisterDefinition2])
+            ->shouldBeCalled()
+            ->willReturn($this->chainBlacklisterDefinition)
+        ;
 
         $this->container->getParameter('seo_override.blacklisters_configuration')->willReturn($blacklistersConfiguration);
         $this->container->findTaggedServiceIds('seo_override.blacklister')->willReturn($tags);

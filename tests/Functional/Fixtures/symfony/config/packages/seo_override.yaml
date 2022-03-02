@@ -1,0 +1,26 @@
+seo_override:
+  fetchers:
+    - doctrine
+    -
+      type: in_memory
+      overrides:
+        domain_in_memory:
+          '/':
+            title: 'new title for homepage of domain_in_memory'
+        '':
+          '/error':
+            title: 'new title for error page'
+          '/admin':
+            title: 'new title for admin'
+    -
+      type: php
+      include_path: "%kernel.project_dir%/config/seo_overrides.php"
+  domains:
+    domain_doctrine: 'domain_doctrine.com'
+    domain_in_memory: 'domain_in_memory.com'
+    domain_php: 'domain_php.com'
+  blacklist:
+    - not_2xx
+    - { type: path, pattern: '^/admin' }
+    - { type: not_method, method: ['GET', 'POST'] }
+    - xml_http

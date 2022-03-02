@@ -5,28 +5,36 @@ namespace Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 class AppController extends AbstractController
 {
-    public function templateAction(string $template)
+    private Environment $twig;
+
+    public function __construct(Environment $twig)
     {
-        return new Response($this->renderView($template), 200);
+        $this->twig = $twig;
     }
 
-    public function errorAction()
+    public function templateAction(string $template): Response
     {
-        return new Response($this->renderView('error.html.twig'), 400);
+        return new Response($this->twig->render($template), 200);
     }
 
-    public function downloadAction()
+    public function errorAction(): Response
+    {
+        return new Response($this->twig->render('error.html.twig'), 400);
+    }
+
+    public function downloadAction(): BinaryFileResponse
     {
         $tmpfname = tempnam('/tmp', 'FOO');
 
         return new BinaryFileResponse($tmpfname);
     }
 
-    public function adminAction()
+    public function adminAction(): Response
     {
-        return new Response($this->renderView('admin.html.twig'), 200);
+        return new Response($this->twig->render('admin.html.twig'), 200);
     }
 }

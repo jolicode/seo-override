@@ -18,10 +18,13 @@ use Joli\SeoOverride\Bridge\Doctrine\Entity\Seo;
 use Joli\SeoOverride\Bridge\Doctrine\Entity\SeoOverride;
 use Joli\SeoOverride\Bridge\Doctrine\Repository\SeoOverrideRepository;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class DoctrineFetcherTest extends TestCase
 {
+    use ProphecyTrait;
+
     /** @var ObjectProphecy */
     private $registry;
 

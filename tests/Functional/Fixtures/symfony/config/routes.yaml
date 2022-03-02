@@ -1,0 +1,17 @@
+index:
+  path: /
+  controller: Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller\AppController::templateAction
+  defaults:
+    template: index.html.twig
+
+error:
+  path: /error
+  controller: Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller\AppController::errorAction
+
+download:
+  path: /download
+  controller: Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller\AppController::downloadAction
+
+admin:
+  path: /admin
+  controller: Joli\SeoOverride\Tests\Functional\Fixtures\symfony\src\Controller\AppController::adminAction

@@ -15,9 +15,12 @@ use Joli\SeoOverride\Fetcher;
 use Joli\SeoOverride\Seo;
 use Joli\SeoOverride\SeoManager;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class SeoManagerTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testItUpdatesFullSeoFromFetcher()
     {
         $seo = new Seo();

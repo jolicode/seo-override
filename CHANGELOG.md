@@ -2,6 +2,9 @@
 
 ## Not yet released
 
+* Add support for Symfony 7.0
+* Drop support for PHP < 8.1
+
 ## 0.7.0 (2022-03-02)
 
 * Add support for Symfony 6.0

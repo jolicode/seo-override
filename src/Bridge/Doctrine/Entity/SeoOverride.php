@@ -38,6 +38,11 @@ class SeoOverride
      */
     private $seo;
 
+    public function __construct()
+    {
+        $this->seo = new Seo;
+    }
+
     public function getId()
     {
         return $this->id;

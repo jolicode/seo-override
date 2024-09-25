@@ -2,6 +2,10 @@
 
 ## Not yet released
 
+## 0.7.1 (2024-09-25)
+
+* Fix PropertyAccessor error when using SeoOverride with EasyAdmin 4
+
 ## 0.7.0 (2022-03-02)
 
 * Add support for Symfony 6.0
